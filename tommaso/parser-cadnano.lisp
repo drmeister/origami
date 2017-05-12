@@ -6,12 +6,17 @@
 (defclass vstrand ()
   ((staple-json :initarg :staple-json :reader staple-json)
    (scaffold-json :initarg :scaffold-json :reader scaffold-json)
-   ...
+   (skip-json :initarg :skip-json :reader skip-json)
+   (loop-json :initarg :loop-json :reader loop-json)
+   (scaf-loop-json :initarg :scaf-loop-json :reader scaf-loop-json)
+   (stap-loop-json :initarg :stap-loop-json :reader stap-loop-json)
    (staple-vec :initarg :staple-vec :reader staple-vec)
    (scaffold-vec :initarg :scaffold-vec :reader scaffold-vec)
-   ...))
+   (row :initarg :row :reader row)
+   (col :initarg :column :reader column)
+   ))
 
-   
+  ;check if not ("format":"3.0")
 (defun parse-json (json)
   (let ((vstrands (make-hash-table :test #'eql)))
     (loop for json-vstrand-info in (LIST-OF-VSTRANDS-FROM-JSON json)
@@ -42,10 +47,12 @@
 				      :row row
 				      :column col))
        do (setf (gethash num vstrands) vstrand)
-       do (BUILD-PRE-NODE (staple-vec vstrand) staple-json)
-       do (BUILD-PRE-NODE (scaffold-vec vstrand) scaffold-json)
-       do (INTRA-HELIX-CONNECT (staple-vec vstrand) (scaffold-vec vstrand)))
-    ;; Connect the prenodes
+;       do (BUILD-NODE (staple-vec vstrand) staple-json)
+       do (BUILD-NODE (staple-vec vstrand))	 
+;       do (BUILD-NODE (scaffold-vec vstrand) scaffold-json)
+       do (BUILD-NODE (scaffold-vec vstrand))
+       do (intra-helix-connect (staple-vec vstrand) (scaffold-vec vstrand)))
+    ;; connect the nodes
     (loop for vstrand being the hash-values in vstrands using (hash-key num)
        for staple-json = (staple-json vstrand)
        for staple-vec = (staple-vec vstrand)
@@ -54,38 +61,35 @@
        do (CONNECT-EVERYTHING vstrands num staple-json staple-vec #'staple-vec)
        do (CONNECT-EVERYTHING vstrands num scaffold-json scaffold-vec #'scaffold-vec))
     ;; Deal with loop
-
-
-
+    ))
     
-       (defun CONNECT-EVERYTHING (vstrands num json vec accessor)
-	 (loop for json-info in json
-	    for index from 0 below (length json)
-	    for node = (elt vec index)
-	    when node
-	    for forward-node = (LOOKUP-NODE vstrands (first json-info) (second json-info) accessor)
-	    for back-node = (LOOKUP-NODE vstrands (third json-info) (fourth json-info) accessor)
-	    do (when forward-node (setf (forward-node node) forward-node))
-	    do (when back-node (setf (back-node node) back-node))))
+(defun BUILD-NODE (vec)
+  (loop for index from 1 to (length vec)
+     do (setf (elt vec index) (make-instance 'node))))
+
+(defun INTRA-HELIX-CONNECT (staple-vec scaffold-vec)
+  (loop for index from 1 to (length staple-vec)
+     do (setf (hbond-node (elt staple-vec index)) (elt scaffold-vec index))
+     do (setf (hbond-node (elt scaffold-vec index)) (elt staple-vec index))))
+    
+(defun CONNECT-EVERYTHING (vstrands num json vec accessor)
+  (loop for json-info in json
+     for index from 0 below (length json)
+     for node = (elt vec index)
+     when node
+     for forward-node = (LOOKUP-NODE vstrands (first json-info) (second json-info) accessor)
+     for back-node = (LOOKUP-NODE vstrands (third json-info) (fourth json-info) accessor)
+     do (when forward-node (setf (forward-node node) forward-node))
+     do (when back-node (setf (back-node node) back-node))))
 	      
-       (defclass pre-node ()
-	 ((hbond-node :initarg :hbond-node :accessor hbond-node)
-	  (forward-node :initarg :forward-node :accessor forward-node)
-	  (back-node :initarg :back-node :accessor back-node)))
-       
+(defclass node ()
+  ((hbond-node :initarg :hbond-node :accessor hbond-node)
+   (forward-node :initarg :forward-node :accessor forward-node)
+   (back-node :initarg :back-node :accessor back-node)))
 
+(defun LOOKUP-NODE (vstrands vstrand-num pos accessor)
+  (let* ((vstrand (gethash vstrand-num vstrands))
+	 (strand (funcall accessor vstrand)))
+    (elt strand pos)))
 
-       (defun LOOKUP-NODE (vstrands vstrand-num pos accessor)
-	 (let* ((vstrand (gethash vstrand-num vstrands))
-		(strand (funcall accessor vstrand)))
-	   (elt strand pos)))
-
-       
-    vstrands))
-
-
-	 
-				    
-	 collect row)
-	 
     
