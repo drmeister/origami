@@ -1,6 +1,7 @@
 
 (ql:quickload "cl-json")
 
+(in-package :cl-jupyter-user)
 
 (defun LIST-OF-VSTRANDS-FROM-JSON (json)
   (cdr (assoc :vstrands json)))
@@ -81,7 +82,7 @@
 	  (setf (hbond-node staple-node) scaffold-node)
 	  (setf (hbond-node scaffold-node) staple-node))))
     
-(defun CONNECT-EVERYTHING (vstrands num strand-json strand-vec accessor)
+(defun connect-everything (vstrands num strand-json strand-vec accessor)
   (loop for json-info in strand-json
      for index from 0 below (length strand-json)
      for node = (elt strand-vec index)
@@ -91,21 +92,21 @@
 	       (bkd-vstrand (third json-info))
 	       (bkd-pos     (fourth json-info)))
 	  (when (/= fwd-vstrand -1)
-	    (let ((forward-node (LOOKUP-NODE vstrands fwd-vstrand fwd-pos accessor)))
+	    (let ((forward-node (lookup-node vstrands fwd-vstrand fwd-pos accessor)))
 	      (assert forward-node)
 	      (setf (forward-node node) forward-node)))
 	  (when (/= bkd-vstrand -1)
-	    (let ((back-node (LOOKUP-NODE vstrands bkd-vstrand bkd-pos accessor)))
+	    (let ((back-node (lookup-node vstrands bkd-vstrand bkd-pos accessor)))
 	      (assert back-node)
 	      (setf (back-node node) back-node))))))
 	      
 (defclass node ()
-  ((hbond-node :initarg :hbond-node :accessor hbond-node)
-   (forward-node :initarg :forward-node :accessor forward-node)
-   (back-node :initarg :back-node :accessor back-node)
+  ((hbond-node :initform nil :initarg :hbond-node :accessor hbond-node)
+   (forward-node :initform nil :initarg :forward-node :accessor forward-node)
+   (back-node :initform nil :initarg :back-node :accessor back-node)
    (name :initarg :name :reader name)))
 
-(defun LOOKUP-NODE (vstrands vstrand-num pos accessor)
+(defun lookup-node (vstrands vstrand-num pos accessor)
   (let* ((vstrand (gethash vstrand-num vstrands))
 	 (strand (funcall accessor vstrand)))
     (elt strand pos)))
@@ -113,25 +114,23 @@
 (defun skip-procedure (x)
   (let ((xf (forward x))
 	(xb (backward x)))
-    ((setf (forward xb) xf)
-     (setf (backward xf) xb)
-     (setf x NIL))))
+    (setf (forward xb) xf)
+    (setf (backward xf) xb)
+    (setf x NIL)))
+
 (defun arrow-direction (vec)
   (let ((step-direction (loop for index from 0 below (length vec)
 			   for node = (elt vec index)
 			   when node
-			   collect (let (fwd (forward node))
+			   collect (let ((fwd (forward-node node)))
 				     (when fwd
 				       (- (position fwd vec) index))))))
     (cond
-      (((every (lambda (x) (if x (plusp x) T)) step-direction))
-       1)
-      (((every (lambda (x) (if x (minusp x) T)) step-direction))
-       -1)
-      (t (error "arrow direction in the vector is neither foward nor backward")))
-    ))
-				  
-					     
+      ((every (lambda (x) (if x (plusp x) T)) step-direction) 1)
+      ((every (lambda (x) (if x (minusp x) T)) step-direction) -1)
+      (t (error "arrow direction in the vector is neither forward nor backward")))))
+
+
 (defun skip-loop (skip loop staple-vec scaffold-vec)
   ;;must check if 4 input have the same lenght
   (let* ((old-vec-min-length
@@ -142,8 +141,8 @@
 					;	       (loop for node across scaffold-vec
 					;				when node
 					;		  count))
-	  (loop for index from 0 below (length scaffol-vec)
-	     when (or (elt scaffold-vec index)  (elt staple-vec index))
+	  (loop for index from 0 below (length scaffold-vec)
+	     when (or (elt scaffold-vec index) (elt staple-vec index))
 	     count))
 	 (new-vec-length (apply #'+ old-vec-min-length (apply #'+ skip) loop))
 	 (new-scaf-vec (make-array new-vec-length))
@@ -151,7 +150,8 @@
 	 (s-l-cursor 0)
 	 (dest-cursor 0)
 	 (stap-direction (arrow-direction staple-vec))
-	 (scaf-direction (arrow-direction scaffold-vec)))
+	 (scaf-direction (arrow-direction scaffold-vec))
+	 
 	       (cond ((and (= stap-direction 1)
 			 (= scaf-direction -1))
 					;stap->f
@@ -162,6 +162,8 @@
 					;stap->b
 					;scaf->f
 		      )
+		     (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%"
+			       stap-direction scaf-direction)))
 
     (loop with s-l-cursor = 0
        with dest-cursor = 0
@@ -217,4 +219,7 @@ result
 
 (/= -1 -1 -2 -3 0)
 
+
+(scaffold-vec (gethash 0 *origami*))
 |#
+
