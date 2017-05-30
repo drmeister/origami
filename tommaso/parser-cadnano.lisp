@@ -71,7 +71,7 @@
   (loop for index from 0 below (length vec)
      for node-json in strand-json
      unless (apply #'= -1 node-json)
-     do (setf (elt vec index) (make-instance 'node))))
+     do (setf (elt vec index) (make-instance 'node :name (cons :json index)))))
 
 (defun INTRA-HELIX-CONNECT (staple-vec scaffold-vec)
   (loop for index from 0 below (length staple-vec)
@@ -102,14 +102,113 @@
 (defclass node ()
   ((hbond-node :initarg :hbond-node :accessor hbond-node)
    (forward-node :initarg :forward-node :accessor forward-node)
-   (back-node :initarg :back-node :accessor back-node)))
+   (back-node :initarg :back-node :accessor back-node)
+   (name :initarg :name :reader name)))
 
 (defun LOOKUP-NODE (vstrands vstrand-num pos accessor)
   (let* ((vstrand (gethash vstrand-num vstrands))
 	 (strand (funcall accessor vstrand)))
     (elt strand pos)))
 
-    
+(defun skip-procedure (x)
+  (let ((xf (forward x))
+	(xb (backward x)))
+    ((setf (forward xb) xf)
+     (setf (backward xf) xb)
+     (setf x NIL))))
+(defun arrow-direction (vec)
+  (let ((step-direction (loop for index from 0 below (length vec)
+			   for node = (elt vec index)
+			   when node
+			   collect (let (fwd (forward node))
+				     (when fwd
+				       (- (position fwd vec) index))))))
+    (cond
+      (((every (lambda (x) (if x (plusp x) T)) step-direction))
+       1)
+      (((every (lambda (x) (if x (minusp x) T)) step-direction))
+       -1)
+      (t (error "arrow direction in the vector is neither foward nor backward")))
+    ))
+				  
+					     
+(defun skip-loop (skip loop staple-vec scaffold-vec)
+  ;;must check if 4 input have the same lenght
+  (let* ((old-vec-min-length
+	  ;;in presence of gaps...
+					;	  (MAX (loop for node across staple-vec
+					;				when node
+					;		  count)
+					;	       (loop for node across scaffold-vec
+					;				when node
+					;		  count))
+	  (loop for index from 0 below (length scaffol-vec)
+	     when (or (elt scaffold-vec index)  (elt staple-vec index))
+	     count))
+	 (new-vec-length (apply #'+ old-vec-min-length (apply #'+ skip) loop))
+	 (new-scaf-vec (make-array new-vec-length))
+	 (new-stap-vec (make-array new-vec-length))
+	 (s-l-cursor 0)
+	 (dest-cursor 0)
+	 (stap-direction (arrow-direction staple-vec))
+	 (scaf-direction (arrow-direction scaffold-vec)))
+	       (cond ((and (= stap-direction 1)
+			 (= scaf-direction -1))
+					;stap->f
+					;scaf->b
+		       )
+		     ((and (= stap-direction -1)
+			   (= scaf-direction 1))
+					;stap->b
+					;scaf->f
+		      )
+
+    (loop with s-l-cursor = 0
+       with dest-cursor = 0
+	 with length-skip = (length skip)
+       until (= s-l-cursor length-skip)
+	 do (cond
+	      ((and (= (elt skip s-l-cursor) -1)
+		    (= (elt loop s-l-cursor) 0))
+	       ;;do a skip procedure
+	       (skip-procedure (elt staple-vec s-l-cursor))
+	       (skip-procedure (elt scaffold-vec s-l-cursor))
+	       (incf s-l-cursor)
+	       )
+	      ((and (> (elt skip s-l-cursor) 0)
+		    (= (elt loop s-l-cursor) 0))
+	       ;;do an insertion
+			 ;;forward arrow		    
+	       (let ((New-node (elt new-f-vec dest-cursor))
+		     (Doubled-node (elt f-vec s-l-cursor))
+		     (b-d-node (backward (elt f-vec s-l-cursor))))
+		 (setf New-node (make-instance 'node :name (cons :loop (elt loop s-l-cursor))))
+		 (setf (backward Doubled-node) New-node)
+		 (setf (forward New-node) Doubled-node)
+		 (setf (backward New-node) b-d-node)
+		 (setf (forward b-d-node) New-node)
+		 )
+	       ;;backward arrow
+	       (let ((New-node (elt new-b-vec dest-cursor))
+		     (Doubled-node (elt b-vec s-l-cursor))
+		     (f-d-node (forward (elt b-vec s-l-cursor))))
+		 (setf New-node (make-instance 'node :name (cons :loop (elt loop s-l-cursor))))
+		 (setf (forward Doubled-node) New-node)
+		 (setf (backward New-node) Doubled-node)		 
+		 (setf (forward New-node) f-d-node)
+		 (setf (backward b-d-node) New-node)
+		 )
+	       (decf (elt loop s-l-cursor))
+	       (incf dest-cursor)
+	       )
+	      ((and (= (elt skip s-l-cursor) 0)
+		(= (elt loop s-l-cursor) 0))
+	       ;;do a copy
+	       (incf dest-cursor)
+	       (incf s-l-cursor)
+	       )
+	      (t (error "An impossible step was encountered")))
+  
 #| testing code
 
 (defparameter result (parse-json *j*))
@@ -119,8 +218,3 @@ result
 (/= -1 -1 -2 -3 0)
 
 |#
-
-
-
-
-
