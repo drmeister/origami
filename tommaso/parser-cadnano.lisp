@@ -56,7 +56,8 @@
        do (BUILD-NODE staple-json (staple-vec vstrand))	 
 					;       do (BUILD-NODE (scaffold-vec vstrand) scaffold-json)
        do (BUILD-NODE scaffold-json (scaffold-vec vstrand))
-       do (intra-helix-connect (staple-vec vstrand) (scaffold-vec vstrand)))
+       do (intra-helix-connect (staple-vec vstrand) (scaffold-vec vstrand));to be postpone after skip-loop 
+	 )
     ;; connect the nodes
     (loop for vstrand being the hash-values in vstrands using (hash-key num)
        for staple-json = (staple-json vstrand)
@@ -66,6 +67,7 @@
        do (CONNECT-EVERYTHING vstrands num staple-json staple-vec #'staple-vec)
        do (CONNECT-EVERYTHING vstrands num scaffold-json scaffold-vec #'scaffold-vec))
     ;; Deal with loop
+    ;; (skip-loop skip loop staple-vec scaffold-vec) -> return new staple and scaffold
     vstrands))
     
 (defun BUILD-NODE (strand-json vec)
@@ -130,87 +132,104 @@
       ((every (lambda (x) (if x (minusp x) T)) step-direction) -1)
       (t (error "arrow direction in the vector is neither forward nor backward")))))
 
+(defun loop-procedure (old-vec s-l-cursor new-vec dest-cursor accessor-l accessor-r)
+  ((setf (elt new-vec dest-cursor) (make-instance 'node :name (cons :loop (elt loop s-l-cursor))))
+  (let ((New-node (elt new-f-vec dest-cursor))
+	(Doubled-node (elt f-vec s-l-cursor))
+	(l-d-node (accessor-l (elt f-vec s-l-cursor))))
+    (setf (accessor-l Doubled-node) New-node)
+    (setf (accessor-r New-node) Doubled-node)
+    (setf (accessor-l New-node) l-d-node)
+    (setf (accessor-r l-d-node) New-node))))
 
 (defun skip-loop (skip loop staple-vec scaffold-vec)
   ;;must check if 4 input have the same lenght
   (let* ((old-vec-min-length
-	  ;;in presence of gaps...
-					;	  (MAX (loop for node across staple-vec
-					;				when node
-					;		  count)
-					;	       (loop for node across scaffold-vec
-					;				when node
-					;		  count))
 	  (loop for index from 0 below (length scaffold-vec)
 	     when (or (elt scaffold-vec index) (elt staple-vec index))
 	     count))
 	 (new-vec-length (apply #'+ old-vec-min-length (apply #'+ skip) loop))
 	 (new-scaf-vec (make-array new-vec-length))
 	 (new-stap-vec (make-array new-vec-length))
-	 (s-l-cursor 0)
-	 (dest-cursor 0)
-	 (stap-direction (arrow-direction staple-vec))
-	 (scaf-direction (arrow-direction scaffold-vec))
-	 
-	       (cond ((and (= stap-direction 1)
+	 (stap-direction (arrow-direction staple-vec)) ;let?
+	 (scaf-direction (arrow-direction scaffold-vec))) ;let?
+    #|
+    (cond ((and (= stap-direction 1)
+    (= scaf-direction -1))
+					;stap->f ;
+					;scaf->b ;
+    )
+    ((and (= stap-direction -1)
+    (= scaf-direction 1))
+					;stap->b ;
+					;scaf->f ;
+    )
+    (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%"
+    stap-direction scaf-direction)))
+    |#
+    (loop with s-l-cursor = 0
+       with dest-cursor = 0
+       with length-skip = (length skip)
+       until (= s-l-cursor length-skip)
+       do (cond
+	    ((and (= (elt skip s-l-cursor) -1)
+		  (= (elt loop s-l-cursor) 0))
+	     ;;do a skip procedure
+	     (skip-procedure (elt staple-vec s-l-cursor))
+	     (skip-procedure (elt scaffold-vec s-l-cursor))
+	     (incf s-l-cursor)
+	     )
+	    ((and (> (elt skip s-l-cursor) 0)
+		  (= (elt loop s-l-cursor) 0))
+	     ;;do an insertion
+	     (cond
+	       ((and (= stap-direction 1)
 			 (= scaf-direction -1))
 					;stap->f
 					;scaf->b
-		       )
-		     ((and (= stap-direction -1)
-			   (= scaf-direction 1))
+		    (loop-procedure stap-vec s-l-cursor new-stap-vec dest-cursor backward-node forward-node)
+		    (loop-procedure scaffold-vec s-l-cursor new-stap-vec dest-cursor forward-node backward-node))
+	       ((and (= stap-direction -1)
+			 (= scaf-direction 1))
 					;stap->b
 					;scaf->f
-		      )
-		     (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%"
-			       stap-direction scaf-direction)))
+		    (loop-procedure stap-vec s-l-cursor new-stap-vec dest-cursor forward backward)
+		    (loop-procedure scaffold-vec s-l-cursor new-stap-vec dest-cursor backward forward))
+	       (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%"
+			     stap-direction scaf-direction)))
+	     #|
+	     (let ((New-node (elt new-f-vec dest-cursor))
+	     (Doubled-node (elt f-vec s-l-cursor))
+	     (b-d-node (backward (elt f-vec s-l-cursor))))
+	     (setf New-node (make-instance 'node :name (cons :loop (elt loop s-l-cursor))))
+	     (setf (backward Doubled-node) New-node)
+	     (setf (forward New-node) Doubled-node)
+	     (setf (backward New-node) b-d-node)
+	     (setf (forward b-d-node) New-node)
+	     )
+	     ;;backward arrow
+	     (let ((New-node (elt new-b-vec dest-cursor))
+	     (Doubled-node (elt b-vec s-l-cursor))
+	     (f-d-node (forward (elt b-vec s-l-cursor))))
+	     (setf New-node (make-instance 'node :name (cons :loop (elt loop s-l-cursor))))
+	     (setf (forward Doubled-node) New-node)
+	     (setf (backward New-node) Doubled-node)		 
+	     (setf (forward New-node) f-d-node)
+	     (setf (backward b-d-node) New-node)
+	     )
+	     |#
+	     (decf (elt loop s-l-cursor))
+	     (incf dest-cursor))
+	    ((and (= (elt skip s-l-cursor) 0)
+		  (= (elt loop s-l-cursor) 0))
+	     ;;do a copy
+	     (setf (elt new-stap-vec dest-cursor) (elt staple-vec s-l-cursor))
+	     (setf (elt new-scaf-vec dest-cursor) (elt scaffold-vec s-l-cursor))
+	     (incf dest-cursor)
+	     (incf s-l-cursor))
+	    (t (error "An impossible step was encountered"))))))
+	 
 
-    (loop with s-l-cursor = 0
-       with dest-cursor = 0
-	 with length-skip = (length skip)
-       until (= s-l-cursor length-skip)
-	 do (cond
-	      ((and (= (elt skip s-l-cursor) -1)
-		    (= (elt loop s-l-cursor) 0))
-	       ;;do a skip procedure
-	       (skip-procedure (elt staple-vec s-l-cursor))
-	       (skip-procedure (elt scaffold-vec s-l-cursor))
-	       (incf s-l-cursor)
-	       )
-	      ((and (> (elt skip s-l-cursor) 0)
-		    (= (elt loop s-l-cursor) 0))
-	       ;;do an insertion
-			 ;;forward arrow		    
-	       (let ((New-node (elt new-f-vec dest-cursor))
-		     (Doubled-node (elt f-vec s-l-cursor))
-		     (b-d-node (backward (elt f-vec s-l-cursor))))
-		 (setf New-node (make-instance 'node :name (cons :loop (elt loop s-l-cursor))))
-		 (setf (backward Doubled-node) New-node)
-		 (setf (forward New-node) Doubled-node)
-		 (setf (backward New-node) b-d-node)
-		 (setf (forward b-d-node) New-node)
-		 )
-	       ;;backward arrow
-	       (let ((New-node (elt new-b-vec dest-cursor))
-		     (Doubled-node (elt b-vec s-l-cursor))
-		     (f-d-node (forward (elt b-vec s-l-cursor))))
-		 (setf New-node (make-instance 'node :name (cons :loop (elt loop s-l-cursor))))
-		 (setf (forward Doubled-node) New-node)
-		 (setf (backward New-node) Doubled-node)		 
-		 (setf (forward New-node) f-d-node)
-		 (setf (backward b-d-node) New-node)
-		 )
-	       (decf (elt loop s-l-cursor))
-	       (incf dest-cursor)
-	       )
-	      ((and (= (elt skip s-l-cursor) 0)
-		(= (elt loop s-l-cursor) 0))
-	       ;;do a copy
-	       (incf dest-cursor)
-	       (incf s-l-cursor)
-	       )
-	      (t (error "An impossible step was encountered")))
-  
 #| testing code
 
 (defparameter result (parse-json *j*))
