@@ -52,10 +52,8 @@
 				      :column col))
        do (format t "vstrand -> ~a~%" vstrand)
        do (setf (gethash num vstrands) vstrand)
-					;       do (BUILD-NODE (staple-vec vstrand) staple-json)
-       do (BUILD-NODE staple-json (staple-vec vstrand) num :staple)
-					;       do (BUILD-NODE (scaffold-vec vstrand) scaffold-json)
-       do (BUILD-NODE scaffold-json (scaffold-vec vstrand) num :scaffold)
+       do (BUILD-NODE staple-json (staple-vec vstrand) num :sT)
+       do (BUILD-NODE scaffold-json (scaffold-vec vstrand) num :sC)
        do (intra-helix-connect (staple-vec vstrand) (scaffold-vec vstrand));to be postpone after skip-loop 
 	 )
     ;; connect the nodes
@@ -74,7 +72,7 @@
   (loop for index from 0 below (length vec)
      for node-json in strand-json
      unless (apply #'= -1 node-json)
-     do (setf (elt vec index) (make-instance 'node :name (list :json num strand-name index)))))
+     do (setf (elt vec index) (make-instance 'node :name (list :j num strand-name index)))))
 
 (defun INTRA-HELIX-CONNECT (staple-vec scaffold-vec)
   (loop for index from 0 below (length staple-vec)
@@ -238,27 +236,32 @@
 ;;; ------------------------------------------------------------
 ;;;
 ;;;  Graphviz generated
-(defun safe-draw-link (dest node next-node &optional link)
-  (let ((*print-pretty* nil))
+(defun safe-draw-link (dest node next-node color &optional link)
+  (let ((*print-pretty* nil)))
   (when (and node next-node)
-    (format dest "\"~a\" -> \"~a\";~%" (name node) (name next-node)))))
+    (format dest "\"~a\" -> \"~a\" [color=~a];~%" (name node) (name next-node) color))))
+
+(defun draw-connection (dest node)
+  (safe-draw-link dest node (forward-node node "violet"))
+  (safe-draw-link dest node (backward-node node) "blue")
+  (safe-draw-link dest node (hbond-node node) "orange"))
 
 (defun draw-node (dest node)
-  (safe-draw-link dest node (forward-node node))
-  (safe-draw-link dest node (backward-node node))
-  (safe-draw-link dest node (hbond-node node)))
- 
+  (format dest "\"~a\";~%" (name node)))
+
 (defun draw-strand (dest num name vec)
-  (format dest "subgraph strandv~a_~a {~%" (string name) num )
+  (format dest "subgraph cluster~a_~a {~%" (string name) num )
   (format dest "     label = \"~a\";~%" (string name))
   (format dest "     color = blue;~%")
+  ;(direction (arrow-direction vec))
   (loop for node across vec
+     for direction =(arrow-direction vec); (if (= 1 (arrow-direction vec)) (#'forward-node) (#'backward-node))
      when node
      do (draw-node dest node))
   (format dest "}~%"))
   
 (defun draw-double-strand (dest num scaffold staple)
-  (format dest "subgraph doubleVstrand_~a {~%" num)
+  (format dest "subgraph cluster_~a {~%" num)
   (format dest "label = \"double-strand-~a\";~%" num)
   (draw-strand dest num :scaffold scaffold)
   (draw-strand dest num :staple staple)
@@ -273,6 +276,16 @@
        for staple-vec = (staple-vec strand)
        for scaffold-vec = (scaffold-vec strand)
        do (draw-double-strand dest num scaffold-vec staple-vec))
+    (loop for strand being the hash-values in strands using (hash-key num)
+       for staple-vec = (staple-vec strand)
+       for scaffold-vec = (scaffold-vec strand)
+       do (loop for node across scaffold-vec
+	     when node
+	     do (draw-node dest node))
+       do (loop for node across staple-vec
+	     when node
+	     do (draw-connection dest node))
+	 )
     (format dest "}~%")))
 
 
