@@ -1,6 +1,7 @@
 
 (ql:quickload "cl-json")
 
+
 (in-package :cl-jupyter-user)
 
 (defun LIST-OF-VSTRANDS-FROM-JSON (json)
@@ -237,28 +238,33 @@
 ;;;
 ;;;  Graphviz generated
 (defun safe-draw-link (dest node next-node color &optional link)
-  (let ((*print-pretty* nil)))
+  ;(let ((*print-pretty* nil)))
   (when (and node next-node)
-    (format dest "\"~a\" -> \"~a\" [color=~a];~%" (name node) (name next-node) color))))
+    (format dest "\"~a\" -> \"~a\" [color=~a];~%" (name node) (name next-node) color)))
 
 (defun draw-connection (dest node)
-  (safe-draw-link dest node (forward-node node "violet"))
+  (safe-draw-link dest node (forward-node node) "violet")
   (safe-draw-link dest node (backward-node node) "blue")
   (safe-draw-link dest node (hbond-node node) "orange"))
 
 (defun draw-node (dest node)
-  (format dest "\"~a\";~%" (name node)))
+;  (let ((*print-pretty* nil)))
+  (format dest "\"(~{~a~^ ~})\"->" (name node)))
 
 (defun draw-strand (dest num name vec)
   (format dest "subgraph cluster~a_~a {~%" (string name) num )
+  (format dest "     edge [style=\"invis\"];~%")
   (format dest "     label = \"~a\";~%" (string name))
   (format dest "     color = blue;~%")
+  (format dest "     \"start~a_~a\"  [style=\"invis\"];~%" (string name) num)
+  (format dest "     \"stop~a_~a\"  [style=\"invis\"];~%" (string name) num)
+  (format dest "     \"start~a_~a\"->" (string name) num)
   ;(direction (arrow-direction vec))
   (loop for node across vec
-     for direction =(arrow-direction vec); (if (= 1 (arrow-direction vec)) (#'forward-node) (#'backward-node))
+     ;for direction =(arrow-direction vec); (if (= 1 (arrow-direction vec)) (#'forward-node) (#'backward-node))
      when node
      do (draw-node dest node))
-  (format dest "}~%"))
+  (format dest "\"stop~a_~a\"}~%" (string name) num))
   
 (defun draw-double-strand (dest num scaffold staple)
   (format dest "subgraph cluster_~a {~%" num)
@@ -281,7 +287,7 @@
        for scaffold-vec = (scaffold-vec strand)
        do (loop for node across scaffold-vec
 	     when node
-	     do (draw-node dest node))
+	     do (draw-connection dest node))
        do (loop for node across staple-vec
 	     when node
 	     do (draw-connection dest node))
