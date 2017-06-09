@@ -74,11 +74,13 @@
        for staple-vec = (staple-vec vstrand)
        for skip-json = (skip-json vstrand)
        for scaffold-vec = (scaffold-vec vstrand)
+	 do (format t "duplex num ~a~%" num)
        do (multiple-value-bind (a b)
 	      (skip-loop num skip-json loop-json staple-vec scaffold-vec)
 	    (setf (new-staple-vec vstrand) a
 		  (new-scaffold-vec vstrand) b)))   
     vstrands))
+
     
 (defun BUILD-NODE (strand-json vec num strand-name)
   (loop for index from 0 below (length vec)
@@ -129,29 +131,39 @@
 			   for node = (elt vec index)
 			   when node
 			   collect (let ((fwd (forward-node node)))
-				     (when fwd
+				     (when (and fwd (position fwd vec))
 				       (- (position fwd vec) index))))))
-    (cond
+#|    (cond
       ((every (lambda (x) (if x (plusp x) T)) step-direction) 1)
       ((every (lambda (x) (if x (minusp x) T)) step-direction) -1)
-      (t (error "arrow direction in the vector is neither forward nor backward")))))
+      (t (error "arrow direction in the vector is neither forward nor backward ~a" step-direction)))))|#
+    (loop for step in step-direction
+	with pos = 0 and neg = 0
+	when step
+	do (cond ((plusp step) (incf pos))
+		 ((minusp step) (incf neg))
+		 (T (error "Do we find a basis connected with itself? ~a" step-direction)))
+       finally (return
+		 (cond ((> pos neg) 1)
+		       ((< pos neg) -1)
+		       (T (error "arrow direction in the vector is neither forward nor backward ~a" step-direction)))))))
 
 (defun skip-loop (num skip-json loop-json staple-vec scaffold-vec)
   (flet ((skip-procedure (x)
 	   (let ((xf (forward-node x))
 		 (xb (backward-node x)))
-	     (setf (forward-node xb) xf)
-	     (setf (backward-node xf) xb)
+	     (when xb (setf (forward-node xb) xf))
+	     (when xf (setf (backward-node xf) xb))
 	     (setf x NIL)))
 	 (loop-procedure (num strand-name old-vec s-l-cursor new-vec dest-cursor loop-vec setf-accessor-l accessor-l setf-accessor-r)
 	    (setf (elt new-vec dest-cursor) (make-instance 'node :name (list :A num strand-name s-l-cursor :I (elt loop-vec s-l-cursor))))
 	    (let ((New-node (elt new-vec dest-cursor))
 		  (Doubled-node (elt old-vec s-l-cursor))
 		  (l-d-node (funcall accessor-l (elt old-vec s-l-cursor))))
-	      (funcall setf-accessor-l New-node Doubled-node)
+	      (when Doubled-node (funcall setf-accessor-l New-node Doubled-node))
 	      (funcall setf-accessor-r  Doubled-node New-node)
 	      (funcall setf-accessor-l l-d-node New-node)
-	      (funcall setf-accessor-r New-node l-d-node))))
+	      (when l-d-node (funcall setf-accessor-r New-node l-d-node)))))
     ;;must check if 4 input have the same lenght
     (let ((skip-vec (coerce skip-json 'vector))
 	  (loop-vec (coerce loop-json 'vector))
@@ -162,7 +174,7 @@
 	      (loop for index from 0 below (length scaffold-vec)
 		 when (or (elt scaffold-vec index) (elt staple-vec index))
 		 count 1))
-	     (new-vec-length (apply #'+ old-vec-min-length (apply #'+ skip-json) loop-json))
+	     (new-vec-length (+ old-vec-min-length (reduce #'+ skip-json) (reduce #'+ loop-json)))
 	     (new-scaf-vec (make-array new-vec-length))
 	     (new-stap-vec (make-array new-vec-length)))
 	(format t "Starting loop~%")
@@ -171,7 +183,7 @@
 	   with length-skip = (length skip-vec)
 	   until (= s-l-cursor length-skip)
 	   do (progn
-		(format t "s-l-cursor -> ~a~%" s-l-cursor)
+;		(format t "s-l-cursor -> ~a~%" s-l-cursor)
 		(if (or (elt scaffold-vec s-l-cursor) (elt staple-vec s-l-cursor))
 		    (cond
 		      ((and (= (elt skip-vec s-l-cursor) -1)
@@ -191,16 +203,16 @@
 			       (= scaf-direction -1))
 					;stap->f
 					;scaf->b
-			  (format t "stap->f scaf->b~%")
-			  (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node))
-			  (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node)))
+;			  (format t "stap->f scaf->b~%")
+			  (and (elt staple-vec s-l-cursor) (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node)))
+			  (and (elt scaffold-vec s-l-cursor) (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node))))
 			 ((and (= stap-direction -1)
 			       (= scaf-direction 1))
 					;stap->b
 					;scaf->f
-			  (format t "stap->b scaf->f~%")
-			  (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node))
-			  (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node)))
+;			  (format t "stap->b scaf->f~%")
+			  (and (elt staple-vec s-l-cursor) (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node)))
+			  (and (elt scaffold-vec s-l-cursor) (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node))))
 			 (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%"
 				   stap-direction scaf-direction)))
 		       (let ((staple-node (elt new-stap-vec dest-cursor))
@@ -213,7 +225,7 @@
 		      ((and (= (elt skip-vec s-l-cursor) 0)
 			    (= (elt loop-vec s-l-cursor) 0))
 		       ;;do a copy
-		       (format t "copy~%")
+;		       (format t "copy~%")
 		       (setf (elt new-stap-vec dest-cursor) (elt staple-vec s-l-cursor))
 		       (setf (elt new-scaf-vec dest-cursor) (elt scaffold-vec s-l-cursor))
 		       (incf dest-cursor)
@@ -232,6 +244,7 @@
 ;;; ------------------------------------------------------------
 ;;;
 ;;;  Graphviz generated
+
 (defun safe-draw-link (dest node next-node color &optional link)
   ;(let ((*print-pretty* nil)))
   (when (and node next-node)
@@ -312,7 +325,6 @@
 	     do (draw-connection dest node))
 	 )
     (format dest "}~%")))
-
 
 #| testing code
 
