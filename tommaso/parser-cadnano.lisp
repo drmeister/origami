@@ -175,8 +175,8 @@
 		 when (or (elt scaffold-vec index) (elt staple-vec index))
 		 count 1))
 	     (new-vec-length (+ old-vec-min-length (reduce #'+ skip-json) (reduce #'+ loop-json)))
-	     (new-scaf-vec (make-array new-vec-length))
-	     (new-stap-vec (make-array new-vec-length)))
+	     (new-scaf-vec (make-array new-vec-length));p-strand
+	     (new-stap-vec (make-array new-vec-length)));n-strand
 	(format t "Starting loop~%")
 	(loop with s-l-cursor = 0
 	   with dest-cursor = 0
@@ -325,6 +325,30 @@
 	     do (draw-connection dest node))
 	 )
     (format dest "}~%")))
+
+;;; ------------------------------------------------------------
+;;;
+;;;  Geometry of cylinder
+
+(defclass helix-constant ()
+  ((radius :initform 1 :initarg :radius :accessor radius) ;Unit: nm
+   (base-pair-angol :initform 190 :initarg :base-pair-angol :accessor base-pair-angol);Unit: degree
+   (rotation-angol :initform 34.3 :initarg :rotation-angol :accessor rotation-angol);Unit: degree
+   (rise :initform 3.32 :initarg :rise :accessor rise))) ;Unit: nm
+
+(defun helix-coordinate (constant index p-strand-sense)
+  (let ((initial-position (geom:vec (radius constant) 0.0 0.0))
+	  (matrix (prodotto-matrici
+		   (geom:make-m4-rotate-z (* 0.0174533 index (rotation-angol constant)))
+		   (make-traslazione (list 0.0 0.0 (* index (rise constant)))))))
+    (unless p-strand-sense
+      (setf initial-position
+	    (geom:m*v (geom:make-m4-rotate-z
+		       (* 0.0174533 (base-pair-angol constant)))
+		       initial-position)))
+    (geom:m*v matrix initial-position)))
+
+
 
 #| testing code
 
