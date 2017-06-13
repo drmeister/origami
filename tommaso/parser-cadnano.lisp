@@ -17,8 +17,8 @@
    (stap-loop-json :initarg :stap-loop-json :reader stap-loop-json)
    (staple-vec :initarg :staple-vec :reader staple-vec)
    (scaffold-vec :initarg :scaffold-vec :reader scaffold-vec)
-   (new-staple-vec :initarg :new-staple-vec :accessor new-staple-vec)
-   (new-scaffold-vec :initarg :new-scaffold-vec :accessor new-scaffold-vec)
+   (p-strand :initarg :p-strand :accessor p-strand)
+   (n-strand :initarg :n-strand :accessor n-strand)
    (row :initarg :row :reader row)
    (col :initarg :column :reader column)
    ))
@@ -77,8 +77,8 @@
        do (format t "duplex num ~a~%" num)
        do (multiple-value-bind (a b)
 	      (skip-loop num skip-json loop-json staple-vec scaffold-vec)
-	    (setf (new-staple-vec vstrand) a
-		  (new-scaffold-vec vstrand) b)))   
+	    (setf (p-strand vstrand) a
+		  (n-strand vstrand) b)))   
     vstrands))
 
     
@@ -175,8 +175,17 @@
 		 when (or (elt scaffold-vec index) (elt staple-vec index))
 		 count 1))
 	     (new-vec-length (+ old-vec-min-length (reduce #'+ skip-json) (reduce #'+ loop-json)))
-	     (new-scaf-vec (make-array new-vec-length));p-strand
-	     (new-stap-vec (make-array new-vec-length)));n-strand
+	     (p-strand (make-array new-vec-length));p-strand
+	     (n-strand (make-array new-vec-length))
+	     (condition (cond ((and (= stap-direction 1)
+				    (= scaf-direction -1))
+			       t)
+			      ((and (= stap-direction -1)
+				    (= scaf-direction 1))
+			       nil)
+			      (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%" stap-direction scaf-direction))))
+	     (old-p-strand (if condition staple-vec scaffold-vec))
+	     (old-n-strand (if condition scaffold-vec staple-vec)))
 	(format t "Starting loop~%")
 	(loop with s-l-cursor = 0
 	   with dest-cursor = 0
@@ -198,46 +207,29 @@
 			    (> (elt loop-vec s-l-cursor) 0))
 		       ;;do an insertion
 		       (format t "Insertion number -> ~a~%" (elt loop-vec s-l-cursor))
-		       (cond
-			 ((and (= stap-direction 1)
-			       (= scaf-direction -1))
-					;stap->f
-					;scaf->b
-;			  (format t "stap->f scaf->b~%")
-			  (and (elt staple-vec s-l-cursor)
-			       (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node))); p-strand
-			  (and (elt scaffold-vec s-l-cursor)
-			       (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node)))); n-strand
-			 ((and (= stap-direction -1)
-			       (= scaf-direction 1))
-					;stap->b
-					;scaf->f
-;			  (format t "stap->b scaf->f~%")
-			  (and (elt staple-vec s-l-cursor)
-			       (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node))); n-strand
-			  (and (elt scaffold-vec s-l-cursor)
-			       (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node)))); p-strand
-			 (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%"
-				   stap-direction scaf-direction)))
-		       (let ((staple-node (elt new-stap-vec dest-cursor)); p-node p-strand
-			     (scaffold-node (elt new-scaf-vec dest-cursor))); n-node n-strand
-			 (when (and staple-node scaffold-node); p-node n-node
-			   (setf (hbond-node staple-node) scaffold-node); p-node n-node
-			   (setf (hbond-node scaffold-node) staple-node))); n-node p-node 
+		       (and (elt staple-vec s-l-cursor)
+			    (loop-procedure num :ST old-p-strand s-l-cursor p-strand dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node))); p-strand
+		       (and (elt scaffold-vec s-l-cursor)
+			    (loop-procedure num :SC old-n-strand s-l-cursor n-strand dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node))); n-strand
+		      (let ((p-node (elt p-strand dest-cursor)); p-node p-strand
+			     (n-node (elt n-strand dest-cursor))); n-node n-strand
+			 (when (and p-node n-node); p-node n-node
+			   (setf (hbond-node p-node) n-node); p-node n-node
+			   (setf (hbond-node n-node) p-node))); n-node p-node 
 		       (decf (elt loop-vec s-l-cursor))
 		       (incf dest-cursor))
 		      ((and (= (elt skip-vec s-l-cursor) 0)
 			    (= (elt loop-vec s-l-cursor) 0))
 		       ;;do a copy
 ;		       (format t "copy~%")
-		       (setf (elt new-stap-vec dest-cursor) (elt staple-vec s-l-cursor)); n or p
-		       (setf (elt new-scaf-vec dest-cursor) (elt scaffold-vec s-l-cursor));n or p
+		       (setf (elt p-strand dest-cursor) (elt old-p-strand s-l-cursor)); n or p
+		       (setf (elt n-strand dest-cursor) (elt old-n-strand s-l-cursor));n or p
 		       (incf dest-cursor)
 		       (incf s-l-cursor))
 		      (t (error "An impossible step was encountered")))
 		    (incf s-l-cursor)
 		    )))
-	(values new-stap-vec new-scaf-vec); n-strand p-strand
+	(values p-strand n-strand); n-strand p-strand
 ;	(list new-stap-vec new-scaf-vec)
 ;	new-stap-vec
 	))))
@@ -307,6 +299,13 @@
 	 )
     (format dest "}~%")))
 
+(defun draw-result-double-strand (dest num p-strand n-strand)
+  (format dest "subgraph cluster_~a {~%" num)
+  (format dest "label = \"double-strand-~a\";~%" num)
+  (draw-strand dest num :p p-strand)
+  (draw-strand dest num :n n-strand)
+  (format dest "}~%"))
+
 (defun draw-result-graph (dest strands)
   (let ((dest (if (streamp dest)
 		  dest
@@ -314,17 +313,17 @@
 ;    (format t "1")
     (format dest "digraph G {~%")
     (loop for strand being the hash-values in strands using (hash-key num)
-       for new-staple-vec = (new-staple-vec strand)
-       for new-scaffold-vec = (new-scaffold-vec strand)
+       for p-strand = (p-strand strand)
+       for n-strand = (n-strand strand)
 ;       do (format t "2")
-       do (draw-double-strand dest num new-scaffold-vec new-staple-vec))
+       do (draw-double-strand dest num p-strand n-strand))
     (loop for strand being the hash-values in strands using (hash-key num)
-       for new-staple-vec = (new-staple-vec strand)
-       for new-scaffold-vec = (new-scaffold-vec strand)
-       do (loop for node across new-scaffold-vec
+       for p-strand = (p-strand strand)
+       for n-strand = (n-strand strand)
+       do (loop for node across p-strand
 	     when node
 	     do (draw-connection dest node))
-       do (loop for node across new-staple-vec
+       do (loop for node across n-strand
 	     when node
 	     do (draw-connection dest node))
 	 )
@@ -335,37 +334,62 @@
 ;;;  double/single strand
 
 (defun single-or-double-strand (vstrands)
-  (loop for vstrand being the hash-values in vstrands using (hash-key num)
-     for st-vec = (new-staple-vec strand)
-     for sc-vec = (new-scaffold.vec strand)
-     do (loop for index from 0 to (length st-vec)
+  (let ((node-positions (make-hash-table :test #'eq)))
+    (loop for vstrand being the hash-values in vstrands using (hash-key num)
+       for st-vec = (p-strand vstrand)
+       for sc-vec = (n-strand vstrand)
+       do (locate-nodes node-positions st-vec)
+       do (locate-nodes node-positions sc-vec))	 
+    (loop for vstrand being the hash-values in vstrands using (hash-key num)
+     for st-vec = (p-strand vstrand)
+     for sc-vec = (n-strand vstrand)
+     append (loop for index from 0 below (length st-vec)
 	   for st-node = (elt st-vec index)
 	   for sc-node = (elt sc-vec index)
 	   when (or st-node sc-node)
-	   do (if st-node
-		  (strand-chain st-node)
-		  (strand-chain sc-node)))))
+	   collect  (if st-node
+			(strand-chain st-node node-positions)
+			(strand-chain sc-node node-positions))))))
 
-(defun strand-chain (node)
-  (if (h-node node)
-      (list (double-chain node #'forward-node) (double-chain node #'backward-node))
-      (list (single-chain node #'forward-node) (single-chain node #'backward-node))
-  
-(defun single-chain (node accessor)
+(defun locate-nodes (hash-table vec)
+  (loop for index from 0 below (length vec)
+     for node = (elt vec index)
+     when node
+     do  (let ((vec-idx-pos (cons vec index)))
+	   (setf (gethash node hash-table) vec-idx-pos))))    
+
+(defun strand-chain (node hash-table)
+  (if (hbond-node node)
+      (list (double-chain node #'forward-node #'backward-node hash-table) (double-chain node #'backward-node #'forward-node hash-table))
+      (list (single-chain node #'forward-node hash-table) (single-chain node #'backward-node hash-table))))
+
+(defun get-position (node hash-table)
+  (let ((reference (gethash node hash-table)))
+    (elt (car reference) (cdr reference))))
+
+(defun (setf get-position) (new node hash-table)
+  (let ((reference (gethash node hash-table)))
+    (setf (elt (car reference) (cdr reference)) new)))
+
+(defun single-chain (node accessor hash-table)
   (loop with i-node = node
-     while (and (funcall accessor i-node) (not (h-node (funcall accessor i-node))))
-     do (setf (position i-node ??) nil)
+     while (and (funcall accessor i-node) (not (hbond-node (funcall accessor i-node))))
+     do (setf (get-position i-node hash-table) nil)
      do (setf i-node (funcall accessor i-node))
-     finally (return i-node)))
+     finally (setf (get-position i-node hash-table) nil)
+       (return i-node)))
 
-(defun double-chain (node accessor)
+
+(defun double-chain (node accessor1 accessor2 hash-table)
   (loop with i-node = node
-     while (and (and (funcall accessor i-node) (h-node (funcall accessor i-node)))
-		(= (h-node (funcall accessor i-node)) (funcall accessor (h-node i-node))))
-     do (setf (position i-node ??) nil)
-     do (setf (position (h-node i-node) ??) nil)
-     do (setf i-node (funcall accessor i-node))        
-     finally (return i-node)))
+     while (and (funcall accessor1 i-node) (hbond-node (funcall accessor1 i-node))
+		(eq (hbond-node (funcall accessor1 i-node)) (funcall accessor2 (hbond-node i-node))))
+     do (setf (get-position i-node hash-table) nil)
+     do (setf (get-position (hbond-node i-node) hash-table) nil)
+     do (setf i-node (funcall accessor1 i-node))        
+     finally (setf (get-position i-node hash-table) nil)
+       (setf (get-position (hbond-node i-node) hash-table) nil)
+       (return i-node)))
 
 ;;; ------------------------------------------------------------
 ;;;
