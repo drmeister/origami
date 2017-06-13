@@ -57,7 +57,7 @@
        do (setf (gethash num vstrands) vstrand)
        do (BUILD-NODE staple-json (staple-vec vstrand) num :sT)
        do (BUILD-NODE scaffold-json (scaffold-vec vstrand) num :sC)
-       do (intra-helix-connect (staple-vec vstrand) (scaffold-vec vstrand));to be postpone after skip-loop 
+       do (intra-helix-connect (staple-vec vstrand) (scaffold-vec vstrand))
 	 )
     ;; connect the nodes
     (loop for vstrand being the hash-values in vstrands using (hash-key num)
@@ -74,7 +74,7 @@
        for staple-vec = (staple-vec vstrand)
        for skip-json = (skip-json vstrand)
        for scaffold-vec = (scaffold-vec vstrand)
-	 do (format t "duplex num ~a~%" num)
+       do (format t "duplex num ~a~%" num)
        do (multiple-value-bind (a b)
 	      (skip-loop num skip-json loop-json staple-vec scaffold-vec)
 	    (setf (new-staple-vec vstrand) a
@@ -204,36 +204,40 @@
 					;stap->f
 					;scaf->b
 ;			  (format t "stap->f scaf->b~%")
-			  (and (elt staple-vec s-l-cursor) (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node)))
-			  (and (elt scaffold-vec s-l-cursor) (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node))))
+			  (and (elt staple-vec s-l-cursor)
+			       (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node))); p-strand
+			  (and (elt scaffold-vec s-l-cursor)
+			       (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node)))); n-strand
 			 ((and (= stap-direction -1)
 			       (= scaf-direction 1))
 					;stap->b
 					;scaf->f
 ;			  (format t "stap->b scaf->f~%")
-			  (and (elt staple-vec s-l-cursor) (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node)))
-			  (and (elt scaffold-vec s-l-cursor) (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node))))
+			  (and (elt staple-vec s-l-cursor)
+			       (loop-procedure num :ST staple-vec s-l-cursor new-stap-vec dest-cursor loop-vec #'(setf forward-node) #'forward-node #'(setf backward-node))); n-strand
+			  (and (elt scaffold-vec s-l-cursor)
+			       (loop-procedure num :SC scaffold-vec s-l-cursor new-scaf-vec dest-cursor loop-vec #'(setf backward-node) #'backward-node #'(setf forward-node)))); p-strand
 			 (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%"
 				   stap-direction scaf-direction)))
-		       (let ((staple-node (elt new-stap-vec dest-cursor))
-			     (scaffold-node (elt new-scaf-vec dest-cursor)))
-			 (when (and staple-node scaffold-node)
-			   (setf (hbond-node staple-node) scaffold-node)
-			   (setf (hbond-node scaffold-node) staple-node)))
+		       (let ((staple-node (elt new-stap-vec dest-cursor)); p-node p-strand
+			     (scaffold-node (elt new-scaf-vec dest-cursor))); n-node n-strand
+			 (when (and staple-node scaffold-node); p-node n-node
+			   (setf (hbond-node staple-node) scaffold-node); p-node n-node
+			   (setf (hbond-node scaffold-node) staple-node))); n-node p-node 
 		       (decf (elt loop-vec s-l-cursor))
 		       (incf dest-cursor))
 		      ((and (= (elt skip-vec s-l-cursor) 0)
 			    (= (elt loop-vec s-l-cursor) 0))
 		       ;;do a copy
 ;		       (format t "copy~%")
-		       (setf (elt new-stap-vec dest-cursor) (elt staple-vec s-l-cursor))
-		       (setf (elt new-scaf-vec dest-cursor) (elt scaffold-vec s-l-cursor))
+		       (setf (elt new-stap-vec dest-cursor) (elt staple-vec s-l-cursor)); n or p
+		       (setf (elt new-scaf-vec dest-cursor) (elt scaffold-vec s-l-cursor));n or p
 		       (incf dest-cursor)
 		       (incf s-l-cursor))
 		      (t (error "An impossible step was encountered")))
 		    (incf s-l-cursor)
 		    )))
-	(values new-stap-vec new-scaf-vec)
+	(values new-stap-vec new-scaf-vec); n-strand p-strand
 ;	(list new-stap-vec new-scaf-vec)
 ;	new-stap-vec
 	))))
@@ -328,7 +332,45 @@
 
 ;;; ------------------------------------------------------------
 ;;;
+;;;  double/single strand
+
+(defun single-or-double-strand (vstrands)
+  (loop for vstrand being the hash-values in vstrands using (hash-key num)
+     for st-vec = (new-staple-vec strand)
+     for sc-vec = (new-scaffold.vec strand)
+     do (loop for index from 0 to (length st-vec)
+	   for st-node = (elt st-vec index)
+	   for sc-node = (elt sc-vec index)
+	   when (or st-node sc-node)
+	   do (if st-node
+		  (strand-chain st-node)
+		  (strand-chain sc-node)))))
+
+(defun strand-chain (node)
+  (if (h-node node)
+      (list (double-chain node #'forward-node) (double-chain node #'backward-node))
+      (list (single-chain node #'forward-node) (single-chain node #'backward-node))
+  
+(defun single-chain (node accessor)
+  (loop with i-node = node
+     while (and (funcall accessor i-node) (not (h-node (funcall accessor i-node))))
+     do (setf (position i-node ??) nil)
+     do (setf i-node (funcall accessor i-node))
+     finally (return i-node)))
+
+(defun double-chain (node accessor)
+  (loop with i-node = node
+     while (and (and (funcall accessor i-node) (h-node (funcall accessor i-node)))
+		(= (h-node (funcall accessor i-node)) (funcall accessor (h-node i-node))))
+     do (setf (position i-node ??) nil)
+     do (setf (position (h-node i-node) ??) nil)
+     do (setf i-node (funcall accessor i-node))        
+     finally (return i-node)))
+
+;;; ------------------------------------------------------------
+;;;
 ;;;  Geometry of cylinder
+
 
 (defclass helix-constant ()
   ((radius :initform 1 :initarg :radius :accessor radius) ;Unit: nm
@@ -340,7 +382,7 @@
   (let ((initial-position (geom:vec (radius constant) 0.0 0.0))
 	  (matrix (prodotto-matrici
 		   (geom:make-m4-rotate-z (* 0.0174533 index (rotation-angol constant)))
-		   (make-traslazione (list 0.0 0.0 (* index (rise constant)))))))
+		   (geom:make-m4-translate (list 0.0 0.0 (* index (rise constant)))))))
     (unless p-strand-sense
       (setf initial-position
 	    (geom:m*v (geom:make-m4-rotate-z
