@@ -343,20 +343,20 @@
 (defun single-or-double-strand (vstrands)
   (let ((node-positions (make-hash-table :test #'eq)))
     (loop for vstrand being the hash-values in vstrands using (hash-key num)
-       for st-vec = (p-strand vstrand)
-       for sc-vec = (n-strand vstrand)
-       do (locate-nodes node-positions st-vec)
-       do (locate-nodes node-positions sc-vec))	 
+       for p-vec = (p-strand vstrand)
+       for n-vec = (n-strand vstrand)
+       do (locate-nodes node-positions p-vec)
+       do (locate-nodes node-positions n-vec))	 
     (loop for vstrand being the hash-values in vstrands using (hash-key num)
-     for st-vec = (p-strand vstrand)
-     for sc-vec = (n-strand vstrand)
-     append (loop for index from 0 below (length st-vec)
-	   for st-node = (elt st-vec index)
-	   for sc-node = (elt sc-vec index)
-	   when (or st-node sc-node)
-	   collect  (if st-node
-			(strand-chain st-node node-positions)
-			(strand-chain sc-node node-positions))))))
+     for p-vec = (p-strand vstrand)
+     for n-vec = (n-strand vstrand)
+     append (loop for index from 0 below (length p-vec)
+	   for st-node = (elt p-vec index)
+	   for sc-node = (elt n-vec index)
+	   when (or p-node n-node)
+	   collect  (if p-node
+			(strand-chain p-node node-positions)
+			(strand-chain n-node node-positions))))))
 
 (defun locate-nodes (hash-table vec)
   (loop for index from 0 below (length vec)
@@ -379,17 +379,24 @@
     (setf (elt (car reference) (cdr reference)) new)))
 
 (defun single-chain (node accessor hash-table)
-  (loop with i-node = node
-     while (and (funcall accessor i-node) (not (hbond-node (funcall accessor i-node))))
+  (loop
+     with i-node = node
+     with first-node = node
+     while (and (funcall accessor i-node)
+		(not (eq (funcall accessor i-node) first-node))
+		(not (hbond-node (funcall accessor i-node))))
      do (setf (get-position i-node hash-table) nil)
      do (setf i-node (funcall accessor i-node))
      finally (setf (get-position i-node hash-table) nil)
        (return i-node)))
 
-
 (defun double-chain (node accessor1 accessor2 hash-table)
-  (loop with i-node = node
-     while (and (funcall accessor1 i-node) (hbond-node (funcall accessor1 i-node))
+  (loop
+     with first-node = node
+     with i-node = node
+     while (and (funcall accessor1 i-node)
+		(not (eq (funcall accessor1 i-node) first-node))
+		(hbond-node (funcall accessor1 i-node))
 		(eq (hbond-node (funcall accessor1 i-node)) (funcall accessor2 (hbond-node i-node))))
      do (setf (get-position i-node hash-table) nil)
      do (setf (get-position (hbond-node i-node) hash-table) nil)
