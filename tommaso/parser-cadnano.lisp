@@ -116,6 +116,7 @@
 	      
 (defclass node ()
   ((hbond-node :initform nil :initarg :hbond-node :accessor hbond-node)
+   (t-q-bond-node :initform nil :initarg :t-q-bond-node :accessor t-q-bond-node)
    (forward-node :initform nil :initarg :forward-node :accessor forward-node)
    (backward-node :initform nil :initarg :backward-node :accessor backward-node)
    (name :initarg :name :reader name)))
@@ -137,16 +138,18 @@
       ((every (lambda (x) (if x (plusp x) T)) step-direction) 1)
       ((every (lambda (x) (if x (minusp x) T)) step-direction) -1)
       (t (error "arrow direction in the vector is neither forward nor backward ~a" step-direction)))))|#
-    (loop for step in step-direction
-	with pos = 0 and neg = 0
-	when step
-	do (cond ((plusp step) (incf pos))
-		 ((minusp step) (incf neg))
-		 (T (error "Do we find a basis connected with itself? ~a" step-direction)))
-       finally (return
-		 (cond ((> pos neg) 1)
-		       ((< pos neg) -1)
-		       (T (error "arrow direction in the vector is neither forward nor backward ~a" step-direction)))))))
+					;(if (every nil step-direction) (error "empty vector")
+    (if step-direction 
+	(loop for step in step-direction
+	   with pos = 0 and neg = 0
+	   when step
+	   do (cond ((plusp step) (incf pos))
+		    ((minusp step) (incf neg))
+		    (T (error "Do we find a basis connected with itself? ~a" step-direction)))
+	   finally (return (cond ((> pos neg) 1)
+				 ((< pos neg) -1)
+				 (T (error "arrow direction in the vector is neither forward nor backward ~a" step-direction)))))
+	nil)))
 
 (defun skip-loop (num skip-json loop-json staple-vec scaffold-vec)
   (flet ((skip-procedure (x)
@@ -177,13 +180,17 @@
 	     (new-vec-length (+ old-vec-min-length (reduce #'+ skip-json) (reduce #'+ loop-json)))
 	     (p-strand (make-array new-vec-length));p-strand
 	     (n-strand (make-array new-vec-length))
-	     (condition (cond ((and (= stap-direction 1)
-				    (= scaf-direction -1))
-			       t)
-			      ((and (= stap-direction -1)
-				    (= scaf-direction 1))
-			       nil)
-			      (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%" stap-direction scaf-direction))))
+	     (condition (cond
+			  ((and (not stap-direction)
+				(not scaf-direction))
+			   t)
+			  ((and (or (not stap-direction) (= stap-direction 1))
+				(or (not scaf-direction) (= scaf-direction -1)))
+			   t)
+			  ((and (or (not stap-direction) (= stap-direction -1))
+				(or (not scaf-direction) (= scaf-direction 1)))
+			   nil)
+			  (t (error "What do I do with stap-direction = ~a and scaf-direction = ~a~%" stap-direction scaf-direction))))
 	     (old-p-strand (if condition staple-vec scaffold-vec))
 	     (old-n-strand (if condition scaffold-vec staple-vec)))
 	(format t "Starting loop~%")
