@@ -119,6 +119,7 @@
    (t-q-bond-node :initform nil :initarg :t-q-bond-node :accessor t-q-bond-node)
    (forward-node :initform nil :initarg :forward-node :accessor forward-node)
    (backward-node :initform nil :initarg :backward-node :accessor backward-node)
+   (residue :initform nil :initarg :residue :accessor residue)
    (name :initarg :name :reader name)))
 
 (defun lookup-node (vstrands vstrand-num pos accessor)
@@ -434,6 +435,48 @@
 		   (geom:make-m4-translate (list 0.0 0.0 (* index (rise constant)))))))
     (geom:m*v matrix initial-position)))
 
+
+
+(defvar *bases* (make-hash-table))
+
+(defun extract-one-residue (aggregate residue-name)
+  (let ((r0 (chem:content-at (chem:content-at aggregate 0) 0))
+	(r1 (chem:content-at (chem:content-at aggregate 1) 0)))
+    (if (eq residue-name (chem:get-name r0))
+	r0
+	r1)))
+    
+(defun load-bases (ht)
+  (let ((cg (chem:load-pdb "base-pair-pdb-file/C-G.pdb"))
+	(gc (chem:load-pdb "base-pair-pdb-file/G-C.pdb"))
+	(at (chem:load-pdb "base-pair-pdb-file/A-T.pdb"))
+	(ta (chem:load-pdb "base-pair-pdb-file/T-A.pdb")))
+    (let ((cg-c (extract-one-residue cg :C))
+	  (cg-g (extract-one-residue cg :G))
+	  (gc-g (extract-one-residue gc :G))
+	  (gc-c (extract-one-residue gc :C))
+	  (at-a (extract-one-residue at :A))
+	  (at-t (extract-one-residue at :T))
+	  (ta-t (extract-one-residue gc :T))
+	  (ta-a (extract-one-residue gc :A)))
+      (setf (gethash :c ht) (cons cg-c cg-g))
+      (setf (gethash :g ht) (cons gc-g gc-c))
+      (setf (gethash :a ht) (cons at-a at-t))
+      (setf (gethash :t ht) (cons ta-t ta-a))))
+  ht)
+
+#|
+(defun fill-nodes-with-residues (strands &optional sequence)
+  (loop for strand in strands
+     for p5 = (first strand)
+     for p3 = (second strand)
+     do (loop for cur = p5
+	   until (eq cur p3)
+	   do (if sequence
+		  (set-node-residue cur 
+  |#     
+
+
 #| testing code
 
 	(defparameter result (parse-json *j*))
@@ -449,3 +492,8 @@
 
 	|#
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Fill the nodes with residues
