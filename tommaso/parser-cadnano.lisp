@@ -413,10 +413,10 @@
 (defclass helix-constant ()
   ((radius :initform 1 :initarg :radius :accessor radius) ;Unit: nm
    (base-pair-angol :initform 190 :initarg :base-pair-angol :accessor base-pair-angol);Unit: degree
-   (rotation-angol :initform 34.3 :initarg :rotation-angol :accessor rotation-angol);Unit: degree
-   (rise :initform 3.32 :initarg :rise :accessor rise))) ;Unit: nm
+   (rotation-angol :initform 36 :initarg :rotation-angol :accessor rotation-angol);Unit: degree
+   (rise :initform 3.2 :initarg :rise :accessor rise))) ;Unit: nm
 
-(defun helix-coordinate (constant index p-strand-sense)
+(defun helix-coordinate-base-model (constant index p-strand-sense)
   (let ((initial-position (geom:vec (radius constant) 0.0 0.0))
 	  (matrix (prodotto-matrici
 		   (geom:make-m4-rotate-z (* 0.0174533 index (rotation-angol constant)))
@@ -428,7 +428,11 @@
 		       initial-position)))
     (geom:m*v matrix initial-position)))
 
-
+(defun helix-roto-translation (constant index initial-position p-strand-sense)
+  (let ((matrix (prodotto-matrici
+		   (geom:make-m4-rotate-z (* 0.0174533 index (rotation-angol constant)))
+		   (geom:make-m4-translate (list 0.0 0.0 (* index (rise constant)))))))
+    (geom:m*v matrix initial-position)))
 
 #| testing code
 
