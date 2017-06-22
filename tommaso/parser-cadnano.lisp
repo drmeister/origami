@@ -351,8 +351,8 @@
      for p-vec = (p-strand vstrand)
      for n-vec = (n-strand vstrand)
      append (loop for index from 0 below (length p-vec)
-	   for st-node = (elt p-vec index)
-	   for sc-node = (elt n-vec index)
+	   for p-node = (elt p-vec index)
+	   for n-node = (elt n-vec index)
 	   when (or p-node n-node)
 	   collect  (if p-node
 			(strand-chain p-node node-positions)
