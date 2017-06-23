@@ -417,6 +417,8 @@
    (rotation-angol :initform 36 :initarg :rotation-angol :accessor rotation-angol);Unit: degree
    (rise :initform 3.2 :initarg :rise :accessor rise))) ;Unit: nm
 
+(defparameter *bform-dna-transform* (make-instance 'helix-constant))
+
 (defun helix-coordinate-base-model (constant index p-strand-sense)
   (let ((initial-position (geom:vec (radius constant) 0.0 0.0))
 	  (matrix (prodotto-matrici
@@ -429,15 +431,10 @@
 		       initial-position)))
     (geom:m*v matrix initial-position)))
 
-(defun helix-roto-translation (constant index initial-position p-strand-sense)
-  (let ((matrix (prodotto-matrici
-		   (geom:make-m4-rotate-z (* 0.0174533 index (rotation-angol constant)))
-		   (geom:make-m4-translate (list 0.0 0.0 (* index (rise constant)))))))
-    (geom:m*v matrix initial-position)))
+(defun helix-transform (constant index)
+  (geom:m*m (geom:make-m4-rotate-z (* 0.0174533 index (rotation-angol constant)))
+	    (geom:make-m4-translate (list 0.0 0.0 (* index (rise constant))))))
 
-
-
-(defvar *bases* (make-hash-table))
 
 (defun extract-one-residue (aggregate residue-name)
   (let ((r0 (chem:content-at (chem:content-at aggregate 0) 0))
@@ -446,8 +443,9 @@
 	r0
 	r1)))
     
-(defun load-bases (ht)
-  (let ((cg (chem:load-pdb "base-pair-pdb-file/C-G.pdb"))
+(defun load-bases ()
+  (let ((ht (make-hash-table))
+	(cg (chem:load-pdb "base-pair-pdb-file/C-G.pdb"))
 	(gc (chem:load-pdb "base-pair-pdb-file/G-C.pdb"))
 	(at (chem:load-pdb "base-pair-pdb-file/A-T.pdb"))
 	(ta (chem:load-pdb "base-pair-pdb-file/T-A.pdb")))
@@ -462,20 +460,65 @@
       (setf (gethash :c ht) (cons cg-c cg-g))
       (setf (gethash :g ht) (cons gc-g gc-c))
       (setf (gethash :a ht) (cons at-a at-t))
-      (setf (gethash :t ht) (cons ta-t ta-a))))
-  ht)
+      (setf (gethash :t ht) (cons ta-t ta-a)))
+    ht))
 
-#|
+(defparameter *bases* (load-bases))
+
+(defun fill-residue (node sequence transform &optional (bases *bases*))
+  (let* ((base-name (if sequence
+		       (prog1
+			   (car sequence)
+			 (setf sequence (cdr sequence)))
+		       :G))
+	 (bases (gethash base-name bases))
+	 (base-plus (chem:matter-copy (car bases)))
+	 (base-minus (chem:matter-copy (cdr bases))))
+    (chem:apply-transform-to-atoms base-plus transform)
+    (chem:apply-transform-to-atoms base-minus transform)
+    (setf (residue node) base-plus)
+    (when (hbond-node node)
+      (setf (residue (hbond-node node)) base-minus)))
+  sequence)
+
 (defun fill-nodes-with-residues (strands &optional sequence)
   (loop for strand in strands
      for p5 = (first strand)
      for p3 = (second strand)
-     do (loop for cur = p5
+       do (format t "nodes:     ~a  -> ~a~%" p5 p3)
+     do (loop for cur = p5 then (backward-node cur)
+	   for index from 0
+	   for rot-trans = (helix-transform *bform-dna-transform* index)
 	   until (eq cur p3)
-	   do (if sequence
-		  (set-node-residue cur 
-  |#     
+	     do (format t "cur node: ~a~%" cur)
+	   do (setf sequence (fill-residue cur sequence rot-trans))
+	   finally (setf sequence (fill-residue p3 sequence rot-trans)))))
 
+
+(defun build-one-molecule (strands)
+  (let ((molecule (chem:make-molecule)))
+    (loop for strand in strands
+       for p5 = (first strand)
+       for p3 = (second strand)
+       for offset from 0 by 20
+       do (loop for cur = p5 then (backward-node cur)
+	     for rot-trans = (geom:make-m4-translate (list (float offset) 0.0 0.0))
+	     for res = (residue cur)
+	     until (eq cur p3)
+	     do (progn
+		  (chem:apply-transform-to-atoms res rot-trans)
+		  (chem:add-matter molecule res))
+	     do (let* ((hbnode (hbond-node cur))
+		       (hbres (and hbnode (residue hbnode))))
+		  (when hbres
+		    (chem:apply-transform-to-atoms hbres rot-trans)
+		    (chem:add-matter molecule hbres)))))
+    molecule))
+
+(fill-nodes-with-residues *parts*)
+
+(defparameter *m* (build-one-molecule *parts*))
+*parts*
 
 #| testing code
 
