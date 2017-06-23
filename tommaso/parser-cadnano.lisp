@@ -3,8 +3,6 @@
 (ql:quickload "read-csv")
 
 
-(in-package :cl-jupyter-user)
-
 (defun LIST-OF-VSTRANDS-FROM-JSON (json)
   (cdr (assoc :vstrands json)))
 
@@ -159,6 +157,7 @@
    (backward-node :initform nil :initarg :backward-node :accessor backward-node)
    (base-name :initform nil :initarg :base-name :accessor base-name)
    (residue :initform nil :initarg :residue :accessor residue)
+   (strand :initarg :strand :accessor strand)
    (name :initarg :name :reader name)))
 
 (defun lookup-node (vstrands vstrand-num pos accessor)
@@ -381,7 +380,8 @@
 ;;;  double/single strand
 
 (defclass dna-strand () 
-  ((p5-end :initarg :p5-end :accessor p5-end)
+  ((order-id :initarg :order-id :accessor order-id)
+   (p5-end :initarg :p5-end :accessor p5-end)
    (p3-end :initarg :p3-end :accessor p3-end)))
 
 (defclass double-stranded-dna (dna-strand) ())
@@ -422,10 +422,19 @@
     (format t "pairs -> ~a~%" (mapcar (lambda (pair) (format nil "~a -> ~a~%" (name (first pair)) (name (second pair)))) pairs))
     (loop for pair in pairs
        for p5 = (first pair) 
-       for p3 = (second pair) ;;fixed ;; FIXME: I'm reversing the order!!!!!
+       for p3 = (second pair)
+       for order-id from 0
        collect (if (hbond-node p5)
-		   (make-instance 'double-stranded-dna :p5-end p5 :p3-end p3)
-		   (make-instance 'single-stranded-dna :p5-end p5 :p3-end p3)))))
+		   (let ((strand (make-instance 'double-stranded-dna :p5-end p5 :p3-end p3 :order-id order-id)))
+		     (setf (strand p5) strand
+			   (strand (hbond-node p5)) strand
+			   (strand p3) strand
+			   (strand (hbond-node p3)) strand)
+		     strand)
+		   (let ((strand (make-instance 'single-stranded-dna :p5-end p5 :p3-end p3 :order-id order-id)))
+		     (setf (strand p5) strand
+			   (strand p3) strand)
+		     strand)))))
 
 (defun locate-nodes (hash-table vec)
   (loop for index from 0 below (length vec)
@@ -510,13 +519,15 @@
     (if (eq residue-name (chem:get-name r0))
 	r0
 	r1)))
-    
-(defun load-bases ()
+
+(defvar *bases* nil)
+
+(defun load-*bases* (dir)
   (let ((ht (make-hash-table))
-	(cg (chem:load-pdb "base-pair-pdb-file/C-G.pdb"))
-	(gc (chem:load-pdb "base-pair-pdb-file/G-C.pdb"))
-	(at (chem:load-pdb "base-pair-pdb-file/A-T.pdb"))
-	(ta (chem:load-pdb "base-pair-pdb-file/T-A.pdb")))
+	(cg (chem:load-pdb (namestring (make-pathname :name "C-G" :type "pdb" :defaults dir))))
+	(gc (chem:load-pdb (namestring (make-pathname :name "G-C" :type "pdb" :defaults dir))))
+	(at (chem:load-pdb (namestring (make-pathname :name "A-T" :type "pdb" :defaults dir))))
+	(ta (chem:load-pdb (namestring (make-pathname :name "T-A" :type "pdb" :defaults dir)))))
     (let ((cg-c (extract-one-residue cg :C))
 	  (cg-g (extract-one-residue cg :G))
 	  (gc-g (extract-one-residue gc :G))
@@ -529,9 +540,7 @@
       (setf (gethash :g ht) (cons gc-g gc-c))
       (setf (gethash :a ht) (cons at-a at-t))
       (setf (gethash :t ht) (cons ta-t ta-a)))
-    ht))
-
-(defparameter *bases* (load-bases))
+    (setf *bases* ht)))
 
 (defun complementary-base-name (name)
   (cdr (assoc name '( ( :c . :g )
@@ -575,37 +584,52 @@
 		    (chem:add-matter molecule hbres)))))
     molecule))
 
-(defun build-energy-function (strands)
-  ;; Create a rigid-body-staple function
-  ;; Loop over 
-  (let ((staple (chem:make-energy-rigid-body-staple)))
-    (
 
-
-
-
-(fill-nodes-with-residues *parts*)
-
-(defparameter *m* (build-one-molecule *parts*))
-*parts*
-
-#| testing code
-
-	(defparameter result (parse-json *j*))
-
-	result
-
-	(/= -1 -1 -2 -3 0)
-
-	(scaffold-vec (gethash 0 *origami*))
-
-        (skip-loop (skip-json (gethash 0 *origami*)) (loop-json (gethash 0 *origami*)) (staple-vec (gethash 0 *origami*)) (scaffold-vec (gethash 0 *origami*)))
-
-
-	|#
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;; Fill the nodes with residues
+(defun build-energy-rigid-body-staple (strands)
+  (let ((ef (chem:make-energy-rigid-body-staple)))
+    (loop for strand in strands
+       for p5 = (p5-end strand)
+       for p3 = (p3-end strand)
+       for p5hb = (hbond-node p5)
+       for p3hb = (hbond-node p3)
+       for my-order-id = (order-id strand)
+       do (let ((p5-partner (backward-node p5)))
+	    (when (and p5-partner (<= my-order-id (order-id (strand p5-partner))))
+	      (chem:energy-rigid-body-staple-add-term ef
+						      230.0 ; OS-P from parm99.dat
+						      1.61 ; OS-p from parm99.dat
+						      my-order-id
+						      (chem:get-position (chem:atom-with-name (residue p5) :P))
+						      (order-id (strand p5-partner))
+						      (chem:get-position (chem:atom-with-name (residue p5-partner) :O3*)))))
+       do (let ((p3-partner (forward-node p3)))
+	    (when (and p3-partner (<= my-order-id (order-id (strand p3-partner))))
+	      (chem:energy-rigid-body-staple-add-term ef
+						      230.0 ; OS-P from parm99.dat
+						      1.61 ; OS-p from parm99.dat
+						      my-order-id
+						      (chem:get-position (chem:atom-with-name (residue p3) :O3*))
+						      (order-id (strand p3-partner))
+						      (chem:get-position (chem:atom-with-name (residue p3-partner) :P)))))
+       do (when p5hb
+	    (let ((p5hb-partner (forward-node p5hb)))
+	      (when (and p5hb-partner (<= my-order-id (order-id (strand p5hb-partner))))
+		(chem:energy-rigid-body-staple-add-term ef
+							230.0 ; OS-P from parm99.dat
+							1.61 ; OS-p from parm99.dat
+							my-order-id
+							(chem:get-position (chem:atom-with-name (residue p5hb) :O3*))
+							(order-id (strand p5hb-partner))
+							(chem:get-position (chem:atom-with-name (residue p5hb-partner) :P))))))
+       do (when p3hb
+	    (let ((p3hb-partner (backward-node p3hb)))
+	      (when (and p3hb-partner (<= my-order-id (order-id (strand p3hb-partner))))
+		(chem:energy-rigid-body-staple-add-term ef
+							230.0 ; OS-P from parm99.dat
+							1.61 ; OS-p from parm99.dat
+							my-order-id
+							(chem:get-position (chem:atom-with-name (residue p3hb) :P))
+							(order-id (strand p3hb-partner))
+							(chem:get-position (chem:atom-with-name (residue p3hb-partner) :O3*)))))))
+    ef))
+  

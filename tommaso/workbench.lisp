@@ -1,10 +1,11 @@
 
-(in-package :cl-jupyter-user)
+(setf *default-pathname-defaults* #P"~/cando/origami/tommaso/")
 
-(defparameter *s* #P"cadnano_test_file/super_barcode_hex.json")
+(load-*bases* #P"~/cando/origami/tommaso/base-pair-pdb-file/")
 
+;;;(defparameter *s* #P"~/cando/origami/tommaso/cadnano_test_file/super_barcode_hex.json")
 
-(defparameter *s* #P"cadnano_test_file/gap_vs_skip.json")
+(defparameter *s* #P"~/cando/origami/tommaso/cadnano_test_file/gap_vs_skip.json")
 (defparameter *origami* (parse-cadnano *s*))
 
 *origami*
@@ -14,4 +15,8 @@
 
 (defparameter *m* (build-one-molecule *origami*))
 
-(chem:save-mol2 *m* "test.mol2")
+(chem:save-mol2 *m* (namestring (merge-pathnames #P"test.mol2")))
+
+
+(defparameter *staple* (build-energy-rigid-body-staple *origami*))
+
