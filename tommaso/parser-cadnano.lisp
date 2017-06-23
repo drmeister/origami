@@ -421,8 +421,8 @@
   (let ((pairs (single-or-double-strand vstrands)))
     (format t "pairs -> ~a~%" (mapcar (lambda (pair) (format nil "~a -> ~a~%" (name (first pair)) (name (second pair)))) pairs))
     (loop for pair in pairs
-       for p5 = (second pair)
-       for p3 = (first pair)  ;; FIXME: I'm reversing the order!!!!!
+       for p5 = (first pair) 
+       for p3 = (second pair) ;;fixed ;; FIXME: I'm reversing the order!!!!!
        collect (if (hbond-node p5)
 		   (make-instance 'double-stranded-dna :p5-end p5 :p3-end p3)
 		   (make-instance 'single-stranded-dna :p5-end p5 :p3-end p3)))))
@@ -436,8 +436,8 @@
 
 (defun strand-chain (node hash-table)
   (if (hbond-node node)
-      (list (double-chain node #'forward-node #'backward-node hash-table) (double-chain node #'backward-node #'forward-node hash-table))
-      (list (single-chain node #'forward-node hash-table) (single-chain node #'backward-node hash-table))))
+      (list (double-chain node #'backward-node #'forward-node hash-table) (double-chain node #'forward-node #'backward-node hash-table))
+      (list (single-chain node #'backward-node hash-table) (single-chain node #'forward-node hash-table))))
 
 (defun get-position (node hash-table)
   (let ((reference (gethash node hash-table)))
