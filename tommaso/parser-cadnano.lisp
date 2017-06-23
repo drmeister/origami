@@ -1,5 +1,6 @@
 
 (ql:quickload "cl-json")
+(ql:quickload "read-csv")
 
 
 (in-package :cl-jupyter-user)
@@ -81,6 +82,43 @@
 		  (n-strand vstrand) b)))   
     vstrands))
 
+(defun read-csv-sequence-file (csv-filename)
+  (if (probe-file csv-filename)
+      (let ((csv-file (open csv-filename :direction :input)))
+	(unwind-protect
+	     (read-csv:parse-csv csv-file)
+	  (close csv-file)))
+      nil))
+
+(defun apply-default-sequence-to-cstrands (cstrands)
+  (loop for strand in cstrands
+     do (loop for node in (dna-strand-as-list-of-nodes strand)
+	   do (progn
+		(setf (base-name node) :G)
+		(when (hbond-node node)
+		  (setf (base-name (hbond-node node)) :C))))))
+
+(defun apply-csv-sequence-to-cstrands (csv-sequence cstrands)
+  ;;; Apply the sequence information in csv-sequence to the vstrands
+  ;;;    If there is no csv-sequence then use :G/:C
+  (if csv-sequence
+      (progn
+	(warn "implement the apply-csv-sequence-to-vstrands function")
+	(apply-default-sequence-to-cstrands cstrands))
+      (apply-default-sequence-to-cstrands cstrands)))
+
+(defun parse-cadnano (file-name)
+  (let ((json-filename (make-pathname :type "json" :defaults file-name))
+	(csv-filename (make-pathname :type "csv" :defaults file-name)))
+    (let* ((json (let ((json-file (open json-filename :direction :input)))
+		   (prog1
+		       (json:decode-json json-file)
+		     (close json-file))))
+	   (vstrands (parse-json json))
+	   (cstrands (single-or-double-classified-strands vstrands)))
+      (let ((csv-sequence (read-csv-sequence-file csv-filename)))
+	(apply-csv-sequence-to-cstrands csv-sequence cstrands))
+      cstrands)))
     
 (defun BUILD-NODE (strand-json vec num strand-name)
   (loop for index from 0 below (length vec)
@@ -119,6 +157,7 @@
    (t-q-bond-node :initform nil :initarg :t-q-bond-node :accessor t-q-bond-node)
    (forward-node :initform nil :initarg :forward-node :accessor forward-node)
    (backward-node :initform nil :initarg :backward-node :accessor backward-node)
+   (base-name :initform nil :initarg :base-name :accessor base-name)
    (residue :initform nil :initarg :residue :accessor residue)
    (name :initarg :name :reader name)))
 
@@ -341,6 +380,23 @@
 ;;;
 ;;;  double/single strand
 
+(defclass dna-strand () 
+  ((p5-end :initarg :p5-end :accessor p5-end)
+   (p3-end :initarg :p3-end :accessor p3-end)))
+
+(defclass double-stranded-dna (dna-strand) ())
+(defclass single-stranded-dna (dna-strand) ())
+
+
+(defun dna-strand-as-list-of-nodes (strand)
+  (let ((p5 (p5-end strand))
+        (p3 (p3-end strand)))
+    (format t "generating list of nodes between p5-> ~a to  p3-> ~a ~%" (name p5) (name p3))
+    (loop for cur = p5 then (forward-node cur)
+       collect cur
+	 do (format t "  Adding to list: ~a~%" (name cur))
+       until (eq cur p3))))
+
 (defun single-or-double-strand (vstrands)
   (let ((node-positions (make-hash-table :test #'eq)))
     (loop for vstrand being the hash-values in vstrands using (hash-key num)
@@ -349,15 +405,27 @@
        do (locate-nodes node-positions p-vec)
        do (locate-nodes node-positions n-vec))	 
     (loop for vstrand being the hash-values in vstrands using (hash-key num)
-     for p-vec = (p-strand vstrand)
-     for n-vec = (n-strand vstrand)
-     append (loop for index from 0 below (length p-vec)
-	   for p-node = (elt p-vec index)
-	   for n-node = (elt n-vec index)
-	   when (or p-node n-node)
-	   collect  (if p-node
-			(strand-chain p-node node-positions)
-			(strand-chain n-node node-positions))))))
+       for p-vec = (p-strand vstrand)
+       for n-vec = (n-strand vstrand)
+       append (loop for index from 0 below (length p-vec)
+		 for p-node = (elt p-vec index)
+		 for n-node = (elt n-vec index)
+		 when (or p-node n-node)
+		 collect  (if p-node
+			      (strand-chain p-node node-positions)
+			      (let ((pair (strand-chain n-node node-positions)))
+				(list (second pair) (first pair))
+				pair))))))
+
+(defun single-or-double-classified-strands (vstrands)
+  (let ((pairs (single-or-double-strand vstrands)))
+    (format t "pairs -> ~a~%" (mapcar (lambda (pair) (format nil "~a -> ~a~%" (name (first pair)) (name (second pair)))) pairs))
+    (loop for pair in pairs
+       for p5 = (second pair)
+       for p3 = (first pair)  ;; FIXME: I'm reversing the order!!!!!
+       collect (if (hbond-node p5)
+		   (make-instance 'double-stranded-dna :p5-end p5 :p3-end p3)
+		   (make-instance 'single-stranded-dna :p5-end p5 :p3-end p3)))))
 
 (defun locate-nodes (hash-table vec)
   (loop for index from 0 below (length vec)
@@ -465,55 +533,56 @@
 
 (defparameter *bases* (load-bases))
 
-(defun fill-residue (node sequence transform &optional (bases *bases*))
-  (let* ((base-name (if sequence
-		       (prog1
-			   (car sequence)
-			 (setf sequence (cdr sequence)))
-		       :G))
-	 (bases (gethash base-name bases))
-	 (base-plus (chem:matter-copy (car bases)))
-	 (base-minus (chem:matter-copy (cdr bases))))
-    (chem:apply-transform-to-atoms base-plus transform)
-    (chem:apply-transform-to-atoms base-minus transform)
-    (setf (residue node) base-plus)
+(defun complementary-base-name (name)
+  (cdr (assoc name '( ( :c . :g )
+		     ( :g . :c )
+		     ( :a . :t )
+		     ( :t . :a )))))
+
+(defun fill-residue (node transform &optional (bases *bases*))
+  (let* ((base-name (base-name node))
+	 (residues (gethash base-name bases))
+	 (residue (chem:matter-copy (car residues))))
+    (chem:apply-transform-to-atoms residue transform)
+    (setf (residue node) residue)
     (when (hbond-node node)
-      (setf (residue (hbond-node node)) base-minus)))
-  sequence)
+      (let ((hbond-residue (chem:matter-copy (cdr residues))))
+	(chem:apply-transform-to-atoms hbond-residue transform)
+	(setf (residue (hbond-node node)) hbond-residue)))))
 
 (defun fill-nodes-with-residues (strands &optional sequence)
   (loop for strand in strands
-     for p5 = (first strand)
-     for p3 = (second strand)
-       do (format t "nodes:     ~a  -> ~a~%" p5 p3)
-     do (loop for cur = p5 then (backward-node cur)
-	   for index from 0
-	   for rot-trans = (helix-transform *bform-dna-transform* index)
-	   until (eq cur p3)
-	     do (format t "cur node: ~a~%" cur)
-	   do (setf sequence (fill-residue cur sequence rot-trans))
-	   finally (setf sequence (fill-residue p3 sequence rot-trans)))))
+       do (loop for node in (dna-strand-as-list-of-nodes strand)
+	     for index from 0
+	     for transform = (helix-transform *bform-dna-transform* index)
+	     do (fill-residue node transform))))
 
 
 (defun build-one-molecule (strands)
   (let ((molecule (chem:make-molecule)))
     (loop for strand in strands
-       for p5 = (first strand)
-       for p3 = (second strand)
-       for offset from 0 by 20
-       do (loop for cur = p5 then (backward-node cur)
-	     for rot-trans = (geom:make-m4-translate (list (float offset) 0.0 0.0))
-	     for res = (residue cur)
-	     until (eq cur p3)
+       for xoffset from 0 by 20
+       for xtrans = (geom:make-m4-translate (list (float xoffset) 0.0 0.0))
+       do (loop for node in (dna-strand-as-list-of-nodes strand)
+	     for res = (residue node)
 	     do (progn
-		  (chem:apply-transform-to-atoms res rot-trans)
+		  (chem:apply-transform-to-atoms res xtrans)
 		  (chem:add-matter molecule res))
-	     do (let* ((hbnode (hbond-node cur))
+	     do (let* ((hbnode (hbond-node node))
 		       (hbres (and hbnode (residue hbnode))))
 		  (when hbres
-		    (chem:apply-transform-to-atoms hbres rot-trans)
+		    (chem:apply-transform-to-atoms hbres xtrans)
 		    (chem:add-matter molecule hbres)))))
     molecule))
+
+(defun build-energy-function (strands)
+  ;; Create a rigid-body-staple function
+  ;; Loop over 
+  (let ((staple (chem:make-energy-rigid-body-staple)))
+    (
+
+
+
 
 (fill-nodes-with-residues *parts*)
 
