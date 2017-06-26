@@ -391,10 +391,8 @@
 (defun dna-strand-as-list-of-nodes (strand)
   (let ((p5 (p5-end strand))
         (p3 (p3-end strand)))
-    (format t "generating list of nodes between p5-> ~a to  p3-> ~a ~%" (name p5) (name p3))
     (loop for cur = p5 then (forward-node cur)
        collect cur
-	 do (format t "  Adding to list: ~a~%" (name cur))
        until (eq cur p3))))
 
 (defun single-or-double-strand (vstrands)
@@ -567,23 +565,104 @@
 	     do (fill-residue node transform))))
 
 
-(defun build-one-molecule (strands)
+(defun rigid-body-transform (energy-function id)
+  (multiple-value-bind (a b c d x y z)
+      (chem:rigid-body-energy-function-get-position energy-function id)
+    (let ((m (geom:make-matrix nil)))
+      (geom:set-from-quaternion m a b c d x y z)
+      m)))
+
+;;; --------------------------------------------------
+;;;
+
+(defun build-one-molecule (strand trans)
   (let ((molecule (chem:make-molecule)))
-    (loop for strand in strands
-       for xoffset from 0 by 20
-       for xtrans = (geom:make-m4-translate (list (float xoffset) 0.0 0.0))
-       do (loop for node in (dna-strand-as-list-of-nodes strand)
-	     for res = (residue node)
-	     do (progn
-		  (chem:apply-transform-to-atoms res xtrans)
-		  (chem:add-matter molecule res))
-	     do (let* ((hbnode (hbond-node node))
-		       (hbres (and hbnode (residue hbnode))))
-		  (when hbres
-		    (chem:apply-transform-to-atoms hbres xtrans)
-		    (chem:add-matter molecule hbres)))))
+    (loop for node in (dna-strand-as-list-of-nodes strand)
+       for res = (chem:matter-copy (residue node))
+       do (progn
+	    (chem:apply-transform-to-atoms res trans)
+	    (chem:add-matter molecule res))
+       do (let* ((hbnode (hbond-node node))
+		 (hbres (and hbnode (chem:matter-copy (residue hbnode)))))
+	    (when hbres
+	      (chem:apply-transform-to-atoms hbres trans)
+	      (chem:add-matter molecule hbres))))
     molecule))
 
+
+(defun build-one-aggregate (strands energy-function)
+  (let ((agg (chem:make-aggregate)))
+    (loop for strand in strands
+       for id = (order-id strand)
+       for trans = (rigid-body-transform energy-function id)
+       do (let ((m (build-one-molecule strand trans)))
+	    (chem:add-matter agg m)))
+    agg))
+
+(defun normalize-rigid-body-energy-function-position (energy)
+  (let* ((start-pos (make-array (chem:get-nvector-size energy) :element-type 'double-float)))
+    (chem:load-coordinates-into-vector energy start-pos)
+    (chem:rigid-body-energy-function-normalize-position energy start-pos)
+    (chem:save-coordinates-from-vector energy start-pos)))
+
+(defun randomize-rigid-body-energy-function-position (energy)
+  (flet ((random-pos ()
+	   (float (- (random 200.0) 100.0) 1.0d0))
+	 (random-quat ()
+	   (float (- (random 2.0) 1.0) 1.0d0)))
+    (let* ((start-pos (make-array (chem:get-nvector-size energy) :element-type 'double-float)))
+      (loop for index from 0 below (chem:get-nvector-size energy) by 7
+	 do (progn
+	      (setf (elt start-pos (+ index 0)) (random-quat))
+	      (setf (elt start-pos (+ index 1)) (random-quat))
+	      (setf (elt start-pos (+ index 2)) (random-quat))
+	      (setf (elt start-pos (+ index 3)) (random-quat))
+	      (setf (elt start-pos (+ index 4)) (random-pos))
+	      (setf (elt start-pos (+ index 5)) (random-pos))
+	      (setf (elt start-pos (+ index 6)) (random-pos))))
+      (chem:rigid-body-energy-function-normalize-position energy start-pos)
+      (format t "start-pos -> ~a~%" start-pos)
+      (chem:save-coordinates-from-vector energy start-pos))))
+
+(defun move-rigid-body (energy-function id vec)
+  (let ((pos (make-array (chem:get-nvector-size energy-function) :element-type 'double-float))
+	(index (* id 7)))
+    (chem:load-coordinates-into-vector energy-function pos)
+    (setf (elt pos (+ index 4)) (float (first vec) 1.0d0))
+    (setf (elt pos (+ index 5)) (float (second vec) 1.0d0))
+    (setf (elt pos (+ index 6)) (float (third vec) 1.0d0))
+    (chem:save-coordinates-from-vector energy-function pos)))
+
+    
+(defun build-rigid-body-energy-function (strands)
+  (let* ((energy (chem:make-rigid-body-energy-function (length strands))))
+    (randomize-rigid-body-energy-function-position energy)
+    energy))
+
+
+(defun check-quaternion (energy-function id)
+  (multiple-value-bind (a b c d x y z)
+      (chem:rigid-body-energy-function-get-position energy-function id)
+    (let ((q (+ (* a a) (* b b) (* c c) (* d d)))
+	  (m (geom:make-matrix nil)))
+      (geom:set-from-quaternion m a b c d x y z)
+      (values m q (list a b c d)))))
+
+
+(defun matrix-from-quaternion (a b c d x y z)
+  (let ((m (geom:make-matrix nil)))
+    (geom:set-from-quaternion m a b c d x y z)
+    m))
+
+
+(defun add-p-o-staple-term (ef id1 pos1 id2 pos2)
+  (chem:energy-rigid-body-staple-add-term ef
+					  230.0 ; 230.0 ; OS-P from parm99.dat
+					  1.61 ; OS-p from parm99.dat
+					  (* 7 id1)
+					  pos1
+					  (* 7 id2)
+					  pos2))
 
 (defun build-energy-rigid-body-staple (strands)
   (let ((ef (chem:make-energy-rigid-body-staple)))
@@ -595,41 +674,114 @@
        for my-order-id = (order-id strand)
        do (let ((p5-partner (backward-node p5)))
 	    (when (and p5-partner (<= my-order-id (order-id (strand p5-partner))))
-	      (chem:energy-rigid-body-staple-add-term ef
-						      230.0 ; OS-P from parm99.dat
-						      1.61 ; OS-p from parm99.dat
-						      my-order-id
-						      (chem:get-position (chem:atom-with-name (residue p5) :P))
-						      (order-id (strand p5-partner))
-						      (chem:get-position (chem:atom-with-name (residue p5-partner) :O3*)))))
+	      (add-p-o-staple-term ef
+				   my-order-id
+				   (chem:get-position (chem:atom-with-name (residue p5) :P))
+				   (order-id (strand p5-partner))
+				   (chem:get-position (chem:atom-with-name (residue p5-partner) :O3*)))))
        do (let ((p3-partner (forward-node p3)))
 	    (when (and p3-partner (<= my-order-id (order-id (strand p3-partner))))
-	      (chem:energy-rigid-body-staple-add-term ef
-						      230.0 ; OS-P from parm99.dat
-						      1.61 ; OS-p from parm99.dat
-						      my-order-id
-						      (chem:get-position (chem:atom-with-name (residue p3) :O3*))
-						      (order-id (strand p3-partner))
-						      (chem:get-position (chem:atom-with-name (residue p3-partner) :P)))))
+	      (add-p-o-staple-term ef
+				   my-order-id
+				   (chem:get-position (chem:atom-with-name (residue p3) :O3*))
+				   (order-id (strand p3-partner))
+				   (chem:get-position (chem:atom-with-name (residue p3-partner) :P)))))
        do (when p5hb
 	    (let ((p5hb-partner (forward-node p5hb)))
 	      (when (and p5hb-partner (<= my-order-id (order-id (strand p5hb-partner))))
-		(chem:energy-rigid-body-staple-add-term ef
-							230.0 ; OS-P from parm99.dat
-							1.61 ; OS-p from parm99.dat
-							my-order-id
-							(chem:get-position (chem:atom-with-name (residue p5hb) :O3*))
-							(order-id (strand p5hb-partner))
-							(chem:get-position (chem:atom-with-name (residue p5hb-partner) :P))))))
+		(add-p-o-staple-term ef
+				     my-order-id
+				     (chem:get-position (chem:atom-with-name (residue p5hb) :O3*))
+				     (order-id (strand p5hb-partner))
+				     (chem:get-position (chem:atom-with-name (residue p5hb-partner) :P))))))
        do (when p3hb
 	    (let ((p3hb-partner (backward-node p3hb)))
 	      (when (and p3hb-partner (<= my-order-id (order-id (strand p3hb-partner))))
-		(chem:energy-rigid-body-staple-add-term ef
-							230.0 ; OS-P from parm99.dat
-							1.61 ; OS-p from parm99.dat
-							my-order-id
-							(chem:get-position (chem:atom-with-name (residue p3hb) :P))
-							(order-id (strand p3hb-partner))
-							(chem:get-position (chem:atom-with-name (residue p3hb-partner) :O3*)))))))
+		(add-p-o-staple-term ef
+				     my-order-id
+				     (chem:get-position (chem:atom-with-name (residue p3hb) :P))
+				     (order-id (strand p3hb-partner))
+				     (chem:get-position (chem:atom-with-name (residue p3hb-partner) :O3*)))))))
     ef))
+
+
+(defun number-of-nonbond-atoms (strand)
+  (loop for node in (dna-strand-as-list-of-nodes strand)
+     sum (+ (chem:number-of-atoms (residue node))
+	    (if (hbond-node node)
+		(chem:number-of-atoms (residue (hbond-node node)))
+		0))))
+
+(defun number-of-nonbond-atoms (strand)
+  (let ((total (loop for node in (dna-strand-as-list-of-nodes strand)
+		  sum (+ (chem:number-of-atoms (residue node))
+			 (if (hbond-node node)
+			     (chem:number-of-atoms (residue (hbond-node node)))
+			     0)))))
+    (format t "Number of nonbond atoms ~a~%" total)
+    total))
+
+
+(defun create-nonbond-terms (nonbond-component strand index)
+  (loop for node in (dna-strand-as-list-of-nodes strand)
+     for residue = (residue node)
+     do (chem:map-atoms
+	 nil
+	 (lambda (atom)
+	   (chem:energy-rigid-body-nonbond-set-term
+	    nonbond-component
+	    (prog1 index
+	      (incf index))
+	    atom	      ; treat everything like a carbon for now
+	    1.908	      ; CT from parm99.dat
+	    0.1094	      ; CT from parm99.dat
+	    0.0		      ; no charge
+	    (chem:get-position atom)))
+			residue))
+  (when (typep strand 'double-stranded-dna)
+    (loop for node in (dna-strand-as-list-of-nodes strand)
+       for hbnode = (hbond-node node)
+       for residue = (residue hbnode)
+       do (chem:map-atoms
+	   nil
+	   (lambda (atom)
+	     (chem:energy-rigid-body-nonbond-set-term
+	      nonbond-component
+	      (prog1 index
+		(incf index))
+	      atom	      ; treat everything like a carbon for now
+	      1.908	      ; CT from parm99.dat
+	      0.1094	      ; CT from parm99.dat
+	      0.0	      ; no charge
+	      (chem:get-position atom)))
+			  residue)))
+  index)
+       
+(defun build-energy-rigid-body-nonbond (strands)
+  (format t "strands -> ~a  length -> ~a~%" strands (length strands))
+  (let* ((strand-vec (let ((vec (make-array (length strands) :element-type 't))) ; store strands in vector by id
+		       (loop for strand in strands ; 
+			  do (setf (elt vec (order-id strand)) strand))
+		       vec)))
+    (format t "(length strand-vec): ~a~%" (length strand-vec))
+    (multiple-value-bind (end-atom-vec total-atoms)
+					; vector to store the last index of each rigid body
+	(let ((vec (make-array (length strands) :element-type 'ext:byte32))
+	      (total-count 0))
+	  (loop for id from 0 below (length strand-vec)
+	     for strand = (elt strand-vec id)
+	     for strand-atoms-count = (number-of-nonbond-atoms strand)
+	     for running-count = strand-atoms-count then (+ running-count strand-atoms-count)
+	     do (setf total-count running-count)
+	     do (format t "Looking at strand id ~a~%" id)
+	     do (setf (elt vec id) total-count))
+	  (values vec total-count))
+      (format t "total-atoms: ~a~%" total-atoms)
+      (let ((nonbond-component (chem:make-energy-rigid-body-nonbond end-atom-vec))
+	    (start-index 0))
+	(loop for id from 0 below (length strand-vec)
+	   for strand = (elt strand-vec id)
+	     do (format t "start-index: ~a ~%" start-index)
+	   do (setf start-index (create-nonbond-terms nonbond-component strand start-index)))
+	nonbond-component))))
   
