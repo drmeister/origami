@@ -1,8 +1,4 @@
 
-(ql:quickload "cl-json")
-(ql:quickload "read-csv")
-
-
 (defun LIST-OF-VSTRANDS-FROM-JSON (json)
   (cdr (assoc :vstrands json)))
 
