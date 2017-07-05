@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    685088,      14234]
-NotebookOptionsPosition[    647470,      13429]
-NotebookOutlinePosition[    647859,      13446]
-CellTagsIndexPosition[    647816,      13443]
+NotebookDataLength[    690304,      14315]
+NotebookOptionsPosition[    652750,      13516]
+NotebookOutlinePosition[    653139,      13533]
+CellTagsIndexPosition[    653096,      13530]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1220,7 +1220,7 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"stapleVarNames", " ", "=", " ", 
+  RowBox[{"cylrepVarNames", " ", "=", " ", 
    RowBox[{"{", " ", "\[IndentingNewLine]", 
     RowBox[{
      RowBox[{"{", 
@@ -1267,30 +1267,31 @@ Cell[BoxData[
     "\[IndentingNewLine]", "}"}]}], ";"}]], "Input",
  CellChangeTimes->{{3.702665250051643*^9, 3.7026653039744596`*^9}, {
    3.702665895595372*^9, 3.7026660256467524`*^9}, 3.70266610473518*^9, 
-   3.7026678793568573`*^9},ExpressionUUID->"25d768ae-822f-439e-88ab-\
+   3.7026678793568573`*^9, 
+   3.708253127515353*^9},ExpressionUUID->"25d768ae-822f-439e-88ab-\
 dccbeb657eb3"],
 
 Cell[BoxData[{
  RowBox[{
-  RowBox[{"stapleSetupRules", " ", "=", " ", 
+  RowBox[{"cylrepSetupRules", " ", "=", " ", 
    RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", 
+   RowBox[{"cylrepSetupRules", ",", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_PARAMETER(sigma,sigma);\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_PARAMETER(sigma,sigma);\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", 
+   RowBox[{"cylrepSetupRules", ",", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_PARAMETER(I1,rigidBodyK);\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_PARAMETER(I1,rigidBodyK);\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", 
+   RowBox[{"cylrepSetupRules", ",", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_PARAMETER(I2,rigidBodyL);\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_PARAMETER(I2,rigidBodyL);\>\"", "]"}]}], 
    "]"}], ";"}]}], "Input",
  CellChangeTimes->{{3.702665307282709*^9, 3.7026653539621363`*^9}, {
   3.702666545008964*^9, 3.702666558545693*^9}, {3.702667865268785*^9, 
@@ -1298,7 +1299,9 @@ Cell[BoxData[{
   3.706924887140312*^9, 3.7069248986928453`*^9}, {3.707330777243126*^9, 
   3.707330779507679*^9}, {3.707342521424604*^9, 3.7073425407717876`*^9}, {
   3.7080963485427837`*^9, 3.708096368962112*^9}, {3.7080964703655853`*^9, 
-  3.7080964707730513`*^9}},ExpressionUUID->"73c80546-179b-4a4d-be83-\
+  3.7080964707730513`*^9}, {3.708252916853992*^9, 3.7082529318325443`*^9}, {
+  3.7082531336584597`*^9, 
+  3.708253135141602*^9}},ExpressionUUID->"73c80546-179b-4a4d-be83-\
 bd4e78cbb208"],
 
 Cell[BoxData[
@@ -1307,24 +1310,24 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"i", "=", "1"}], ",", 
     RowBox[{"i", "\[LessEqual]", 
-     RowBox[{"Length", "[", "stapleVarNames", "]"}]}], ",", 
+     RowBox[{"Length", "[", "cylrepVarNames", "]"}]}], ",", 
     RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
     RowBox[{
      RowBox[{"str", " ", "=", " ", 
-      RowBox[{"\"\<STAPLE_SET_POSITION(\>\"", "<>", 
+      RowBox[{"\"\<CYLREP_SET_POSITION(\>\"", "<>", 
        RowBox[{"ToString", "[", 
         RowBox[{
-         RowBox[{"stapleVarNames", "[", 
+         RowBox[{"cylrepVarNames", "[", 
           RowBox[{"[", "i", "]"}], "]"}], "[", 
          RowBox[{"[", "1", "]"}], "]"}], "]"}], "<>", "\"\<,\>\"", "<>", 
        RowBox[{"ToString", "[", 
         RowBox[{
-         RowBox[{"stapleVarNames", "[", 
+         RowBox[{"cylrepVarNames", "[", 
           RowBox[{"[", "i", "]"}], "]"}], "[", 
          RowBox[{"[", "3", "]"}], "]"}], "]"}], "<>", "\"\<,\>\"", "<>", 
        RowBox[{"ToString", "[", 
         RowBox[{
-         RowBox[{"stapleVarNames", "[", 
+         RowBox[{"cylrepVarNames", "[", 
           RowBox[{"[", "i", "]"}], "]"}], "[", 
          RowBox[{"[", "4", "]"}], "]"}], "]"}], "<>", "\"\<);\>\""}]}], ";", 
      "\[IndentingNewLine]", 
@@ -1333,102 +1336,103 @@ Cell[BoxData[
        RowBox[{"Print", "[", "str", "]"}], ";"}], "*)"}], 
      "\[IndentingNewLine]", 
      RowBox[{"AppendTo", "[", 
-      RowBox[{"stapleSetupRules", ",", 
+      RowBox[{"cylrepSetupRules", ",", 
        RowBox[{"CCode", "[", "str", "]"}]}], "]"}], ";"}]}], 
    "\[IndentingNewLine]", "]"}], ";"}]], "Input",
  CellChangeTimes->{{3.7026653697729197`*^9, 3.702665399017919*^9}, {
-  3.702667865332658*^9, 3.70266787995826*^9}, {3.702889668272381*^9, 
-  3.7028896775365877`*^9}},ExpressionUUID->"292bce02-772d-4567-85eb-\
+   3.702667865332658*^9, 3.70266787995826*^9}, {3.702889668272381*^9, 
+   3.7028896775365877`*^9}, 3.708252942899839*^9, {3.7082531359350643`*^9, 
+   3.708253138669182*^9}},ExpressionUUID->"292bce02-772d-4567-85eb-\
 30dc9fd192e3"],
 
 Cell[BoxData[{
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pxki,pointKi,getX());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pxki,pointKi,getX());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pyki,pointKi,getY());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pyki,pointKi,getY());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pzki,pointKi,getZ());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pzki,pointKi,getZ());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pxli,pointLi,getX());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pxli,pointLi,getX());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pyli,pointLi,getY());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pyli,pointLi,getY());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pzli,pointLi,getZ());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pzli,pointLi,getZ());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pxkf,pointKf,getX());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pxkf,pointKf,getX());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pykf,pointKf,getY());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pykf,pointKf,getY());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pzkf,pointKf,getZ());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pzkf,pointKf,getZ());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pxlf,pointLf,getX());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pxlf,pointLf,getX());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pylf,pointLf,getY());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pylf,pointLf,getY());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleSetupRules", ",", " ", 
+   RowBox[{"cylrepSetupRules", ",", " ", 
     RowBox[{
-    "CCode", "[", "\"\<STAPLE_SET_POINT(pzlf,pointL,getZ());\>\"", "]"}]}], 
+    "CCode", "[", "\"\<CYLREP_SET_POINT(pzlf,pointL,getZ());\>\"", "]"}]}], 
    "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
  CellChangeTimes->{{3.702889717438642*^9, 3.702889744132216*^9}, {
   3.702889799017868*^9, 3.702889838930481*^9}, {3.7028898927791853`*^9, 
   3.702889938491302*^9}, {3.702894463739758*^9, 3.702894468534267*^9}, {
   3.7069249208588142`*^9, 3.706924965222961*^9}, {3.707327569341755*^9, 
   3.707327603424741*^9}, {3.708096689937593*^9, 3.7080967059836063`*^9}, {
-  3.7080968321255703`*^9, 
-  3.7080968509149303`*^9}},ExpressionUUID->"1ba5a378-9b83-4f21-863f-\
+  3.7080968321255703`*^9, 3.7080968509149303`*^9}, {3.7082529441203623`*^9, 
+  3.708252951097663*^9}, {3.7082531393113003`*^9, 
+  3.708253142100255*^9}},ExpressionUUID->"1ba5a378-9b83-4f21-863f-\
 73f3ad635eb9"],
 
-Cell[CellGroupData[{
-
 Cell[BoxData[
- RowBox[{"stapleSetupRules", "//", "MatrixForm"}]], "Input",
+ RowBox[{"cylrepSetupRules", "//", "MatrixForm"}]], "Input",
  CellChangeTimes->{{3.702665439946115*^9, 3.702665444877211*^9}, 
-   3.702667880041853*^9},ExpressionUUID->"c2b5e4f9-51d1-4bb8-a9a3-\
+   3.702667880041853*^9, 
+   3.70825314291249*^9},ExpressionUUID->"c2b5e4f9-51d1-4bb8-a9a3-\
 8d70eb95895d"],
 
 Cell[BoxData[
@@ -1436,61 +1440,61 @@ Cell[BoxData[
   RowBox[{"(", "\[NoBreak]", 
    TagBox[GridBox[{
       {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_PARAMETER(ks,ks);\"\>", "]"}]},
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_PARAMETER(ks,ks);\>\"", "]"}]},
       {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_PARAMETER(r0,r0);\"\>", "]"}]},
-      {
-       RowBox[{
-       "CCode", "[", "\<\"STAPLE_SET_PARAMETER(I1,rigidBodyK);\"\>", "]"}]},
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_PARAMETER(r0,r0);\>\"", "]"}]},
       {
        RowBox[{
-       "CCode", "[", "\<\"STAPLE_SET_PARAMETER(I2,rigidBodyL);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(ak,I1,0);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(bk,I1,1);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(ck,I1,2);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(dk,I1,3);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(xk,I1,4);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(yk,I1,5);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(zk,I1,6);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(al,I2,0);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(bl,I2,1);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(cl,I2,2);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(dl,I2,3);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(xl,I2,4);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(yl,I2,5);\"\>", "]"}]},
-      {
-       RowBox[{"CCode", "[", "\<\"STAPLE_SET_POSITION(zl,I2,6);\"\>", "]"}]},
+       "CCode", "[", "\"\<CYLREP_SET_PARAMETER(I1,rigidBodyK);\>\"", "]"}]},
       {
        RowBox[{
-       "CCode", "[", "\<\"STAPLE_SET_POINT(pxk,pointK,getX());\"\>", "]"}]},
+       "CCode", "[", "\"\<CYLREP_SET_PARAMETER(I2,rigidBodyL);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(ak,I1,0);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(bk,I1,1);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(ck,I1,2);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(dk,I1,3);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(xk,I1,4);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(yk,I1,5);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(zk,I1,6);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(al,I2,0);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(bl,I2,1);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(cl,I2,2);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(dl,I2,3);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(xl,I2,4);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(yl,I2,5);\>\"", "]"}]},
+      {
+       RowBox[{"CCode", "[", "\"\<CYLREP_SET_POSITION(zl,I2,6);\>\"", "]"}]},
       {
        RowBox[{
-       "CCode", "[", "\<\"STAPLE_SET_POINT(pyk,pointK,getY());\"\>", "]"}]},
+       "CCode", "[", "\"\<CYLREP_SET_POINT(pxk,pointK,getX());\>\"", "]"}]},
       {
        RowBox[{
-       "CCode", "[", "\<\"STAPLE_SET_POINT(pzk,pointK,getZ());\"\>", "]"}]},
+       "CCode", "[", "\"\<CYLREP_SET_POINT(pyk,pointK,getY());\>\"", "]"}]},
       {
        RowBox[{
-       "CCode", "[", "\<\"STAPLE_SET_POINT(pxl,pointL,getX());\"\>", "]"}]},
+       "CCode", "[", "\"\<CYLREP_SET_POINT(pzk,pointK,getZ());\>\"", "]"}]},
       {
        RowBox[{
-       "CCode", "[", "\<\"STAPLE_SET_POINT(pyl,pointL,getY());\"\>", "]"}]},
+       "CCode", "[", "\"\<CYLREP_SET_POINT(pxl,pointL,getX());\>\"", "]"}]},
       {
        RowBox[{
-       "CCode", "[", "\<\"STAPLE_SET_POINT(pzl,pointL,getZ());\"\>", "]"}]}
+       "CCode", "[", "\"\<CYLREP_SET_POINT(pyl,pointL,getY());\>\"", "]"}]},
+      {
+       RowBox[{
+       "CCode", "[", "\"\<CYLREP_SET_POINT(pzl,pointL,getZ());\>\"", "]"}]}
      },
      GridBoxAlignment->{
       "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}},
@@ -1504,53 +1508,44 @@ Cell[BoxData[
          Offset[0.2]}, "RowsIndexed" -> {}}],
     Column], "\[NoBreak]", ")"}],
   Function[BoxForm`e$, 
-   MatrixForm[BoxForm`e$]]]], "Output",
- CellChangeTimes->{
-  3.702667911181444*^9, 3.702889683448352*^9, 3.702889962257967*^9, 
-   3.702891183373643*^9, 3.702891414545534*^9, {3.702894455342057*^9, 
-   3.702894481407825*^9}, 3.707147394958623*^9, 3.707147520607356*^9, 
-   3.707148768847888*^9, 3.707319234277985*^9, 3.7073193524251328`*^9, 
-   3.707321553334177*^9, 3.7073215844839907`*^9, 3.7073281889594717`*^9, 
-   3.707329471753852*^9, 3.707330053548213*^9, 3.70733025549349*^9, 
-   3.7073307862997704`*^9, 3.707340914986191*^9, 3.70734254710538*^9, 
-   3.707387937020323*^9},ExpressionUUID->"604778e7-468d-4f7d-82e9-\
-33d150f1bf68"]
-}, Open  ]],
+   MatrixForm[BoxForm`e$]]]], "Input",
+ CellChangeTimes->{{3.7082529540885563`*^9, 3.708252954094639*^9}, {
+   3.708252984628436*^9, 3.708252995729435*^9}, 
+   3.70825307411052*^9},ExpressionUUID->"604778e7-468d-4f7d-82e9-\
+33d150f1bf68"],
 
 Cell[BoxData[{
  RowBox[{
-  RowBox[{"stapleEnergyRules", " ", "=", " ", 
+  RowBox[{"cylrepEnergyRules", " ", "=", " ", 
    RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"stapleOutputs", " ", "=", " ", 
+  RowBox[{"cylrepOutputs", " ", "=", " ", 
    RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleEnergyRules", ",", 
+   RowBox[{"cylrepEnergyRules", ",", 
     RowBox[{"Assign", "[", 
-     RowBox[{"Energy", ",", "stapleEnergyFn"}], "]"}]}], "]"}], 
+     RowBox[{"Energy", ",", "CylRepEnergyFn"}], "]"}]}], "]"}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleEnergyRules", ",", 
+   RowBox[{"cylrepEnergyRules", ",", 
     RowBox[{"EnergyAccumulate", "[", 
-     RowBox[{"\"\<STAPLE\>\"", ",", "Energy"}], "]"}]}], "]"}], 
+     RowBox[{"\"\<CYLREP\>\"", ",", "Energy"}], "]"}]}], "]"}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AppendTo", "[", 
-   RowBox[{"stapleOutputs", ",", "Energy"}], "]"}], ";"}]}], "Input",
+   RowBox[{"cylrepOutputs", ",", "Energy"}], "]"}], ";"}]}], "Input",
  CellChangeTimes->{{3.7026655052521257`*^9, 3.7026655279230843`*^9}, 
    3.702665559899187*^9, 3.7026669034970493`*^9, {3.7026678801394444`*^9, 
-   3.702667880549102*^9}, {3.702894354420628*^9, 
-   3.702894355431469*^9}},ExpressionUUID->"8be6f392-c34d-43c0-8ce9-\
+   3.702667880549102*^9}, {3.702894354420628*^9, 3.702894355431469*^9}, 
+   3.708252996197461*^9, {3.7082531437211933`*^9, 3.708253151831306*^9}, 
+   3.7082532589688997`*^9},ExpressionUUID->"8be6f392-c34d-43c0-8ce9-\
 b69111073add"],
 
-Cell[CellGroupData[{
-
-Cell[BoxData["stapleEnergyRules"], "Input",
- CellChangeTimes->{{3.707329478903056*^9, 
-  3.7073294824514437`*^9}},ExpressionUUID->"3bb3e559-0794-4327-b6b6-\
-8272cb8d9188"],
+Cell[BoxData["cylrepEnergyRules"], "Input",
+ CellChangeTimes->{{3.707329478903056*^9, 3.7073294824514437`*^9}, 
+   3.7082531530077*^9},ExpressionUUID->"3bb3e559-0794-4327-b6b6-8272cb8d9188"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -1682,14 +1677,11 @@ Cell[BoxData[
                 SuperscriptBox["cl", "2"], "+", 
                 SuperscriptBox["dl", "2"]}]], "+", "zk", "-", "zl"}], ")"}], 
             "2"]}], ")"}]}]}], ")"}], "2"]}], "\[Rule]", "Energy"}], ",", 
-   RowBox[{"CCode", "[", "\<\"STAPLE_ENERGY_ACCUMULATE(Energy);\"\>", "]"}]}],
-   "}"}]], "Output",
- CellChangeTimes->{3.7073294830677357`*^9, 3.7073300537105837`*^9, 
-  3.707330255656562*^9, 3.70733078645054*^9, 3.707340915124569*^9, 
-  3.707342547248365*^9, 
-  3.707387937204125*^9},ExpressionUUID->"25578402-f4c9-4288-bc0e-\
+   RowBox[{"CCode", "[", "\"\<CYLREP_ENERGY_ACCUMULATE(Energy);\>\"", "]"}]}],
+   "}"}]], "Input",
+ CellChangeTimes->{{3.708253003630865*^9, 
+  3.708253003657308*^9}},ExpressionUUID->"25578402-f4c9-4288-bc0e-\
 ff3879c625b0"]
-}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1701,28 +1693,32 @@ Cell["Append the Gradient rules", "Subtitle",
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"stapleForceRules", " ", "=", " ", 
+  RowBox[{"cylrepForceRules", " ", "=", " ", 
    RowBox[{"{", "}"}]}], ";"}]], "Input",
  CellChangeTimes->{{3.7026663167169523`*^9, 3.702666324249215*^9}, 
-   3.702667880730946*^9},ExpressionUUID->"2e40f068-4e78-4573-a0b6-\
+   3.702667880730946*^9, 
+   3.7082531541792088`*^9},ExpressionUUID->"2e40f068-4e78-4573-a0b6-\
 9808791c4f32"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"AppendGradientAndForce", "[", 
    RowBox[{
-   "\"\<STAPLE\>\"", ",", "stapleEnergyRules", ",", "stapleOutputs", ",", 
-    "stapleEnergyFn", ",", "stapleVarNames"}], "]"}], ";"}]], "Input",
+   "\"\<CYLREP\>\"", ",", "cylrepEnergyRules", ",", "cylrepOutputs", ",", 
+    "CylRepEnergyFn", ",", "cylrepVarNames"}], "]"}], ";"}]], "Input",
  CellChangeTimes->{{3.702665662227541*^9, 3.702665675042551*^9}, {
-  3.702665719248609*^9, 3.702665779138154*^9}, {3.702667866125484*^9, 
-  3.702667880997301*^9}},ExpressionUUID->"df08ad31-7880-4191-b5eb-\
+   3.702665719248609*^9, 3.702665779138154*^9}, {3.702667866125484*^9, 
+   3.702667880997301*^9}, 3.708253010428467*^9, {3.7082531552209253`*^9, 
+   3.70825315689365*^9}, 
+   3.7082532589977417`*^9},ExpressionUUID->"df08ad31-7880-4191-b5eb-\
 cf0e33deea61"],
 
 Cell[CellGroupData[{
 
-Cell[BoxData["stapleOutputs"], "Input",
+Cell[BoxData["cylrepOutputs"], "Input",
  CellChangeTimes->{{3.702665807907201*^9, 3.7026658098882017`*^9}, 
-   3.702667881086121*^9},ExpressionUUID->"e2425163-0ba3-4239-8a2b-\
+   3.702667881086121*^9, 
+   3.708253157764968*^9},ExpressionUUID->"e2425163-0ba3-4239-8a2b-\
 c7fc74b36b67"],
 
 Cell[BoxData[
@@ -1753,56 +1749,47 @@ d67ad95e9131"],
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"stapleAllRules", " ", "=", 
+  RowBox[{"cylrepAllRules", " ", "=", 
    RowBox[{"{", "\[IndentingNewLine]", 
     RowBox[{
-    "stapleSetupRules", ",", "\[IndentingNewLine]", "stapleEnergyRules"}], 
+    "cylrepSetupRules", ",", "\[IndentingNewLine]", "cylrepEnergyRules"}], 
     "}"}]}], ";"}]], "Input",
  CellChangeTimes->{{3.410177622861577*^9, 3.410177650326877*^9}, {
    3.410957497343137*^9, 3.410957525179797*^9}, 3.410958727655569*^9, {
    3.702666212925044*^9, 3.70266621369392*^9}, 3.702666368288919*^9, {
-   3.702667881180406*^9, 
-   3.702667881299728*^9}},ExpressionUUID->"d4ee2390-ddd2-4c1f-8d2e-\
+   3.702667881180406*^9, 3.702667881299728*^9}, {3.708253159243967*^9, 
+   3.7082531603748837`*^9}},ExpressionUUID->"d4ee2390-ddd2-4c1f-8d2e-\
 73e6f4ed754f"],
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"stapleRules", " ", "=", " ", 
-   RowBox[{"Flatten", "[", "stapleAllRules", "]"}]}], ";"}]], "Input",
+  RowBox[{"cylrepRules", " ", "=", " ", 
+   RowBox[{"Flatten", "[", "cylrepAllRules", "]"}]}], ";"}]], "Input",
  CellChangeTimes->{{3.4109587363528433`*^9, 3.410958744314476*^9}, {
   3.702666213960264*^9, 3.7026662163072977`*^9}, {3.7026678814059973`*^9, 
-  3.702667881458247*^9}},ExpressionUUID->"ad91b7ae-a9ac-408e-9cc5-\
+  3.702667881458247*^9}, {3.7082531611858187`*^9, 
+  3.7082531614828997`*^9}},ExpressionUUID->"ad91b7ae-a9ac-408e-9cc5-\
 b9074a7eff33"],
 
-Cell[CellGroupData[{
-
 Cell[BoxData[
- RowBox[{"stapleRules", "[", 
+ RowBox[{"cylrepRules", "[", 
   RowBox[{"[", "4", "]"}], "]"}]], "Input",
  CellChangeTimes->{{3.411210896309596*^9, 3.411210898002816*^9}, 
    3.702666216845126*^9, 3.702667881574181*^9, {3.707329839330907*^9, 
-   3.7073298483731422`*^9}},ExpressionUUID->"ce3baefe-0244-4fda-9aab-\
+   3.7073298483731422`*^9}, 
+   3.7082531620724077`*^9},ExpressionUUID->"ce3baefe-0244-4fda-9aab-\
 ab7cb7e93947"],
 
 Cell[BoxData[
- RowBox[{"CCode", "[", "\<\"STAPLE_SET_PARAMETER(I2,rigidBodyL);\"\>", 
-  "]"}]], "Output",
- CellChangeTimes->{
-  3.70266791289823*^9, 3.7028896849821453`*^9, 3.7028899672865753`*^9, 
-   3.702891184871729*^9, 3.702891416585243*^9, 3.702894375334017*^9, {
-   3.7028944571236*^9, 3.702894482815072*^9}, 3.7071474766614103`*^9, 
-   3.707147524804441*^9, 3.70714877253653*^9, 3.707319236171826*^9, 
-   3.707319353859886*^9, 3.7073215548937693`*^9, 3.7073215859362373`*^9, 
-   3.707328195869495*^9, 3.7073295568835382`*^9, {3.707329841337697*^9, 
-   3.7073298488823347`*^9}, 3.707330055763028*^9, 3.707330257790016*^9, 
-   3.7073307885318613`*^9, 3.707340917418907*^9, 3.7073425492216997`*^9, 
-   3.707387938819627*^9},ExpressionUUID->"4369e2cf-c283-48b2-bb4f-\
-d87c41e73e90"]
-}, Open  ]],
+ RowBox[{"CCode", "[", "\"\<CYLREP_SET_PARAMETER(I2,rigidBodyL);\>\"", "]"}]],\
+ "Input",
+ CellChangeTimes->{{3.708253011791232*^9, 
+  3.7082530117928543`*^9}},ExpressionUUID->"4369e2cf-c283-48b2-bb4f-\
+d87c41e73e90"],
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"stapleInput", " ", "=", " ", 
+  RowBox[{"cylrepInput", " ", "=", " ", 
    RowBox[{"{", " ", 
     RowBox[{
     "ak", ",", "bk", ",", "ck", ",", "dk", ",", "xk", ",", "yk", ",", "zk", 
@@ -1811,14 +1798,15 @@ Cell[BoxData[
  CellChangeTimes->{{3.4055952302564087`*^9, 3.405595267347364*^9}, {
    3.408556502824588*^9, 3.4085565040993557`*^9}, {3.702666505031909*^9, 
    3.702666531507627*^9}, 3.702667881776746*^9, {3.707146819345879*^9, 
-   3.707146827499598*^9}},ExpressionUUID->"33e2b5b2-61a9-4ec6-9284-\
+   3.707146827499598*^9}, 
+   3.708253162929468*^9},ExpressionUUID->"33e2b5b2-61a9-4ec6-9284-\
 5abb92b14f69"],
 
-Cell["AppendTo[stapleOutputs, stapleDeviation];", "Text",
+Cell["AppendTo[cylrepOutputs, cylrepDeviation];", "Text",
  CellChangeTimes->{{3.411152051138565*^9, 3.411152052756624*^9}, {
    3.702666532511979*^9, 3.7026665335664177`*^9}, {3.702667881858635*^9, 
-   3.702667881917015*^9}, 
-   3.707330251034462*^9},ExpressionUUID->"a09d7055-e98a-4e56-903c-\
+   3.702667881917015*^9}, 3.707330251034462*^9, {3.708253164939849*^9, 
+   3.708253165423612*^9}},ExpressionUUID->"a09d7055-e98a-4e56-903c-\
 aac336ad1055"]
 }, Open  ]],
 
@@ -1834,20 +1822,20 @@ names, etc. into what passes for a structure in Mathematica (I call it a Pack)\
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"staplePack0", " ", "=", " ", 
+  RowBox[{"cylrepPack0", " ", "=", " ", 
    RowBox[{"{", "\[IndentingNewLine]", 
     RowBox[{
-     RowBox[{"Name", "\[Rule]", "\"\<STAPLE\>\""}], ",", 
+     RowBox[{"Name", "\[Rule]", "\"\<CYLREP\>\""}], ",", 
      "\[IndentingNewLine]", 
      RowBox[{"AdditionalCDeclares", "\[Rule]", "\"\<\>\""}], ",", 
      "\[IndentingNewLine]", 
-     RowBox[{"DerivativeVariables", "\[Rule]", "stapleInput"}], ",", 
+     RowBox[{"DerivativeVariables", "\[Rule]", "cylrepInput"}], ",", 
      "\[IndentingNewLine]", 
-     RowBox[{"Rules", "\[Rule]", "stapleRules"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"Rules", "\[Rule]", "cylrepRules"}], ",", "\[IndentingNewLine]", 
      
-     RowBox[{"Input", "\[Rule]", "stapleInput"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"Input", "\[Rule]", "cylrepInput"}], ",", "\[IndentingNewLine]", 
      
-     RowBox[{"Output", "\[Rule]", "stapleOutputs"}]}], "\[IndentingNewLine]", 
+     RowBox[{"Output", "\[Rule]", "cylrepOutputs"}]}], "\[IndentingNewLine]", 
     "}"}]}], ";"}]], "Input",
  CellChangeTimes->{{3.402876557641659*^9, 3.402876568596249*^9}, 
    3.402876852017213*^9, {3.40559527044873*^9, 3.405595281200487*^9}, {
@@ -1863,20 +1851,21 @@ Cell[BoxData[
    3.4110757253172703`*^9}, {3.4110759780540733`*^9, 3.411075995800424*^9}, 
    3.4110793661329203`*^9, {3.702666534898035*^9, 3.702666566906396*^9}, 
    3.702666629707164*^9, {3.702667866896305*^9, 3.702667882200088*^9}, {
-   3.707146875689992*^9, 
-   3.707146877680748*^9}},ExpressionUUID->"d681c39b-c74f-4a15-9aa4-\
+   3.707146875689992*^9, 3.707146877680748*^9}, 3.7082530132377987`*^9, {
+   3.708253166986656*^9, 
+   3.7082531696664543`*^9}},ExpressionUUID->"d681c39b-c74f-4a15-9aa4-\
 27fbd158f121"],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"writeOutputVariablesForDebugging", "[", "staplePack0", "]"}], 
+  RowBox[{"writeOutputVariablesForDebugging", "[", "cylrepPack0", "]"}], 
   ";"}]], "Input",
  CellChangeTimes->{{3.408752301954282*^9, 3.408752370230307*^9}, {
    3.408821026441674*^9, 3.408821031596847*^9}, 3.4110670621890917`*^9, 
-   3.7026665401661*^9, 
-   3.702667882303001*^9},ExpressionUUID->"0e2d1b50-7feb-4b67-b871-\
+   3.7026665401661*^9, 3.702667882303001*^9, 
+   3.708253170621071*^9},ExpressionUUID->"0e2d1b50-7feb-4b67-b871-\
 b8ea7349d220"],
 
 Cell[CellGroupData[{
@@ -1961,15 +1950,16 @@ Cell[BoxData[
 }, Open  ]],
 
 Cell["\<\
-staplePack = Block[{PrintTemporary = Print}, packOptimize[staplePack0]];\
+cylrepPack = Block[{PrintTemporary = Print}, packOptimize[cylrepPack0]];\
 \>", "Text",
  CellChangeTimes->{{3.405593154617752*^9, 3.405593181273087*^9}, {
    3.405594926006316*^9, 3.4055949283713083`*^9}, {3.40560847035536*^9, 
    3.405608470488098*^9}, {3.407559202182371*^9, 3.407559202626436*^9}, {
    3.408564854380271*^9, 3.408564873627013*^9}, 3.41106665985861*^9, {
    3.411072816696417*^9, 3.4110728451363277`*^9}, {3.702666540999856*^9, 
-   3.702666541884931*^9}, {3.7026678823791237`*^9, 
-   3.70266788249536*^9}},ExpressionUUID->"8badf66f-b944-4538-a70e-\
+   3.702666541884931*^9}, {3.7026678823791237`*^9, 3.70266788249536*^9}, {
+   3.70825317226714*^9, 
+   3.708253174396119*^9}},ExpressionUUID->"8badf66f-b944-4538-a70e-\
 32d7f4c650ab"]
 }, Open  ]],
 
@@ -1982,9 +1972,9 @@ e660dbf87bc7"],
 
 Cell[CellGroupData[{
 
-Cell[BoxData["stapleOutputs"], "Input",
- CellChangeTimes->{{3.707330179572913*^9, 
-  3.707330183594152*^9}},ExpressionUUID->"42d7bdb2-e586-48a1-b292-\
+Cell[BoxData["cylrepOutputs"], "Input",
+ CellChangeTimes->{{3.707330179572913*^9, 3.707330183594152*^9}, 
+   3.7082531756352386`*^9},ExpressionUUID->"42d7bdb2-e586-48a1-b292-\
 7a5c72f63b4c"],
 
 Cell[BoxData[
@@ -2002,9 +1992,9 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"Output", "/.", "staplePack"}]], "Input",
- CellChangeTimes->{{3.70733006954773*^9, 
-  3.70733016132583*^9}},ExpressionUUID->"947a19c0-4f19-4e63-8662-\
+ RowBox[{"Output", "/.", "cylrepPack"}]], "Input",
+ CellChangeTimes->{{3.70733006954773*^9, 3.70733016132583*^9}, 
+   3.708253176082878*^9},ExpressionUUID->"947a19c0-4f19-4e63-8662-\
 03bf251f1e10"],
 
 Cell[BoxData[
@@ -2024,16 +2014,16 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"staplePack", " ", "=", " ", 
-   RowBox[{"packOptimize", "[", "staplePack0", "]"}]}], ";"}]], "Input",
+  RowBox[{"cylrepPack", " ", "=", " ", 
+   RowBox[{"packOptimize", "[", "cylrepPack0", "]"}]}], ";"}]], "Input",
  CellChangeTimes->{{3.405593154617752*^9, 3.405593181273087*^9}, {
    3.405594926006316*^9, 3.4055949283713083`*^9}, {3.40560847035536*^9, 
    3.405608470488098*^9}, {3.407559202182371*^9, 3.407559202626436*^9}, {
    3.408564854380271*^9, 3.408564873627013*^9}, 3.41106665985861*^9, {
    3.411072816696417*^9, 3.4110728451363277`*^9}, {3.411073752072069*^9, 
    3.4110737531085377`*^9}, {3.702666542649117*^9, 3.702666543244851*^9}, {
-   3.702667882654457*^9, 
-   3.702667882764448*^9}},ExpressionUUID->"579e0215-e217-4a6f-aa64-\
+   3.702667882654457*^9, 3.702667882764448*^9}, {3.7082531790877953`*^9, 
+   3.708253180214933*^9}},ExpressionUUID->"579e0215-e217-4a6f-aa64-\
 97bfa8d33974"],
 
 Cell[CellGroupData[{
@@ -2416,165 +2406,193 @@ tx466\\n\\ntzz580 -> tx468\\n\\ntzz581 -> tx491\\n\\ntzz573 -> tx535\"\>"], \
   3.707387982674912*^9},ExpressionUUID->"b4d96b08-2646-4a9b-9408-\
 9520a3983c4a"],
 
-Cell[BoxData["\<\"After removal: \
-CCode[STAPLE_SET_PARAMETER(ks,ks);]\\n\\nCCode[STAPLE_SET_PARAMETER(r0,r0);]\\\
-n\\nCCode[STAPLE_SET_PARAMETER(I1,rigidBodyK);]\\n\\nCCode[STAPLE_SET_\
-PARAMETER(I2,rigidBodyL);]\\n\\nCCode[STAPLE_SET_POSITION(ak,I1,0);]\\n\\\
-nCCode[STAPLE_SET_POSITION(bk,I1,1);]\\n\\nCCode[STAPLE_SET_POSITION(ck,I1,2);\
-]\\n\\nCCode[STAPLE_SET_POSITION(dk,I1,3);]\\n\\nCCode[STAPLE_SET_POSITION(xk,\
-I1,4);]\\n\\nCCode[STAPLE_SET_POSITION(yk,I1,5);]\\n\\nCCode[STAPLE_SET_\
-POSITION(zk,I1,6);]\\n\\nCCode[STAPLE_SET_POSITION(al,I2,0);]\\n\\nCCode[\
-STAPLE_SET_POSITION(bl,I2,1);]\\n\\nCCode[STAPLE_SET_POSITION(cl,I2,2);]\\n\\\
-nCCode[STAPLE_SET_POSITION(dl,I2,3);]\\n\\nCCode[STAPLE_SET_POSITION(xl,I2,4);\
-]\\n\\nCCode[STAPLE_SET_POSITION(yl,I2,5);]\\n\\nCCode[STAPLE_SET_POSITION(zl,\
-I2,6);]\\n\\nCCode[STAPLE_SET_POINT(pxk,pointK,getX());]\\n\\nCCode[STAPLE_\
-SET_POINT(pyk,pointK,getY());]\\n\\nCCode[STAPLE_SET_POINT(pzk,pointK,getZ());\
-]\\n\\nCCode[STAPLE_SET_POINT(pxl,pointL,getX());]\\n\\nCCode[STAPLE_SET_\
-POINT(pyl,pointL,getY());]\\n\\nCCode[STAPLE_SET_POINT(pzl,pointL,getZ());]\\\
-n\\npower2[ak] -> tx278\\n\\npower2[al] -> tx279\\n\\npower2[bk] -> \
-tx280\\n\\npower2[bl] -> tx281\\n\\npower2[ck] -> tx282\\n\\npower2[cl] -> \
-tx283\\n\\npower2[dk] -> tx284\\n\\npower2[dl] -> tx285\\n\\n-pxk -> \
-tzz565\\n\\nak ck -> tzz583\\n\\ntzz565 tzz583 -> tx286\\n\\nbk ck pxk -> \
-tx287\\n\\ndk pxk -> tzz579\\n\\nak tzz579 -> tx288\\n\\nbk tzz579 -> \
-tx289\\n\\n-pxl -> tzz575\\n\\nal cl tzz575 -> tx290\\n\\nbl cl pxl -> \
-tx291\\n\\ndl pxl -> tzz577\\n\\nal tzz577 -> tx292\\n\\nbl tzz577 -> \
-tx293\\n\\nak bk -> tzz584\\n\\npyk tzz584 -> tx294\\n\\nck pyk -> \
-tzz582\\n\\nbk tzz582 -> tx295\\n\\n-pyk -> tzz572\\n\\nak dk tzz572 -> tx296\
-\\n\\ndk tzz582 -> tx297\\n\\nal bl pyl -> tx298\\n\\ncl pyl -> \
-tzz581\\n\\nbl tzz581 -> tx299\\n\\n-pyl -> tzz574\\n\\nal dl tzz574 -> tx300\
-\\n\\ndl tzz581 -> tx301\\n\\n-pzk -> tzz564\\n\\ntzz564 tzz584 -> \
-tx302\\n\\npzk tzz583 -> tx303\\n\\ndk pzk -> tzz578\\n\\nbk tzz578 -> \
-tx304\\n\\nck tzz578 -> tx305\\n\\nbl pzl -> tzz573\\n\\n-(al tzz573) -> \
-tx306\\n\\ncl pzl -> tzz580\\n\\nal tzz580 -> tx307\\n\\ndl tzz573 -> \
-tx308\\n\\ndl tzz580 -> tx309\\n\\ntx280 tzz572 -> tx310\\n\\ntx280 tzz564 -> \
-tx311\\n\\ntx281 tzz574 -> tx312\\n\\n-pzl -> tzz585\\n\\ntx281 tzz585 -> \
-tx313\\n\\ntx282 tzz565 -> tx314\\n\\ntx282 tzz564 -> tx315\\n\\ntx283 tzz575 \
--> tx316\\n\\ntx283 tzz585 -> tx317\\n\\ntx284 tzz565 -> tx318\\n\\ntx284 \
-tzz572 -> tx319\\n\\ntx278 + tx280 + tx282 + tx284 -> tx320\\n\\ntx285 tzz575 \
--> tx321\\n\\ntx285 tzz574 -> tx322\\n\\ntx279 + tx281 + tx283 + tx285 -> \
-tx323\\n\\ntx286 + tx289 + tx294 + tx297 + tx311 + tx315 -> tx324\\n\\ntx290 \
-+ tx293 + tx298 + tx301 + tx313 + tx317 -> tx325\\n\\ntx295 + tx296 + tx303 + \
-tx304 + tx314 + tx318 -> tx326\\n\\ntx287 + tx288 + tx302 + tx305 + tx310 + \
-tx319 -> tx327\\n\\nreciprocal[tx320] -> tx328\\n\\ntx299 + tx300 + tx307 + \
-tx308 + tx316 + tx321 -> tx329\\n\\ntx291 + tx292 + tx306 + tx309 + tx312 + \
-tx322 -> tx330\\n\\nreciprocal[tx323] -> tx331\\n\\ntzz575 -> \
-tx332\\n\\ntzz574 -> tx333\\n\\ntzz585 -> tx334\\n\\n2. tx328 -> \
-tzz556\\n\\ntx324 tzz556 -> tx335\\n\\ntx326 tzz556 -> tx336\\n\\ntx327 \
-tzz556 -> tx337\\n\\n-2. tx331 -> tzz555\\n\\ntx325 tzz555 -> \
-tx338\\n\\ntx329 tzz555 -> tx339\\n\\ntx330 tzz555 -> tx340\\n\\n-xl -> tx341\
-\\n\\n-yl -> tx342\\n\\n-zl -> tx343\\n\\npxk + tx332 + tx336 + tx339 + tx341 \
-+ xk -> tx344\\n\\npyk + tx333 + tx337 + tx340 + tx342 + yk -> tx345\\n\\npzk \
-+ tx334 + tx335 + tx338 + tx343 + zk -> tx346\\n\\npower2[tx344] -> \
-tx347\\n\\npower2[tx345] -> tx348\\n\\npower2[tx346] -> tx349\\n\\ntx347 + \
-tx348 + tx349 -> tx350\\n\\n-r0 -> tx351\\n\\nmysqrt[tx350] -> \
-tx352\\n\\ntx351 + tx352 -> tx353\\n\\npower2[tx353] -> tx354\\n\\nks tx354 \
--> Energy\\n\\nCCode[STAPLE_ENERGY_ACCUMULATE(Energy);]\\n\\ntx283 tx332 -> \
-tx355\\n\\ntx285 tx332 -> tx356\\n\\ntx281 tx333 -> tx357\\n\\ntx285 tx333 -> \
-tx358\\n\\ntx281 tx334 -> tx359\\n\\ntx283 tx334 -> tx360\\n\\ntx299 + tx300 \
-+ tx307 + tx308 + tx355 + tx356 -> tx361\\n\\ntx291 + tx292 + tx306 + tx309 + \
-tx357 + tx358 -> tx362\\n\\ntx290 + tx293 + tx298 + tx301 + tx359 + tx360 -> \
-tx363\\n\\nck tzz565 -> tx364\\n\\ntzz579 -> tx365\\n\\nbk pyk -> \
-tx366\\n\\ndk tzz572 -> tx367\\n\\nbk tzz564 -> tx368\\n\\nck pzk -> tx369\\n\
-\\ntx361 tzz555 -> tx370\\n\\ntx362 tzz555 -> tx371\\n\\ntx363 tzz555 -> \
-tx372\\n\\npower2[tx328] -> tx373\\n\\ntx364 + tx366 -> tx374\\n\\ntx365 + \
-tx368 -> tx375\\n\\ntx367 + tx369 -> tx376\\n\\npxk + tx332 + tx336 + tx341 + \
-tx370 + xk -> tx377\\n\\npyk + tx333 + tx337 + tx342 + tx371 + yk -> tx378\\n\
-\\npzk + tx334 + tx335 + tx343 + tx372 + zk -> tx379\\n\\n-4. tx373 -> tzz560\
-\\n\\ntx324 tzz560 -> tzz571\\n\\nak tzz571 -> tx380\\n\\ntx326 tzz560 -> \
-tzz570\\n\\nak tzz570 -> tx381\\n\\ntx327 tzz560 -> tzz569\\n\\nak tzz569 -> \
-tx382\\n\\ntx374 tzz556 -> tx383\\n\\ntx375 tzz556 -> tx384\\n\\ntx376 tzz556 \
--> tx385\\n\\npower2[tx377] -> tx386\\n\\npower2[tx378] -> \
-tx387\\n\\npower2[tx379] -> tx388\\n\\ntx380 + tx383 -> tx389\\n\\ntx382 + \
-tx384 -> tx390\\n\\ntx381 + tx385 -> tx391\\n\\ntx386 + tx387 + tx388 -> \
-tx392\\n\\n2. tx379 -> tzz561\\n\\ntx389 tzz561 -> tx393\\n\\n2. tx378 -> \
-tzz562\\n\\ntx390 tzz562 -> tx394\\n\\n2. tx377 -> tzz563\\n\\ntx391 tzz563 \
--> tx395\\n\\nmysqrt[tx392] -> tx396\\n\\nreciprocal[tx396] -> \
-tx397\\n\\ntx393 + tx394 + tx395 -> tx398\\n\\ntx351 + tx396 -> \
-tx399\\n\\ntx397 tx399 -> tzz557\\n\\nks tzz557 -> tzz558\\n\\ntx398 tzz558 \
--> gak\\n\\n-gak -> fak\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 0, fak \
-);]\\n\\nck pxk -> tx400\\n\\nak pyk -> tx401\\n\\ntzz582 -> tx402\\n\\nak \
-tzz564 -> tx403\\n\\n-2. bk pzk -> tx404\\n\\ntzz578 -> tx405\\n\\n-2. tx366 \
--> tx406\\n\\ntx365 + tx401 + tx404 -> tx407\\n\\ntx402 + tx405 -> \
-tx408\\n\\ntx400 + tx403 + tx406 -> tx409\\n\\nbk tzz571 -> tx410\\n\\nbk \
-tzz570 -> tx411\\n\\nbk tzz569 -> tx412\\n\\ntx407 tzz556 -> tx413\\n\\ntx408 \
-tzz556 -> tx414\\n\\ntx409 tzz556 -> tx415\\n\\ntx410 + tx413 -> \
-tx416\\n\\ntx411 + tx414 -> tx417\\n\\ntx412 + tx415 -> tx418\\n\\ntx416 \
-tzz561 -> tx419\\n\\ntx417 tzz563 -> tx420\\n\\ntx418 tzz562 -> \
-tx421\\n\\ntx419 + tx420 + tx421 -> tx422\\n\\ntx422 tzz558 -> gbk\\n\\n-gbk \
--> fbk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 1, fbk );]\\n\\nak tzz565 -> \
-tx423\\n\\nbk pxk -> tx424\\n\\ndk pyk -> tx425\\n\\nak pzk -> tx426\\n\\n-2. \
-tx369 -> tx427\\n\\n-2. tx400 -> tx428\\n\\ntx405 + tx424 -> tx429\\n\\ntx423 \
-+ tx425 + tx427 -> tx430\\n\\ntx366 + tx426 + tx428 -> tx431\\n\\nck tzz571 \
--> tx432\\n\\nck tzz570 -> tx433\\n\\nck tzz569 -> tx434\\n\\ntx429 tzz556 -> \
-tx435\\n\\ntx430 tzz556 -> tx436\\n\\ntx431 tzz556 -> tx437\\n\\ntx434 + \
-tx435 -> tx438\\n\\ntx432 + tx436 -> tx439\\n\\ntx433 + tx437 -> \
-tx440\\n\\ntx438 tzz562 -> tx441\\n\\ntx439 tzz561 -> tx442\\n\\ntx440 tzz563 \
--> tx443\\n\\ntx441 + tx442 + tx443 -> tx444\\n\\ntx444 tzz558 -> \
-gck\\n\\n-gck -> fck\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 2, fck \
-);]\\n\\nak pxk -> tx445\\n\\nbk pzk -> tx446\\n\\n-2. tx365 -> \
-tx447\\n\\n-tx401 -> tx448\\n\\n-2. tx425 -> tx449\\n\\ntx402 + tx424 -> \
-tx450\\n\\ntx446 + tx447 + tx448 -> tx451\\n\\ntx369 + tx445 + tx449 -> tx452\
-\\n\\ndk tzz571 -> tx453\\n\\ndk tzz570 -> tx454\\n\\ndk tzz569 -> \
-tx455\\n\\ntx450 tzz556 -> tx456\\n\\ntx451 tzz556 -> tx457\\n\\ntx452 tzz556 \
--> tx458\\n\\ntx453 + tx456 -> tx459\\n\\ntx454 + tx457 -> tx460\\n\\ntx455 + \
-tx458 -> tx461\\n\\ntx459 tzz561 -> tx462\\n\\ntx460 tzz563 -> \
-tx463\\n\\ntx461 tzz562 -> tx464\\n\\ntx462 + tx463 + tx464 -> \
-tx465\\n\\ntx465 tzz558 -> gdk\\n\\n-gdk -> \
-fdk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 3, fdk );]\\n\\ntzz558 tzz563 -> \
-gxk\\n\\n-gxk -> fxk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 4, fxk \
-);]\\n\\ntzz558 tzz562 -> gyk\\n\\n-gyk -> \
-fyk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 5, fyk );]\\n\\ntzz558 tzz561 -> \
-gzk\\n\\n-gzk -> fzk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 6, fzk \
-);]\\n\\ntzz577 -> tx466\\n\\nbl pyl -> tx467\\n\\ntzz580 -> tx468\\n\\ncl \
-tx332 -> tx469\\n\\ndl tx333 -> tx470\\n\\nbl tx334 -> \
-tx471\\n\\npower2[tx331] -> tx472\\n\\ntx467 + tx469 -> tx473\\n\\ntx468 + \
-tx470 -> tx474\\n\\ntx466 + tx471 -> tx475\\n\\n4. tx472 -> tzz559\\n\\ntx361 \
-tzz559 -> tzz568\\n\\nal tzz568 -> tx476\\n\\ntx362 tzz559 -> tzz567\\n\\nal \
-tzz567 -> tx477\\n\\ntx363 tzz559 -> tzz566\\n\\nal tzz566 -> \
-tx478\\n\\ntx473 tzz555 -> tx479\\n\\ntx474 tzz555 -> tx480\\n\\ntx475 tzz555 \
--> tx481\\n\\ntx478 + tx479 -> tx482\\n\\ntx476 + tx480 -> tx483\\n\\ntx477 + \
-tx481 -> tx484\\n\\ntx482 tzz561 -> tx485\\n\\ntx483 tzz563 -> \
-tx486\\n\\ntx484 tzz562 -> tx487\\n\\ntx485 + tx486 + tx487 -> \
-tx488\\n\\ntx488 tzz558 -> gal\\n\\n-gal -> \
-fal\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 0, fal );]\\n\\ncl pxl -> tx489\\n\
-\\nal pyl -> tx490\\n\\ntzz581 -> tx491\\n\\n-2. tzz573 -> tx492\\n\\ndl pzl \
--> tx493\\n\\nal tx334 -> tx494\\n\\n-2. tx467 -> tx495\\n\\ntx466 + tx490 + \
-tx492 -> tx496\\n\\ntx491 + tx493 -> tx497\\n\\ntx489 + tx494 + tx495 -> \
-tx498\\n\\nbl tzz568 -> tx499\\n\\nbl tzz567 -> tx500\\n\\nbl tzz566 -> tx501\
-\\n\\ntx496 tzz555 -> tx502\\n\\ntx497 tzz555 -> tx503\\n\\ntx498 tzz555 -> \
-tx504\\n\\ntx501 + tx502 -> tx505\\n\\ntx499 + tx503 -> tx506\\n\\ntx500 + \
-tx504 -> tx507\\n\\ntx505 tzz561 -> tx508\\n\\ntx506 tzz563 -> \
-tx509\\n\\ntx507 tzz562 -> tx510\\n\\ntx508 + tx509 + tx510 -> \
-tx511\\n\\ntx511 tzz558 -> gbl\\n\\n-gbl -> \
-fbl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 1, fbl );]\\n\\nbl pxl -> tx512\\n\
-\\ndl pyl -> tx513\\n\\nal pzl -> tx514\\n\\nal tx332 -> tx515\\n\\n-2. tx468 \
--> tx516\\n\\n-2. tx489 -> tx517\\n\\ntx493 + tx512 -> tx518\\n\\ntx513 + \
-tx515 + tx516 -> tx519\\n\\ntx467 + tx514 + tx517 -> tx520\\n\\ncl tzz568 -> \
-tx521\\n\\ncl tzz567 -> tx522\\n\\ncl tzz566 -> tx523\\n\\ntx518 tzz555 -> \
-tx524\\n\\ntx519 tzz555 -> tx525\\n\\ntx520 tzz555 -> tx526\\n\\ntx522 + \
-tx524 -> tx527\\n\\ntx523 + tx525 -> tx528\\n\\ntx521 + tx526 -> \
-tx529\\n\\ntx527 tzz562 -> tx530\\n\\ntx528 tzz561 -> tx531\\n\\ntx529 tzz563 \
--> tx532\\n\\ntx530 + tx531 + tx532 -> tx533\\n\\ntx533 tzz558 -> \
-gcl\\n\\n-gcl -> fcl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 2, fcl \
-);]\\n\\nal pxl -> tx534\\n\\ntzz573 -> tx535\\n\\nal tx333 -> tx536\\n\\n-2. \
-tx466 -> tx537\\n\\n-2. tx513 -> tx538\\n\\ntx491 + tx512 -> tx539\\n\\ntx535 \
-+ tx536 + tx537 -> tx540\\n\\ntx468 + tx534 + tx538 -> tx541\\n\\ndl tzz568 \
--> tx542\\n\\ndl tzz567 -> tx543\\n\\ndl tzz566 -> tx544\\n\\ntx539 tzz555 -> \
-tx545\\n\\ntx540 tzz555 -> tx546\\n\\ntx541 tzz555 -> tx547\\n\\ntx544 + \
-tx545 -> tx548\\n\\ntx542 + tx546 -> tx549\\n\\ntx543 + tx547 -> \
-tx550\\n\\ntx548 tzz561 -> tx551\\n\\ntx549 tzz563 -> tx552\\n\\ntx550 tzz562 \
--> tx553\\n\\ntx551 + tx552 + tx553 -> tx554\\n\\ntx554 tzz558 -> \
-gdl\\n\\n-gdl -> fdl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 3, fdl \
-);]\\n\\n-2. tzz558 -> tzz576\\n\\ntx377 tzz576 -> gxl\\n\\n-gxl -> \
-fxl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 4, fxl );]\\n\\ntx378 tzz576 -> \
-gyl\\n\\n-gyl -> fyl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 5, fyl \
-);]\\n\\ntx379 tzz576 -> gzl\\n\\n-gzl -> \
-fzl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 6, fzl );]\"\>"], "Print",
- CellChangeTimes->{3.702666640270697*^9, 3.702667223609469*^9, 
-  3.702889707661439*^9, 3.702891210318593*^9, 3.702894400586055*^9, 
-  3.702894500717475*^9, 3.7073192647294073`*^9, 3.707321572021159*^9, 
-  3.707328272120843*^9, 3.707330300475561*^9, 3.7073409608399897`*^9, 
-  3.707387982678156*^9},ExpressionUUID->"229031f7-cf40-44ca-af58-\
+Cell[BoxData["\"\<After removal: \
+CCode[CYLREP_SET_PARAMETER(ks,ks);]\\\\n\\\\nCCode[CYLREP_SET_PARAMETER(r0,r0)\
+;]\\\\n\\\\nCCode[CYLREP_SET_PARAMETER(I1,rigidBodyK);]\\\\n\\\\nCCode[CYLREP_\
+SET_PARAMETER(I2,rigidBodyL);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(ak,I1,0);]\\\
+\\n\\\\nCCode[CYLREP_SET_POSITION(bk,I1,1);]\\\\n\\\\nCCode[CYLREP_SET_\
+POSITION(ck,I1,2);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(dk,I1,3);]\\\\n\\\\\
+nCCode[CYLREP_SET_POSITION(xk,I1,4);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(yk,\
+I1,5);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(zk,I1,6);]\\\\n\\\\nCCode[CYLREP_\
+SET_POSITION(al,I2,0);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(bl,I2,1);]\\\\n\\\\\
+nCCode[CYLREP_SET_POSITION(cl,I2,2);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(dl,\
+I2,3);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(xl,I2,4);]\\\\n\\\\nCCode[CYLREP_\
+SET_POSITION(yl,I2,5);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(zl,I2,6);]\\\\n\\\\\
+nCCode[CYLREP_SET_POINT(pxk,pointK,getX());]\\\\n\\\\nCCode[CYLREP_SET_POINT(\
+pyk,pointK,getY());]\\\\n\\\\nCCode[CYLREP_SET_POINT(pzk,pointK,getZ());]\\\\\
+n\\\\nCCode[CYLREP_SET_POINT(pxl,pointL,getX());]\\\\n\\\\nCCode[CYLREP_SET_\
+POINT(pyl,pointL,getY());]\\\\n\\\\nCCode[CYLREP_SET_POINT(pzl,pointL,getZ());\
+]\\\\n\\\\npower2[ak] -> tx278\\\\n\\\\npower2[al] -> \
+tx279\\\\n\\\\npower2[bk] -> tx280\\\\n\\\\npower2[bl] -> \
+tx281\\\\n\\\\npower2[ck] -> tx282\\\\n\\\\npower2[cl] -> \
+tx283\\\\n\\\\npower2[dk] -> tx284\\\\n\\\\npower2[dl] -> tx285\\\\n\\\\n-pxk \
+-> tzz565\\\\n\\\\nak ck -> tzz583\\\\n\\\\ntzz565 tzz583 -> \
+tx286\\\\n\\\\nbk ck pxk -> tx287\\\\n\\\\ndk pxk -> tzz579\\\\n\\\\nak \
+tzz579 -> tx288\\\\n\\\\nbk tzz579 -> tx289\\\\n\\\\n-pxl -> \
+tzz575\\\\n\\\\nal cl tzz575 -> tx290\\\\n\\\\nbl cl pxl -> tx291\\\\n\\\\ndl \
+pxl -> tzz577\\\\n\\\\nal tzz577 -> tx292\\\\n\\\\nbl tzz577 -> \
+tx293\\\\n\\\\nak bk -> tzz584\\\\n\\\\npyk tzz584 -> tx294\\\\n\\\\nck pyk \
+-> tzz582\\\\n\\\\nbk tzz582 -> tx295\\\\n\\\\n-pyk -> tzz572\\\\n\\\\nak dk \
+tzz572 -> tx296\\\\n\\\\ndk tzz582 -> tx297\\\\n\\\\nal bl pyl -> \
+tx298\\\\n\\\\ncl pyl -> tzz581\\\\n\\\\nbl tzz581 -> tx299\\\\n\\\\n-pyl -> \
+tzz574\\\\n\\\\nal dl tzz574 -> tx300\\\\n\\\\ndl tzz581 -> \
+tx301\\\\n\\\\n-pzk -> tzz564\\\\n\\\\ntzz564 tzz584 -> tx302\\\\n\\\\npzk \
+tzz583 -> tx303\\\\n\\\\ndk pzk -> tzz578\\\\n\\\\nbk tzz578 -> \
+tx304\\\\n\\\\nck tzz578 -> tx305\\\\n\\\\nbl pzl -> tzz573\\\\n\\\\n-(al \
+tzz573) -> tx306\\\\n\\\\ncl pzl -> tzz580\\\\n\\\\nal tzz580 -> tx307\\\\n\\\
+\\ndl tzz573 -> tx308\\\\n\\\\ndl tzz580 -> tx309\\\\n\\\\ntx280 tzz572 -> \
+tx310\\\\n\\\\ntx280 tzz564 -> tx311\\\\n\\\\ntx281 tzz574 -> \
+tx312\\\\n\\\\n-pzl -> tzz585\\\\n\\\\ntx281 tzz585 -> tx313\\\\n\\\\ntx282 \
+tzz565 -> tx314\\\\n\\\\ntx282 tzz564 -> tx315\\\\n\\\\ntx283 tzz575 -> tx316\
+\\\\n\\\\ntx283 tzz585 -> tx317\\\\n\\\\ntx284 tzz565 -> tx318\\\\n\\\\ntx284 \
+tzz572 -> tx319\\\\n\\\\ntx278 + tx280 + tx282 + tx284 -> \
+tx320\\\\n\\\\ntx285 tzz575 -> tx321\\\\n\\\\ntx285 tzz574 -> \
+tx322\\\\n\\\\ntx279 + tx281 + tx283 + tx285 -> tx323\\\\n\\\\ntx286 + tx289 \
++ tx294 + tx297 + tx311 + tx315 -> tx324\\\\n\\\\ntx290 + tx293 + tx298 + \
+tx301 + tx313 + tx317 -> tx325\\\\n\\\\ntx295 + tx296 + tx303 + tx304 + tx314 \
++ tx318 -> tx326\\\\n\\\\ntx287 + tx288 + tx302 + tx305 + tx310 + tx319 -> \
+tx327\\\\n\\\\nreciprocal[tx320] -> tx328\\\\n\\\\ntx299 + tx300 + tx307 + \
+tx308 + tx316 + tx321 -> tx329\\\\n\\\\ntx291 + tx292 + tx306 + tx309 + tx312 \
++ tx322 -> tx330\\\\n\\\\nreciprocal[tx323] -> tx331\\\\n\\\\ntzz575 -> tx332\
+\\\\n\\\\ntzz574 -> tx333\\\\n\\\\ntzz585 -> tx334\\\\n\\\\n2. tx328 -> \
+tzz556\\\\n\\\\ntx324 tzz556 -> tx335\\\\n\\\\ntx326 tzz556 -> \
+tx336\\\\n\\\\ntx327 tzz556 -> tx337\\\\n\\\\n-2. tx331 -> \
+tzz555\\\\n\\\\ntx325 tzz555 -> tx338\\\\n\\\\ntx329 tzz555 -> \
+tx339\\\\n\\\\ntx330 tzz555 -> tx340\\\\n\\\\n-xl -> tx341\\\\n\\\\n-yl -> \
+tx342\\\\n\\\\n-zl -> tx343\\\\n\\\\npxk + tx332 + tx336 + tx339 + tx341 + xk \
+-> tx344\\\\n\\\\npyk + tx333 + tx337 + tx340 + tx342 + yk -> \
+tx345\\\\n\\\\npzk + tx334 + tx335 + tx338 + tx343 + zk -> \
+tx346\\\\n\\\\npower2[tx344] -> tx347\\\\n\\\\npower2[tx345] -> \
+tx348\\\\n\\\\npower2[tx346] -> tx349\\\\n\\\\ntx347 + tx348 + tx349 -> tx350\
+\\\\n\\\\n-r0 -> tx351\\\\n\\\\nmysqrt[tx350] -> tx352\\\\n\\\\ntx351 + tx352 \
+-> tx353\\\\n\\\\npower2[tx353] -> tx354\\\\n\\\\nks tx354 -> \
+Energy\\\\n\\\\nCCode[CYLREP_ENERGY_ACCUMULATE(Energy);]\\\\n\\\\ntx283 tx332 \
+-> tx355\\\\n\\\\ntx285 tx332 -> tx356\\\\n\\\\ntx281 tx333 -> \
+tx357\\\\n\\\\ntx285 tx333 -> tx358\\\\n\\\\ntx281 tx334 -> \
+tx359\\\\n\\\\ntx283 tx334 -> tx360\\\\n\\\\ntx299 + tx300 + tx307 + tx308 + \
+tx355 + tx356 -> tx361\\\\n\\\\ntx291 + tx292 + tx306 + tx309 + tx357 + tx358 \
+-> tx362\\\\n\\\\ntx290 + tx293 + tx298 + tx301 + tx359 + tx360 -> tx363\\\\n\
+\\\\nck tzz565 -> tx364\\\\n\\\\ntzz579 -> tx365\\\\n\\\\nbk pyk -> \
+tx366\\\\n\\\\ndk tzz572 -> tx367\\\\n\\\\nbk tzz564 -> tx368\\\\n\\\\nck pzk \
+-> tx369\\\\n\\\\ntx361 tzz555 -> tx370\\\\n\\\\ntx362 tzz555 -> tx371\\\\n\\\
+\\ntx363 tzz555 -> tx372\\\\n\\\\npower2[tx328] -> tx373\\\\n\\\\ntx364 + \
+tx366 -> tx374\\\\n\\\\ntx365 + tx368 -> tx375\\\\n\\\\ntx367 + tx369 -> \
+tx376\\\\n\\\\npxk + tx332 + tx336 + tx341 + tx370 + xk -> tx377\\\\n\\\\npyk \
++ tx333 + tx337 + tx342 + tx371 + yk -> tx378\\\\n\\\\npzk + tx334 + tx335 + \
+tx343 + tx372 + zk -> tx379\\\\n\\\\n-4. tx373 -> tzz560\\\\n\\\\ntx324 \
+tzz560 -> tzz571\\\\n\\\\nak tzz571 -> tx380\\\\n\\\\ntx326 tzz560 -> \
+tzz570\\\\n\\\\nak tzz570 -> tx381\\\\n\\\\ntx327 tzz560 -> \
+tzz569\\\\n\\\\nak tzz569 -> tx382\\\\n\\\\ntx374 tzz556 -> \
+tx383\\\\n\\\\ntx375 tzz556 -> tx384\\\\n\\\\ntx376 tzz556 -> \
+tx385\\\\n\\\\npower2[tx377] -> tx386\\\\n\\\\npower2[tx378] -> \
+tx387\\\\n\\\\npower2[tx379] -> tx388\\\\n\\\\ntx380 + tx383 -> \
+tx389\\\\n\\\\ntx382 + tx384 -> tx390\\\\n\\\\ntx381 + tx385 -> \
+tx391\\\\n\\\\ntx386 + tx387 + tx388 -> tx392\\\\n\\\\n2. tx379 -> \
+tzz561\\\\n\\\\ntx389 tzz561 -> tx393\\\\n\\\\n2. tx378 -> \
+tzz562\\\\n\\\\ntx390 tzz562 -> tx394\\\\n\\\\n2. tx377 -> \
+tzz563\\\\n\\\\ntx391 tzz563 -> tx395\\\\n\\\\nmysqrt[tx392] -> \
+tx396\\\\n\\\\nreciprocal[tx396] -> tx397\\\\n\\\\ntx393 + tx394 + tx395 -> \
+tx398\\\\n\\\\ntx351 + tx396 -> tx399\\\\n\\\\ntx397 tx399 -> \
+tzz557\\\\n\\\\nks tzz557 -> tzz558\\\\n\\\\ntx398 tzz558 -> \
+gak\\\\n\\\\n-gak -> fak\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 0, fak \
+);]\\\\n\\\\nck pxk -> tx400\\\\n\\\\nak pyk -> tx401\\\\n\\\\ntzz582 -> \
+tx402\\\\n\\\\nak tzz564 -> tx403\\\\n\\\\n-2. bk pzk -> \
+tx404\\\\n\\\\ntzz578 -> tx405\\\\n\\\\n-2. tx366 -> tx406\\\\n\\\\ntx365 + \
+tx401 + tx404 -> tx407\\\\n\\\\ntx402 + tx405 -> tx408\\\\n\\\\ntx400 + tx403 \
++ tx406 -> tx409\\\\n\\\\nbk tzz571 -> tx410\\\\n\\\\nbk tzz570 -> tx411\\\\n\
+\\\\nbk tzz569 -> tx412\\\\n\\\\ntx407 tzz556 -> tx413\\\\n\\\\ntx408 tzz556 \
+-> tx414\\\\n\\\\ntx409 tzz556 -> tx415\\\\n\\\\ntx410 + tx413 -> \
+tx416\\\\n\\\\ntx411 + tx414 -> tx417\\\\n\\\\ntx412 + tx415 -> \
+tx418\\\\n\\\\ntx416 tzz561 -> tx419\\\\n\\\\ntx417 tzz563 -> \
+tx420\\\\n\\\\ntx418 tzz562 -> tx421\\\\n\\\\ntx419 + tx420 + tx421 -> \
+tx422\\\\n\\\\ntx422 tzz558 -> gbk\\\\n\\\\n-gbk -> \
+fbk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 1, fbk );]\\\\n\\\\nak tzz565 \
+-> tx423\\\\n\\\\nbk pxk -> tx424\\\\n\\\\ndk pyk -> tx425\\\\n\\\\nak pzk -> \
+tx426\\\\n\\\\n-2. tx369 -> tx427\\\\n\\\\n-2. tx400 -> tx428\\\\n\\\\ntx405 \
++ tx424 -> tx429\\\\n\\\\ntx423 + tx425 + tx427 -> tx430\\\\n\\\\ntx366 + \
+tx426 + tx428 -> tx431\\\\n\\\\nck tzz571 -> tx432\\\\n\\\\nck tzz570 -> \
+tx433\\\\n\\\\nck tzz569 -> tx434\\\\n\\\\ntx429 tzz556 -> \
+tx435\\\\n\\\\ntx430 tzz556 -> tx436\\\\n\\\\ntx431 tzz556 -> \
+tx437\\\\n\\\\ntx434 + tx435 -> tx438\\\\n\\\\ntx432 + tx436 -> \
+tx439\\\\n\\\\ntx433 + tx437 -> tx440\\\\n\\\\ntx438 tzz562 -> \
+tx441\\\\n\\\\ntx439 tzz561 -> tx442\\\\n\\\\ntx440 tzz563 -> \
+tx443\\\\n\\\\ntx441 + tx442 + tx443 -> tx444\\\\n\\\\ntx444 tzz558 -> \
+gck\\\\n\\\\n-gck -> fck\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 2, fck \
+);]\\\\n\\\\nak pxk -> tx445\\\\n\\\\nbk pzk -> tx446\\\\n\\\\n-2. tx365 -> \
+tx447\\\\n\\\\n-tx401 -> tx448\\\\n\\\\n-2. tx425 -> tx449\\\\n\\\\ntx402 + \
+tx424 -> tx450\\\\n\\\\ntx446 + tx447 + tx448 -> tx451\\\\n\\\\ntx369 + tx445 \
++ tx449 -> tx452\\\\n\\\\ndk tzz571 -> tx453\\\\n\\\\ndk tzz570 -> tx454\\\\n\
+\\\\ndk tzz569 -> tx455\\\\n\\\\ntx450 tzz556 -> tx456\\\\n\\\\ntx451 tzz556 \
+-> tx457\\\\n\\\\ntx452 tzz556 -> tx458\\\\n\\\\ntx453 + tx456 -> \
+tx459\\\\n\\\\ntx454 + tx457 -> tx460\\\\n\\\\ntx455 + tx458 -> \
+tx461\\\\n\\\\ntx459 tzz561 -> tx462\\\\n\\\\ntx460 tzz563 -> \
+tx463\\\\n\\\\ntx461 tzz562 -> tx464\\\\n\\\\ntx462 + tx463 + tx464 -> \
+tx465\\\\n\\\\ntx465 tzz558 -> gdk\\\\n\\\\n-gdk -> \
+fdk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 3, fdk );]\\\\n\\\\ntzz558 \
+tzz563 -> gxk\\\\n\\\\n-gxk -> fxk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, \
+4, fxk );]\\\\n\\\\ntzz558 tzz562 -> gyk\\\\n\\\\n-gyk -> \
+fyk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 5, fyk );]\\\\n\\\\ntzz558 \
+tzz561 -> gzk\\\\n\\\\n-gzk -> fzk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, \
+6, fzk );]\\\\n\\\\ntzz577 -> tx466\\\\n\\\\nbl pyl -> tx467\\\\n\\\\ntzz580 \
+-> tx468\\\\n\\\\ncl tx332 -> tx469\\\\n\\\\ndl tx333 -> tx470\\\\n\\\\nbl \
+tx334 -> tx471\\\\n\\\\npower2[tx331] -> tx472\\\\n\\\\ntx467 + tx469 -> \
+tx473\\\\n\\\\ntx468 + tx470 -> tx474\\\\n\\\\ntx466 + tx471 -> \
+tx475\\\\n\\\\n4. tx472 -> tzz559\\\\n\\\\ntx361 tzz559 -> tzz568\\\\n\\\\nal \
+tzz568 -> tx476\\\\n\\\\ntx362 tzz559 -> tzz567\\\\n\\\\nal tzz567 -> tx477\\\
+\\n\\\\ntx363 tzz559 -> tzz566\\\\n\\\\nal tzz566 -> tx478\\\\n\\\\ntx473 \
+tzz555 -> tx479\\\\n\\\\ntx474 tzz555 -> tx480\\\\n\\\\ntx475 tzz555 -> tx481\
+\\\\n\\\\ntx478 + tx479 -> tx482\\\\n\\\\ntx476 + tx480 -> \
+tx483\\\\n\\\\ntx477 + tx481 -> tx484\\\\n\\\\ntx482 tzz561 -> \
+tx485\\\\n\\\\ntx483 tzz563 -> tx486\\\\n\\\\ntx484 tzz562 -> \
+tx487\\\\n\\\\ntx485 + tx486 + tx487 -> tx488\\\\n\\\\ntx488 tzz558 -> \
+gal\\\\n\\\\n-gal -> fal\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 0, fal \
+);]\\\\n\\\\ncl pxl -> tx489\\\\n\\\\nal pyl -> tx490\\\\n\\\\ntzz581 -> \
+tx491\\\\n\\\\n-2. tzz573 -> tx492\\\\n\\\\ndl pzl -> tx493\\\\n\\\\nal tx334 \
+-> tx494\\\\n\\\\n-2. tx467 -> tx495\\\\n\\\\ntx466 + tx490 + tx492 -> \
+tx496\\\\n\\\\ntx491 + tx493 -> tx497\\\\n\\\\ntx489 + tx494 + tx495 -> tx498\
+\\\\n\\\\nbl tzz568 -> tx499\\\\n\\\\nbl tzz567 -> tx500\\\\n\\\\nbl tzz566 \
+-> tx501\\\\n\\\\ntx496 tzz555 -> tx502\\\\n\\\\ntx497 tzz555 -> tx503\\\\n\\\
+\\ntx498 tzz555 -> tx504\\\\n\\\\ntx501 + tx502 -> tx505\\\\n\\\\ntx499 + \
+tx503 -> tx506\\\\n\\\\ntx500 + tx504 -> tx507\\\\n\\\\ntx505 tzz561 -> tx508\
+\\\\n\\\\ntx506 tzz563 -> tx509\\\\n\\\\ntx507 tzz562 -> tx510\\\\n\\\\ntx508 \
++ tx509 + tx510 -> tx511\\\\n\\\\ntx511 tzz558 -> gbl\\\\n\\\\n-gbl -> \
+fbl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 1, fbl );]\\\\n\\\\nbl pxl -> \
+tx512\\\\n\\\\ndl pyl -> tx513\\\\n\\\\nal pzl -> tx514\\\\n\\\\nal tx332 -> \
+tx515\\\\n\\\\n-2. tx468 -> tx516\\\\n\\\\n-2. tx489 -> tx517\\\\n\\\\ntx493 \
++ tx512 -> tx518\\\\n\\\\ntx513 + tx515 + tx516 -> tx519\\\\n\\\\ntx467 + \
+tx514 + tx517 -> tx520\\\\n\\\\ncl tzz568 -> tx521\\\\n\\\\ncl tzz567 -> \
+tx522\\\\n\\\\ncl tzz566 -> tx523\\\\n\\\\ntx518 tzz555 -> \
+tx524\\\\n\\\\ntx519 tzz555 -> tx525\\\\n\\\\ntx520 tzz555 -> \
+tx526\\\\n\\\\ntx522 + tx524 -> tx527\\\\n\\\\ntx523 + tx525 -> \
+tx528\\\\n\\\\ntx521 + tx526 -> tx529\\\\n\\\\ntx527 tzz562 -> \
+tx530\\\\n\\\\ntx528 tzz561 -> tx531\\\\n\\\\ntx529 tzz563 -> \
+tx532\\\\n\\\\ntx530 + tx531 + tx532 -> tx533\\\\n\\\\ntx533 tzz558 -> \
+gcl\\\\n\\\\n-gcl -> fcl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 2, fcl \
+);]\\\\n\\\\nal pxl -> tx534\\\\n\\\\ntzz573 -> tx535\\\\n\\\\nal tx333 -> \
+tx536\\\\n\\\\n-2. tx466 -> tx537\\\\n\\\\n-2. tx513 -> tx538\\\\n\\\\ntx491 \
++ tx512 -> tx539\\\\n\\\\ntx535 + tx536 + tx537 -> tx540\\\\n\\\\ntx468 + \
+tx534 + tx538 -> tx541\\\\n\\\\ndl tzz568 -> tx542\\\\n\\\\ndl tzz567 -> \
+tx543\\\\n\\\\ndl tzz566 -> tx544\\\\n\\\\ntx539 tzz555 -> \
+tx545\\\\n\\\\ntx540 tzz555 -> tx546\\\\n\\\\ntx541 tzz555 -> \
+tx547\\\\n\\\\ntx544 + tx545 -> tx548\\\\n\\\\ntx542 + tx546 -> \
+tx549\\\\n\\\\ntx543 + tx547 -> tx550\\\\n\\\\ntx548 tzz561 -> \
+tx551\\\\n\\\\ntx549 tzz563 -> tx552\\\\n\\\\ntx550 tzz562 -> \
+tx553\\\\n\\\\ntx551 + tx552 + tx553 -> tx554\\\\n\\\\ntx554 tzz558 -> \
+gdl\\\\n\\\\n-gdl -> fdl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 3, fdl \
+);]\\\\n\\\\n-2. tzz558 -> tzz576\\\\n\\\\ntx377 tzz576 -> gxl\\\\n\\\\n-gxl \
+-> fxl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 4, fxl );]\\\\n\\\\ntx378 \
+tzz576 -> gyl\\\\n\\\\n-gyl -> fyl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, \
+5, fyl );]\\\\n\\\\ntx379 tzz576 -> gzl\\\\n\\\\n-gzl -> \
+fzl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 6, fzl );]\>\""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.702666640270697*^9, 3.702667223609469*^9, 3.702889707661439*^9, 
+   3.702891210318593*^9, 3.702894400586055*^9, 3.702894500717475*^9, 
+   3.7073192647294073`*^9, 3.707321572021159*^9, 3.707328272120843*^9, 
+   3.707330300475561*^9, 3.7073409608399897`*^9, 3.707387982678156*^9, {
+   3.70825302970572*^9, 
+   3.70825302998351*^9}},ExpressionUUID->"229031f7-cf40-44ca-af58-\
 8e1a49e71e10"],
 
 Cell[BoxData["\<\"eliminateTrivialRules\"\>"], "Print",
@@ -2616,165 +2634,193 @@ tx466\\n\\ntzz580 -> tx468\\n\\ntzz581 -> tx491\\n\\ntzz573 -> tx535\"\>"], \
   3.707387982794017*^9},ExpressionUUID->"805fa311-5fba-465f-90f5-\
 b7b6187774e0"],
 
-Cell[BoxData["\<\"After removal: \
-CCode[STAPLE_SET_PARAMETER(ks,ks);]\\n\\nCCode[STAPLE_SET_PARAMETER(r0,r0);]\\\
-n\\nCCode[STAPLE_SET_PARAMETER(I1,rigidBodyK);]\\n\\nCCode[STAPLE_SET_\
-PARAMETER(I2,rigidBodyL);]\\n\\nCCode[STAPLE_SET_POSITION(ak,I1,0);]\\n\\\
-nCCode[STAPLE_SET_POSITION(bk,I1,1);]\\n\\nCCode[STAPLE_SET_POSITION(ck,I1,2);\
-]\\n\\nCCode[STAPLE_SET_POSITION(dk,I1,3);]\\n\\nCCode[STAPLE_SET_POSITION(xk,\
-I1,4);]\\n\\nCCode[STAPLE_SET_POSITION(yk,I1,5);]\\n\\nCCode[STAPLE_SET_\
-POSITION(zk,I1,6);]\\n\\nCCode[STAPLE_SET_POSITION(al,I2,0);]\\n\\nCCode[\
-STAPLE_SET_POSITION(bl,I2,1);]\\n\\nCCode[STAPLE_SET_POSITION(cl,I2,2);]\\n\\\
-nCCode[STAPLE_SET_POSITION(dl,I2,3);]\\n\\nCCode[STAPLE_SET_POSITION(xl,I2,4);\
-]\\n\\nCCode[STAPLE_SET_POSITION(yl,I2,5);]\\n\\nCCode[STAPLE_SET_POSITION(zl,\
-I2,6);]\\n\\nCCode[STAPLE_SET_POINT(pxk,pointK,getX());]\\n\\nCCode[STAPLE_\
-SET_POINT(pyk,pointK,getY());]\\n\\nCCode[STAPLE_SET_POINT(pzk,pointK,getZ());\
-]\\n\\nCCode[STAPLE_SET_POINT(pxl,pointL,getX());]\\n\\nCCode[STAPLE_SET_\
-POINT(pyl,pointL,getY());]\\n\\nCCode[STAPLE_SET_POINT(pzl,pointL,getZ());]\\\
-n\\npower2[ak] -> tx278\\n\\npower2[al] -> tx279\\n\\npower2[bk] -> \
-tx280\\n\\npower2[bl] -> tx281\\n\\npower2[ck] -> tx282\\n\\npower2[cl] -> \
-tx283\\n\\npower2[dk] -> tx284\\n\\npower2[dl] -> tx285\\n\\n-pxk -> \
-tzz565\\n\\nak ck -> tzz583\\n\\ntzz565 tzz583 -> tx286\\n\\nbk ck pxk -> \
-tx287\\n\\ndk pxk -> tzz579\\n\\nak tzz579 -> tx288\\n\\nbk tzz579 -> \
-tx289\\n\\n-pxl -> tzz575\\n\\nal cl tzz575 -> tx290\\n\\nbl cl pxl -> \
-tx291\\n\\ndl pxl -> tzz577\\n\\nal tzz577 -> tx292\\n\\nbl tzz577 -> \
-tx293\\n\\nak bk -> tzz584\\n\\npyk tzz584 -> tx294\\n\\nck pyk -> \
-tzz582\\n\\nbk tzz582 -> tx295\\n\\n-pyk -> tzz572\\n\\nak dk tzz572 -> tx296\
-\\n\\ndk tzz582 -> tx297\\n\\nal bl pyl -> tx298\\n\\ncl pyl -> \
-tzz581\\n\\nbl tzz581 -> tx299\\n\\n-pyl -> tzz574\\n\\nal dl tzz574 -> tx300\
-\\n\\ndl tzz581 -> tx301\\n\\n-pzk -> tzz564\\n\\ntzz564 tzz584 -> \
-tx302\\n\\npzk tzz583 -> tx303\\n\\ndk pzk -> tzz578\\n\\nbk tzz578 -> \
-tx304\\n\\nck tzz578 -> tx305\\n\\nbl pzl -> tzz573\\n\\n-(al tzz573) -> \
-tx306\\n\\ncl pzl -> tzz580\\n\\nal tzz580 -> tx307\\n\\ndl tzz573 -> \
-tx308\\n\\ndl tzz580 -> tx309\\n\\ntx280 tzz572 -> tx310\\n\\ntx280 tzz564 -> \
-tx311\\n\\ntx281 tzz574 -> tx312\\n\\n-pzl -> tzz585\\n\\ntx281 tzz585 -> \
-tx313\\n\\ntx282 tzz565 -> tx314\\n\\ntx282 tzz564 -> tx315\\n\\ntx283 tzz575 \
--> tx316\\n\\ntx283 tzz585 -> tx317\\n\\ntx284 tzz565 -> tx318\\n\\ntx284 \
-tzz572 -> tx319\\n\\ntx278 + tx280 + tx282 + tx284 -> tx320\\n\\ntx285 tzz575 \
--> tx321\\n\\ntx285 tzz574 -> tx322\\n\\ntx279 + tx281 + tx283 + tx285 -> \
-tx323\\n\\ntx286 + tx289 + tx294 + tx297 + tx311 + tx315 -> tx324\\n\\ntx290 \
-+ tx293 + tx298 + tx301 + tx313 + tx317 -> tx325\\n\\ntx295 + tx296 + tx303 + \
-tx304 + tx314 + tx318 -> tx326\\n\\ntx287 + tx288 + tx302 + tx305 + tx310 + \
-tx319 -> tx327\\n\\nreciprocal[tx320] -> tx328\\n\\ntx299 + tx300 + tx307 + \
-tx308 + tx316 + tx321 -> tx329\\n\\ntx291 + tx292 + tx306 + tx309 + tx312 + \
-tx322 -> tx330\\n\\nreciprocal[tx323] -> tx331\\n\\ntzz575 -> \
-tx332\\n\\ntzz574 -> tx333\\n\\ntzz585 -> tx334\\n\\n2. tx328 -> \
-tzz556\\n\\ntx324 tzz556 -> tx335\\n\\ntx326 tzz556 -> tx336\\n\\ntx327 \
-tzz556 -> tx337\\n\\n-2. tx331 -> tzz555\\n\\ntx325 tzz555 -> \
-tx338\\n\\ntx329 tzz555 -> tx339\\n\\ntx330 tzz555 -> tx340\\n\\n-xl -> tx341\
-\\n\\n-yl -> tx342\\n\\n-zl -> tx343\\n\\npxk + tx332 + tx336 + tx339 + tx341 \
-+ xk -> tx344\\n\\npyk + tx333 + tx337 + tx340 + tx342 + yk -> tx345\\n\\npzk \
-+ tx334 + tx335 + tx338 + tx343 + zk -> tx346\\n\\npower2[tx344] -> \
-tx347\\n\\npower2[tx345] -> tx348\\n\\npower2[tx346] -> tx349\\n\\ntx347 + \
-tx348 + tx349 -> tx350\\n\\n-r0 -> tx351\\n\\nmysqrt[tx350] -> \
-tx352\\n\\ntx351 + tx352 -> tx353\\n\\npower2[tx353] -> tx354\\n\\nks tx354 \
--> Energy\\n\\nCCode[STAPLE_ENERGY_ACCUMULATE(Energy);]\\n\\ntx283 tx332 -> \
-tx355\\n\\ntx285 tx332 -> tx356\\n\\ntx281 tx333 -> tx357\\n\\ntx285 tx333 -> \
-tx358\\n\\ntx281 tx334 -> tx359\\n\\ntx283 tx334 -> tx360\\n\\ntx299 + tx300 \
-+ tx307 + tx308 + tx355 + tx356 -> tx361\\n\\ntx291 + tx292 + tx306 + tx309 + \
-tx357 + tx358 -> tx362\\n\\ntx290 + tx293 + tx298 + tx301 + tx359 + tx360 -> \
-tx363\\n\\nck tzz565 -> tx364\\n\\ntzz579 -> tx365\\n\\nbk pyk -> \
-tx366\\n\\ndk tzz572 -> tx367\\n\\nbk tzz564 -> tx368\\n\\nck pzk -> tx369\\n\
-\\ntx361 tzz555 -> tx370\\n\\ntx362 tzz555 -> tx371\\n\\ntx363 tzz555 -> \
-tx372\\n\\npower2[tx328] -> tx373\\n\\ntx364 + tx366 -> tx374\\n\\ntx365 + \
-tx368 -> tx375\\n\\ntx367 + tx369 -> tx376\\n\\npxk + tx332 + tx336 + tx341 + \
-tx370 + xk -> tx377\\n\\npyk + tx333 + tx337 + tx342 + tx371 + yk -> tx378\\n\
-\\npzk + tx334 + tx335 + tx343 + tx372 + zk -> tx379\\n\\n-4. tx373 -> tzz560\
-\\n\\ntx324 tzz560 -> tzz571\\n\\nak tzz571 -> tx380\\n\\ntx326 tzz560 -> \
-tzz570\\n\\nak tzz570 -> tx381\\n\\ntx327 tzz560 -> tzz569\\n\\nak tzz569 -> \
-tx382\\n\\ntx374 tzz556 -> tx383\\n\\ntx375 tzz556 -> tx384\\n\\ntx376 tzz556 \
--> tx385\\n\\npower2[tx377] -> tx386\\n\\npower2[tx378] -> \
-tx387\\n\\npower2[tx379] -> tx388\\n\\ntx380 + tx383 -> tx389\\n\\ntx382 + \
-tx384 -> tx390\\n\\ntx381 + tx385 -> tx391\\n\\ntx386 + tx387 + tx388 -> \
-tx392\\n\\n2. tx379 -> tzz561\\n\\ntx389 tzz561 -> tx393\\n\\n2. tx378 -> \
-tzz562\\n\\ntx390 tzz562 -> tx394\\n\\n2. tx377 -> tzz563\\n\\ntx391 tzz563 \
--> tx395\\n\\nmysqrt[tx392] -> tx396\\n\\nreciprocal[tx396] -> \
-tx397\\n\\ntx393 + tx394 + tx395 -> tx398\\n\\ntx351 + tx396 -> \
-tx399\\n\\ntx397 tx399 -> tzz557\\n\\nks tzz557 -> tzz558\\n\\ntx398 tzz558 \
--> gak\\n\\n-gak -> fak\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 0, fak \
-);]\\n\\nck pxk -> tx400\\n\\nak pyk -> tx401\\n\\ntzz582 -> tx402\\n\\nak \
-tzz564 -> tx403\\n\\n-2. bk pzk -> tx404\\n\\ntzz578 -> tx405\\n\\n-2. tx366 \
--> tx406\\n\\ntx365 + tx401 + tx404 -> tx407\\n\\ntx402 + tx405 -> \
-tx408\\n\\ntx400 + tx403 + tx406 -> tx409\\n\\nbk tzz571 -> tx410\\n\\nbk \
-tzz570 -> tx411\\n\\nbk tzz569 -> tx412\\n\\ntx407 tzz556 -> tx413\\n\\ntx408 \
-tzz556 -> tx414\\n\\ntx409 tzz556 -> tx415\\n\\ntx410 + tx413 -> \
-tx416\\n\\ntx411 + tx414 -> tx417\\n\\ntx412 + tx415 -> tx418\\n\\ntx416 \
-tzz561 -> tx419\\n\\ntx417 tzz563 -> tx420\\n\\ntx418 tzz562 -> \
-tx421\\n\\ntx419 + tx420 + tx421 -> tx422\\n\\ntx422 tzz558 -> gbk\\n\\n-gbk \
--> fbk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 1, fbk );]\\n\\nak tzz565 -> \
-tx423\\n\\nbk pxk -> tx424\\n\\ndk pyk -> tx425\\n\\nak pzk -> tx426\\n\\n-2. \
-tx369 -> tx427\\n\\n-2. tx400 -> tx428\\n\\ntx405 + tx424 -> tx429\\n\\ntx423 \
-+ tx425 + tx427 -> tx430\\n\\ntx366 + tx426 + tx428 -> tx431\\n\\nck tzz571 \
--> tx432\\n\\nck tzz570 -> tx433\\n\\nck tzz569 -> tx434\\n\\ntx429 tzz556 -> \
-tx435\\n\\ntx430 tzz556 -> tx436\\n\\ntx431 tzz556 -> tx437\\n\\ntx434 + \
-tx435 -> tx438\\n\\ntx432 + tx436 -> tx439\\n\\ntx433 + tx437 -> \
-tx440\\n\\ntx438 tzz562 -> tx441\\n\\ntx439 tzz561 -> tx442\\n\\ntx440 tzz563 \
--> tx443\\n\\ntx441 + tx442 + tx443 -> tx444\\n\\ntx444 tzz558 -> \
-gck\\n\\n-gck -> fck\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 2, fck \
-);]\\n\\nak pxk -> tx445\\n\\nbk pzk -> tx446\\n\\n-2. tx365 -> \
-tx447\\n\\n-tx401 -> tx448\\n\\n-2. tx425 -> tx449\\n\\ntx402 + tx424 -> \
-tx450\\n\\ntx446 + tx447 + tx448 -> tx451\\n\\ntx369 + tx445 + tx449 -> tx452\
-\\n\\ndk tzz571 -> tx453\\n\\ndk tzz570 -> tx454\\n\\ndk tzz569 -> \
-tx455\\n\\ntx450 tzz556 -> tx456\\n\\ntx451 tzz556 -> tx457\\n\\ntx452 tzz556 \
--> tx458\\n\\ntx453 + tx456 -> tx459\\n\\ntx454 + tx457 -> tx460\\n\\ntx455 + \
-tx458 -> tx461\\n\\ntx459 tzz561 -> tx462\\n\\ntx460 tzz563 -> \
-tx463\\n\\ntx461 tzz562 -> tx464\\n\\ntx462 + tx463 + tx464 -> \
-tx465\\n\\ntx465 tzz558 -> gdk\\n\\n-gdk -> \
-fdk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 3, fdk );]\\n\\ntzz558 tzz563 -> \
-gxk\\n\\n-gxk -> fxk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 4, fxk \
-);]\\n\\ntzz558 tzz562 -> gyk\\n\\n-gyk -> \
-fyk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 5, fyk );]\\n\\ntzz558 tzz561 -> \
-gzk\\n\\n-gzk -> fzk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 6, fzk \
-);]\\n\\ntzz577 -> tx466\\n\\nbl pyl -> tx467\\n\\ntzz580 -> tx468\\n\\ncl \
-tx332 -> tx469\\n\\ndl tx333 -> tx470\\n\\nbl tx334 -> \
-tx471\\n\\npower2[tx331] -> tx472\\n\\ntx467 + tx469 -> tx473\\n\\ntx468 + \
-tx470 -> tx474\\n\\ntx466 + tx471 -> tx475\\n\\n4. tx472 -> tzz559\\n\\ntx361 \
-tzz559 -> tzz568\\n\\nal tzz568 -> tx476\\n\\ntx362 tzz559 -> tzz567\\n\\nal \
-tzz567 -> tx477\\n\\ntx363 tzz559 -> tzz566\\n\\nal tzz566 -> \
-tx478\\n\\ntx473 tzz555 -> tx479\\n\\ntx474 tzz555 -> tx480\\n\\ntx475 tzz555 \
--> tx481\\n\\ntx478 + tx479 -> tx482\\n\\ntx476 + tx480 -> tx483\\n\\ntx477 + \
-tx481 -> tx484\\n\\ntx482 tzz561 -> tx485\\n\\ntx483 tzz563 -> \
-tx486\\n\\ntx484 tzz562 -> tx487\\n\\ntx485 + tx486 + tx487 -> \
-tx488\\n\\ntx488 tzz558 -> gal\\n\\n-gal -> \
-fal\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 0, fal );]\\n\\ncl pxl -> tx489\\n\
-\\nal pyl -> tx490\\n\\ntzz581 -> tx491\\n\\n-2. tzz573 -> tx492\\n\\ndl pzl \
--> tx493\\n\\nal tx334 -> tx494\\n\\n-2. tx467 -> tx495\\n\\ntx466 + tx490 + \
-tx492 -> tx496\\n\\ntx491 + tx493 -> tx497\\n\\ntx489 + tx494 + tx495 -> \
-tx498\\n\\nbl tzz568 -> tx499\\n\\nbl tzz567 -> tx500\\n\\nbl tzz566 -> tx501\
-\\n\\ntx496 tzz555 -> tx502\\n\\ntx497 tzz555 -> tx503\\n\\ntx498 tzz555 -> \
-tx504\\n\\ntx501 + tx502 -> tx505\\n\\ntx499 + tx503 -> tx506\\n\\ntx500 + \
-tx504 -> tx507\\n\\ntx505 tzz561 -> tx508\\n\\ntx506 tzz563 -> \
-tx509\\n\\ntx507 tzz562 -> tx510\\n\\ntx508 + tx509 + tx510 -> \
-tx511\\n\\ntx511 tzz558 -> gbl\\n\\n-gbl -> \
-fbl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 1, fbl );]\\n\\nbl pxl -> tx512\\n\
-\\ndl pyl -> tx513\\n\\nal pzl -> tx514\\n\\nal tx332 -> tx515\\n\\n-2. tx468 \
--> tx516\\n\\n-2. tx489 -> tx517\\n\\ntx493 + tx512 -> tx518\\n\\ntx513 + \
-tx515 + tx516 -> tx519\\n\\ntx467 + tx514 + tx517 -> tx520\\n\\ncl tzz568 -> \
-tx521\\n\\ncl tzz567 -> tx522\\n\\ncl tzz566 -> tx523\\n\\ntx518 tzz555 -> \
-tx524\\n\\ntx519 tzz555 -> tx525\\n\\ntx520 tzz555 -> tx526\\n\\ntx522 + \
-tx524 -> tx527\\n\\ntx523 + tx525 -> tx528\\n\\ntx521 + tx526 -> \
-tx529\\n\\ntx527 tzz562 -> tx530\\n\\ntx528 tzz561 -> tx531\\n\\ntx529 tzz563 \
--> tx532\\n\\ntx530 + tx531 + tx532 -> tx533\\n\\ntx533 tzz558 -> \
-gcl\\n\\n-gcl -> fcl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 2, fcl \
-);]\\n\\nal pxl -> tx534\\n\\ntzz573 -> tx535\\n\\nal tx333 -> tx536\\n\\n-2. \
-tx466 -> tx537\\n\\n-2. tx513 -> tx538\\n\\ntx491 + tx512 -> tx539\\n\\ntx535 \
-+ tx536 + tx537 -> tx540\\n\\ntx468 + tx534 + tx538 -> tx541\\n\\ndl tzz568 \
--> tx542\\n\\ndl tzz567 -> tx543\\n\\ndl tzz566 -> tx544\\n\\ntx539 tzz555 -> \
-tx545\\n\\ntx540 tzz555 -> tx546\\n\\ntx541 tzz555 -> tx547\\n\\ntx544 + \
-tx545 -> tx548\\n\\ntx542 + tx546 -> tx549\\n\\ntx543 + tx547 -> \
-tx550\\n\\ntx548 tzz561 -> tx551\\n\\ntx549 tzz563 -> tx552\\n\\ntx550 tzz562 \
--> tx553\\n\\ntx551 + tx552 + tx553 -> tx554\\n\\ntx554 tzz558 -> \
-gdl\\n\\n-gdl -> fdl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 3, fdl \
-);]\\n\\n-2. tzz558 -> tzz576\\n\\ntx377 tzz576 -> gxl\\n\\n-gxl -> \
-fxl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 4, fxl );]\\n\\ntx378 tzz576 -> \
-gyl\\n\\n-gyl -> fyl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 5, fyl \
-);]\\n\\ntx379 tzz576 -> gzl\\n\\n-gzl -> \
-fzl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 6, fzl );]\"\>"], "Print",
- CellChangeTimes->{3.702666640270697*^9, 3.702667223609469*^9, 
-  3.702889707661439*^9, 3.702891210318593*^9, 3.702894400586055*^9, 
-  3.702894500717475*^9, 3.7073192647294073`*^9, 3.707321572021159*^9, 
-  3.707328272120843*^9, 3.707330300475561*^9, 3.7073409608399897`*^9, 
-  3.707387982796583*^9},ExpressionUUID->"74cfd218-694f-4ddf-871b-\
+Cell[BoxData["\"\<After removal: \
+CCode[CYLREP_SET_PARAMETER(ks,ks);]\\\\n\\\\nCCode[CYLREP_SET_PARAMETER(r0,r0)\
+;]\\\\n\\\\nCCode[CYLREP_SET_PARAMETER(I1,rigidBodyK);]\\\\n\\\\nCCode[CYLREP_\
+SET_PARAMETER(I2,rigidBodyL);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(ak,I1,0);]\\\
+\\n\\\\nCCode[CYLREP_SET_POSITION(bk,I1,1);]\\\\n\\\\nCCode[CYLREP_SET_\
+POSITION(ck,I1,2);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(dk,I1,3);]\\\\n\\\\\
+nCCode[CYLREP_SET_POSITION(xk,I1,4);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(yk,\
+I1,5);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(zk,I1,6);]\\\\n\\\\nCCode[CYLREP_\
+SET_POSITION(al,I2,0);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(bl,I2,1);]\\\\n\\\\\
+nCCode[CYLREP_SET_POSITION(cl,I2,2);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(dl,\
+I2,3);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(xl,I2,4);]\\\\n\\\\nCCode[CYLREP_\
+SET_POSITION(yl,I2,5);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(zl,I2,6);]\\\\n\\\\\
+nCCode[CYLREP_SET_POINT(pxk,pointK,getX());]\\\\n\\\\nCCode[CYLREP_SET_POINT(\
+pyk,pointK,getY());]\\\\n\\\\nCCode[CYLREP_SET_POINT(pzk,pointK,getZ());]\\\\\
+n\\\\nCCode[CYLREP_SET_POINT(pxl,pointL,getX());]\\\\n\\\\nCCode[CYLREP_SET_\
+POINT(pyl,pointL,getY());]\\\\n\\\\nCCode[CYLREP_SET_POINT(pzl,pointL,getZ());\
+]\\\\n\\\\npower2[ak] -> tx278\\\\n\\\\npower2[al] -> \
+tx279\\\\n\\\\npower2[bk] -> tx280\\\\n\\\\npower2[bl] -> \
+tx281\\\\n\\\\npower2[ck] -> tx282\\\\n\\\\npower2[cl] -> \
+tx283\\\\n\\\\npower2[dk] -> tx284\\\\n\\\\npower2[dl] -> tx285\\\\n\\\\n-pxk \
+-> tzz565\\\\n\\\\nak ck -> tzz583\\\\n\\\\ntzz565 tzz583 -> \
+tx286\\\\n\\\\nbk ck pxk -> tx287\\\\n\\\\ndk pxk -> tzz579\\\\n\\\\nak \
+tzz579 -> tx288\\\\n\\\\nbk tzz579 -> tx289\\\\n\\\\n-pxl -> \
+tzz575\\\\n\\\\nal cl tzz575 -> tx290\\\\n\\\\nbl cl pxl -> tx291\\\\n\\\\ndl \
+pxl -> tzz577\\\\n\\\\nal tzz577 -> tx292\\\\n\\\\nbl tzz577 -> \
+tx293\\\\n\\\\nak bk -> tzz584\\\\n\\\\npyk tzz584 -> tx294\\\\n\\\\nck pyk \
+-> tzz582\\\\n\\\\nbk tzz582 -> tx295\\\\n\\\\n-pyk -> tzz572\\\\n\\\\nak dk \
+tzz572 -> tx296\\\\n\\\\ndk tzz582 -> tx297\\\\n\\\\nal bl pyl -> \
+tx298\\\\n\\\\ncl pyl -> tzz581\\\\n\\\\nbl tzz581 -> tx299\\\\n\\\\n-pyl -> \
+tzz574\\\\n\\\\nal dl tzz574 -> tx300\\\\n\\\\ndl tzz581 -> \
+tx301\\\\n\\\\n-pzk -> tzz564\\\\n\\\\ntzz564 tzz584 -> tx302\\\\n\\\\npzk \
+tzz583 -> tx303\\\\n\\\\ndk pzk -> tzz578\\\\n\\\\nbk tzz578 -> \
+tx304\\\\n\\\\nck tzz578 -> tx305\\\\n\\\\nbl pzl -> tzz573\\\\n\\\\n-(al \
+tzz573) -> tx306\\\\n\\\\ncl pzl -> tzz580\\\\n\\\\nal tzz580 -> tx307\\\\n\\\
+\\ndl tzz573 -> tx308\\\\n\\\\ndl tzz580 -> tx309\\\\n\\\\ntx280 tzz572 -> \
+tx310\\\\n\\\\ntx280 tzz564 -> tx311\\\\n\\\\ntx281 tzz574 -> \
+tx312\\\\n\\\\n-pzl -> tzz585\\\\n\\\\ntx281 tzz585 -> tx313\\\\n\\\\ntx282 \
+tzz565 -> tx314\\\\n\\\\ntx282 tzz564 -> tx315\\\\n\\\\ntx283 tzz575 -> tx316\
+\\\\n\\\\ntx283 tzz585 -> tx317\\\\n\\\\ntx284 tzz565 -> tx318\\\\n\\\\ntx284 \
+tzz572 -> tx319\\\\n\\\\ntx278 + tx280 + tx282 + tx284 -> \
+tx320\\\\n\\\\ntx285 tzz575 -> tx321\\\\n\\\\ntx285 tzz574 -> \
+tx322\\\\n\\\\ntx279 + tx281 + tx283 + tx285 -> tx323\\\\n\\\\ntx286 + tx289 \
++ tx294 + tx297 + tx311 + tx315 -> tx324\\\\n\\\\ntx290 + tx293 + tx298 + \
+tx301 + tx313 + tx317 -> tx325\\\\n\\\\ntx295 + tx296 + tx303 + tx304 + tx314 \
++ tx318 -> tx326\\\\n\\\\ntx287 + tx288 + tx302 + tx305 + tx310 + tx319 -> \
+tx327\\\\n\\\\nreciprocal[tx320] -> tx328\\\\n\\\\ntx299 + tx300 + tx307 + \
+tx308 + tx316 + tx321 -> tx329\\\\n\\\\ntx291 + tx292 + tx306 + tx309 + tx312 \
++ tx322 -> tx330\\\\n\\\\nreciprocal[tx323] -> tx331\\\\n\\\\ntzz575 -> tx332\
+\\\\n\\\\ntzz574 -> tx333\\\\n\\\\ntzz585 -> tx334\\\\n\\\\n2. tx328 -> \
+tzz556\\\\n\\\\ntx324 tzz556 -> tx335\\\\n\\\\ntx326 tzz556 -> \
+tx336\\\\n\\\\ntx327 tzz556 -> tx337\\\\n\\\\n-2. tx331 -> \
+tzz555\\\\n\\\\ntx325 tzz555 -> tx338\\\\n\\\\ntx329 tzz555 -> \
+tx339\\\\n\\\\ntx330 tzz555 -> tx340\\\\n\\\\n-xl -> tx341\\\\n\\\\n-yl -> \
+tx342\\\\n\\\\n-zl -> tx343\\\\n\\\\npxk + tx332 + tx336 + tx339 + tx341 + xk \
+-> tx344\\\\n\\\\npyk + tx333 + tx337 + tx340 + tx342 + yk -> \
+tx345\\\\n\\\\npzk + tx334 + tx335 + tx338 + tx343 + zk -> \
+tx346\\\\n\\\\npower2[tx344] -> tx347\\\\n\\\\npower2[tx345] -> \
+tx348\\\\n\\\\npower2[tx346] -> tx349\\\\n\\\\ntx347 + tx348 + tx349 -> tx350\
+\\\\n\\\\n-r0 -> tx351\\\\n\\\\nmysqrt[tx350] -> tx352\\\\n\\\\ntx351 + tx352 \
+-> tx353\\\\n\\\\npower2[tx353] -> tx354\\\\n\\\\nks tx354 -> \
+Energy\\\\n\\\\nCCode[CYLREP_ENERGY_ACCUMULATE(Energy);]\\\\n\\\\ntx283 tx332 \
+-> tx355\\\\n\\\\ntx285 tx332 -> tx356\\\\n\\\\ntx281 tx333 -> \
+tx357\\\\n\\\\ntx285 tx333 -> tx358\\\\n\\\\ntx281 tx334 -> \
+tx359\\\\n\\\\ntx283 tx334 -> tx360\\\\n\\\\ntx299 + tx300 + tx307 + tx308 + \
+tx355 + tx356 -> tx361\\\\n\\\\ntx291 + tx292 + tx306 + tx309 + tx357 + tx358 \
+-> tx362\\\\n\\\\ntx290 + tx293 + tx298 + tx301 + tx359 + tx360 -> tx363\\\\n\
+\\\\nck tzz565 -> tx364\\\\n\\\\ntzz579 -> tx365\\\\n\\\\nbk pyk -> \
+tx366\\\\n\\\\ndk tzz572 -> tx367\\\\n\\\\nbk tzz564 -> tx368\\\\n\\\\nck pzk \
+-> tx369\\\\n\\\\ntx361 tzz555 -> tx370\\\\n\\\\ntx362 tzz555 -> tx371\\\\n\\\
+\\ntx363 tzz555 -> tx372\\\\n\\\\npower2[tx328] -> tx373\\\\n\\\\ntx364 + \
+tx366 -> tx374\\\\n\\\\ntx365 + tx368 -> tx375\\\\n\\\\ntx367 + tx369 -> \
+tx376\\\\n\\\\npxk + tx332 + tx336 + tx341 + tx370 + xk -> tx377\\\\n\\\\npyk \
++ tx333 + tx337 + tx342 + tx371 + yk -> tx378\\\\n\\\\npzk + tx334 + tx335 + \
+tx343 + tx372 + zk -> tx379\\\\n\\\\n-4. tx373 -> tzz560\\\\n\\\\ntx324 \
+tzz560 -> tzz571\\\\n\\\\nak tzz571 -> tx380\\\\n\\\\ntx326 tzz560 -> \
+tzz570\\\\n\\\\nak tzz570 -> tx381\\\\n\\\\ntx327 tzz560 -> \
+tzz569\\\\n\\\\nak tzz569 -> tx382\\\\n\\\\ntx374 tzz556 -> \
+tx383\\\\n\\\\ntx375 tzz556 -> tx384\\\\n\\\\ntx376 tzz556 -> \
+tx385\\\\n\\\\npower2[tx377] -> tx386\\\\n\\\\npower2[tx378] -> \
+tx387\\\\n\\\\npower2[tx379] -> tx388\\\\n\\\\ntx380 + tx383 -> \
+tx389\\\\n\\\\ntx382 + tx384 -> tx390\\\\n\\\\ntx381 + tx385 -> \
+tx391\\\\n\\\\ntx386 + tx387 + tx388 -> tx392\\\\n\\\\n2. tx379 -> \
+tzz561\\\\n\\\\ntx389 tzz561 -> tx393\\\\n\\\\n2. tx378 -> \
+tzz562\\\\n\\\\ntx390 tzz562 -> tx394\\\\n\\\\n2. tx377 -> \
+tzz563\\\\n\\\\ntx391 tzz563 -> tx395\\\\n\\\\nmysqrt[tx392] -> \
+tx396\\\\n\\\\nreciprocal[tx396] -> tx397\\\\n\\\\ntx393 + tx394 + tx395 -> \
+tx398\\\\n\\\\ntx351 + tx396 -> tx399\\\\n\\\\ntx397 tx399 -> \
+tzz557\\\\n\\\\nks tzz557 -> tzz558\\\\n\\\\ntx398 tzz558 -> \
+gak\\\\n\\\\n-gak -> fak\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 0, fak \
+);]\\\\n\\\\nck pxk -> tx400\\\\n\\\\nak pyk -> tx401\\\\n\\\\ntzz582 -> \
+tx402\\\\n\\\\nak tzz564 -> tx403\\\\n\\\\n-2. bk pzk -> \
+tx404\\\\n\\\\ntzz578 -> tx405\\\\n\\\\n-2. tx366 -> tx406\\\\n\\\\ntx365 + \
+tx401 + tx404 -> tx407\\\\n\\\\ntx402 + tx405 -> tx408\\\\n\\\\ntx400 + tx403 \
++ tx406 -> tx409\\\\n\\\\nbk tzz571 -> tx410\\\\n\\\\nbk tzz570 -> tx411\\\\n\
+\\\\nbk tzz569 -> tx412\\\\n\\\\ntx407 tzz556 -> tx413\\\\n\\\\ntx408 tzz556 \
+-> tx414\\\\n\\\\ntx409 tzz556 -> tx415\\\\n\\\\ntx410 + tx413 -> \
+tx416\\\\n\\\\ntx411 + tx414 -> tx417\\\\n\\\\ntx412 + tx415 -> \
+tx418\\\\n\\\\ntx416 tzz561 -> tx419\\\\n\\\\ntx417 tzz563 -> \
+tx420\\\\n\\\\ntx418 tzz562 -> tx421\\\\n\\\\ntx419 + tx420 + tx421 -> \
+tx422\\\\n\\\\ntx422 tzz558 -> gbk\\\\n\\\\n-gbk -> \
+fbk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 1, fbk );]\\\\n\\\\nak tzz565 \
+-> tx423\\\\n\\\\nbk pxk -> tx424\\\\n\\\\ndk pyk -> tx425\\\\n\\\\nak pzk -> \
+tx426\\\\n\\\\n-2. tx369 -> tx427\\\\n\\\\n-2. tx400 -> tx428\\\\n\\\\ntx405 \
++ tx424 -> tx429\\\\n\\\\ntx423 + tx425 + tx427 -> tx430\\\\n\\\\ntx366 + \
+tx426 + tx428 -> tx431\\\\n\\\\nck tzz571 -> tx432\\\\n\\\\nck tzz570 -> \
+tx433\\\\n\\\\nck tzz569 -> tx434\\\\n\\\\ntx429 tzz556 -> \
+tx435\\\\n\\\\ntx430 tzz556 -> tx436\\\\n\\\\ntx431 tzz556 -> \
+tx437\\\\n\\\\ntx434 + tx435 -> tx438\\\\n\\\\ntx432 + tx436 -> \
+tx439\\\\n\\\\ntx433 + tx437 -> tx440\\\\n\\\\ntx438 tzz562 -> \
+tx441\\\\n\\\\ntx439 tzz561 -> tx442\\\\n\\\\ntx440 tzz563 -> \
+tx443\\\\n\\\\ntx441 + tx442 + tx443 -> tx444\\\\n\\\\ntx444 tzz558 -> \
+gck\\\\n\\\\n-gck -> fck\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 2, fck \
+);]\\\\n\\\\nak pxk -> tx445\\\\n\\\\nbk pzk -> tx446\\\\n\\\\n-2. tx365 -> \
+tx447\\\\n\\\\n-tx401 -> tx448\\\\n\\\\n-2. tx425 -> tx449\\\\n\\\\ntx402 + \
+tx424 -> tx450\\\\n\\\\ntx446 + tx447 + tx448 -> tx451\\\\n\\\\ntx369 + tx445 \
++ tx449 -> tx452\\\\n\\\\ndk tzz571 -> tx453\\\\n\\\\ndk tzz570 -> tx454\\\\n\
+\\\\ndk tzz569 -> tx455\\\\n\\\\ntx450 tzz556 -> tx456\\\\n\\\\ntx451 tzz556 \
+-> tx457\\\\n\\\\ntx452 tzz556 -> tx458\\\\n\\\\ntx453 + tx456 -> \
+tx459\\\\n\\\\ntx454 + tx457 -> tx460\\\\n\\\\ntx455 + tx458 -> \
+tx461\\\\n\\\\ntx459 tzz561 -> tx462\\\\n\\\\ntx460 tzz563 -> \
+tx463\\\\n\\\\ntx461 tzz562 -> tx464\\\\n\\\\ntx462 + tx463 + tx464 -> \
+tx465\\\\n\\\\ntx465 tzz558 -> gdk\\\\n\\\\n-gdk -> \
+fdk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 3, fdk );]\\\\n\\\\ntzz558 \
+tzz563 -> gxk\\\\n\\\\n-gxk -> fxk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, \
+4, fxk );]\\\\n\\\\ntzz558 tzz562 -> gyk\\\\n\\\\n-gyk -> \
+fyk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 5, fyk );]\\\\n\\\\ntzz558 \
+tzz561 -> gzk\\\\n\\\\n-gzk -> fzk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, \
+6, fzk );]\\\\n\\\\ntzz577 -> tx466\\\\n\\\\nbl pyl -> tx467\\\\n\\\\ntzz580 \
+-> tx468\\\\n\\\\ncl tx332 -> tx469\\\\n\\\\ndl tx333 -> tx470\\\\n\\\\nbl \
+tx334 -> tx471\\\\n\\\\npower2[tx331] -> tx472\\\\n\\\\ntx467 + tx469 -> \
+tx473\\\\n\\\\ntx468 + tx470 -> tx474\\\\n\\\\ntx466 + tx471 -> \
+tx475\\\\n\\\\n4. tx472 -> tzz559\\\\n\\\\ntx361 tzz559 -> tzz568\\\\n\\\\nal \
+tzz568 -> tx476\\\\n\\\\ntx362 tzz559 -> tzz567\\\\n\\\\nal tzz567 -> tx477\\\
+\\n\\\\ntx363 tzz559 -> tzz566\\\\n\\\\nal tzz566 -> tx478\\\\n\\\\ntx473 \
+tzz555 -> tx479\\\\n\\\\ntx474 tzz555 -> tx480\\\\n\\\\ntx475 tzz555 -> tx481\
+\\\\n\\\\ntx478 + tx479 -> tx482\\\\n\\\\ntx476 + tx480 -> \
+tx483\\\\n\\\\ntx477 + tx481 -> tx484\\\\n\\\\ntx482 tzz561 -> \
+tx485\\\\n\\\\ntx483 tzz563 -> tx486\\\\n\\\\ntx484 tzz562 -> \
+tx487\\\\n\\\\ntx485 + tx486 + tx487 -> tx488\\\\n\\\\ntx488 tzz558 -> \
+gal\\\\n\\\\n-gal -> fal\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 0, fal \
+);]\\\\n\\\\ncl pxl -> tx489\\\\n\\\\nal pyl -> tx490\\\\n\\\\ntzz581 -> \
+tx491\\\\n\\\\n-2. tzz573 -> tx492\\\\n\\\\ndl pzl -> tx493\\\\n\\\\nal tx334 \
+-> tx494\\\\n\\\\n-2. tx467 -> tx495\\\\n\\\\ntx466 + tx490 + tx492 -> \
+tx496\\\\n\\\\ntx491 + tx493 -> tx497\\\\n\\\\ntx489 + tx494 + tx495 -> tx498\
+\\\\n\\\\nbl tzz568 -> tx499\\\\n\\\\nbl tzz567 -> tx500\\\\n\\\\nbl tzz566 \
+-> tx501\\\\n\\\\ntx496 tzz555 -> tx502\\\\n\\\\ntx497 tzz555 -> tx503\\\\n\\\
+\\ntx498 tzz555 -> tx504\\\\n\\\\ntx501 + tx502 -> tx505\\\\n\\\\ntx499 + \
+tx503 -> tx506\\\\n\\\\ntx500 + tx504 -> tx507\\\\n\\\\ntx505 tzz561 -> tx508\
+\\\\n\\\\ntx506 tzz563 -> tx509\\\\n\\\\ntx507 tzz562 -> tx510\\\\n\\\\ntx508 \
++ tx509 + tx510 -> tx511\\\\n\\\\ntx511 tzz558 -> gbl\\\\n\\\\n-gbl -> \
+fbl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 1, fbl );]\\\\n\\\\nbl pxl -> \
+tx512\\\\n\\\\ndl pyl -> tx513\\\\n\\\\nal pzl -> tx514\\\\n\\\\nal tx332 -> \
+tx515\\\\n\\\\n-2. tx468 -> tx516\\\\n\\\\n-2. tx489 -> tx517\\\\n\\\\ntx493 \
++ tx512 -> tx518\\\\n\\\\ntx513 + tx515 + tx516 -> tx519\\\\n\\\\ntx467 + \
+tx514 + tx517 -> tx520\\\\n\\\\ncl tzz568 -> tx521\\\\n\\\\ncl tzz567 -> \
+tx522\\\\n\\\\ncl tzz566 -> tx523\\\\n\\\\ntx518 tzz555 -> \
+tx524\\\\n\\\\ntx519 tzz555 -> tx525\\\\n\\\\ntx520 tzz555 -> \
+tx526\\\\n\\\\ntx522 + tx524 -> tx527\\\\n\\\\ntx523 + tx525 -> \
+tx528\\\\n\\\\ntx521 + tx526 -> tx529\\\\n\\\\ntx527 tzz562 -> \
+tx530\\\\n\\\\ntx528 tzz561 -> tx531\\\\n\\\\ntx529 tzz563 -> \
+tx532\\\\n\\\\ntx530 + tx531 + tx532 -> tx533\\\\n\\\\ntx533 tzz558 -> \
+gcl\\\\n\\\\n-gcl -> fcl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 2, fcl \
+);]\\\\n\\\\nal pxl -> tx534\\\\n\\\\ntzz573 -> tx535\\\\n\\\\nal tx333 -> \
+tx536\\\\n\\\\n-2. tx466 -> tx537\\\\n\\\\n-2. tx513 -> tx538\\\\n\\\\ntx491 \
++ tx512 -> tx539\\\\n\\\\ntx535 + tx536 + tx537 -> tx540\\\\n\\\\ntx468 + \
+tx534 + tx538 -> tx541\\\\n\\\\ndl tzz568 -> tx542\\\\n\\\\ndl tzz567 -> \
+tx543\\\\n\\\\ndl tzz566 -> tx544\\\\n\\\\ntx539 tzz555 -> \
+tx545\\\\n\\\\ntx540 tzz555 -> tx546\\\\n\\\\ntx541 tzz555 -> \
+tx547\\\\n\\\\ntx544 + tx545 -> tx548\\\\n\\\\ntx542 + tx546 -> \
+tx549\\\\n\\\\ntx543 + tx547 -> tx550\\\\n\\\\ntx548 tzz561 -> \
+tx551\\\\n\\\\ntx549 tzz563 -> tx552\\\\n\\\\ntx550 tzz562 -> \
+tx553\\\\n\\\\ntx551 + tx552 + tx553 -> tx554\\\\n\\\\ntx554 tzz558 -> \
+gdl\\\\n\\\\n-gdl -> fdl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 3, fdl \
+);]\\\\n\\\\n-2. tzz558 -> tzz576\\\\n\\\\ntx377 tzz576 -> gxl\\\\n\\\\n-gxl \
+-> fxl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 4, fxl );]\\\\n\\\\ntx378 \
+tzz576 -> gyl\\\\n\\\\n-gyl -> fyl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, \
+5, fyl );]\\\\n\\\\ntx379 tzz576 -> gzl\\\\n\\\\n-gzl -> \
+fzl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 6, fzl );]\>\""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.702666640270697*^9, 3.702667223609469*^9, 3.702889707661439*^9, 
+   3.702891210318593*^9, 3.702894400586055*^9, 3.702894500717475*^9, 
+   3.7073192647294073`*^9, 3.707321572021159*^9, 3.707328272120843*^9, 
+   3.707330300475561*^9, 3.7073409608399897`*^9, 3.707387982796583*^9, {
+   3.7082530299966087`*^9, 
+   3.7082530302460117`*^9}},ExpressionUUID->"74cfd218-694f-4ddf-871b-\
 9c32d9b4f0ab"],
 
 Cell[BoxData["\<\"trivialRules>> triv = {tzz575 -> tx332, tzz574 -> tx333, \
@@ -2808,171 +2854,200 @@ tx466\\n\\ntzz580 -> tx468\\n\\ntzz581 -> tx491\\n\\ntzz573 -> tx535\"\>"], \
   3.707387984231409*^9},ExpressionUUID->"04f21b23-fec6-4982-a7c8-\
 f5cbe1795628"],
 
-Cell[BoxData["\<\"After removal: \
-CCode[STAPLE_SET_PARAMETER(ks,ks);]\\n\\nCCode[STAPLE_SET_PARAMETER(r0,r0);]\\\
-n\\nCCode[STAPLE_SET_PARAMETER(I1,rigidBodyK);]\\n\\nCCode[STAPLE_SET_\
-PARAMETER(I2,rigidBodyL);]\\n\\nCCode[STAPLE_SET_POSITION(ak,I1,0);]\\n\\\
-nCCode[STAPLE_SET_POSITION(bk,I1,1);]\\n\\nCCode[STAPLE_SET_POSITION(ck,I1,2);\
-]\\n\\nCCode[STAPLE_SET_POSITION(dk,I1,3);]\\n\\nCCode[STAPLE_SET_POSITION(xk,\
-I1,4);]\\n\\nCCode[STAPLE_SET_POSITION(yk,I1,5);]\\n\\nCCode[STAPLE_SET_\
-POSITION(zk,I1,6);]\\n\\nCCode[STAPLE_SET_POSITION(al,I2,0);]\\n\\nCCode[\
-STAPLE_SET_POSITION(bl,I2,1);]\\n\\nCCode[STAPLE_SET_POSITION(cl,I2,2);]\\n\\\
-nCCode[STAPLE_SET_POSITION(dl,I2,3);]\\n\\nCCode[STAPLE_SET_POSITION(xl,I2,4);\
-]\\n\\nCCode[STAPLE_SET_POSITION(yl,I2,5);]\\n\\nCCode[STAPLE_SET_POSITION(zl,\
-I2,6);]\\n\\nCCode[STAPLE_SET_POINT(pxk,pointK,getX());]\\n\\nCCode[STAPLE_\
-SET_POINT(pyk,pointK,getY());]\\n\\nCCode[STAPLE_SET_POINT(pzk,pointK,getZ());\
-]\\n\\nCCode[STAPLE_SET_POINT(pxl,pointL,getX());]\\n\\nCCode[STAPLE_SET_\
-POINT(pyl,pointL,getY());]\\n\\nCCode[STAPLE_SET_POINT(pzl,pointL,getZ());]\\\
-n\\npower2[ak] -> tx278\\n\\npower2[al] -> tx279\\n\\npower2[bk] -> \
-tx280\\n\\npower2[bl] -> tx281\\n\\npower2[ck] -> tx282\\n\\npower2[cl] -> \
-tx283\\n\\npower2[dk] -> tx284\\n\\npower2[dl] -> tx285\\n\\n-pxk -> \
-tzz565\\n\\nak ck -> tzz583\\n\\ntzz565 tzz583 -> tx286\\n\\nbk ck pxk -> \
-tx287\\n\\ndk pxk -> tzz579\\n\\nak tzz579 -> tx288\\n\\nbk tzz579 -> \
-tx289\\n\\n-pxl -> tzz575\\n\\nal cl tzz575 -> tx290\\n\\nbl cl pxl -> \
-tx291\\n\\ndl pxl -> tzz577\\n\\nal tzz577 -> tx292\\n\\nbl tzz577 -> \
-tx293\\n\\nak bk -> tzz584\\n\\npyk tzz584 -> tx294\\n\\nck pyk -> \
-tzz582\\n\\nbk tzz582 -> tx295\\n\\n-pyk -> tzz572\\n\\nak dk tzz572 -> tx296\
-\\n\\ndk tzz582 -> tx297\\n\\nal bl pyl -> tx298\\n\\ncl pyl -> \
-tzz581\\n\\nbl tzz581 -> tx299\\n\\n-pyl -> tzz574\\n\\nal dl tzz574 -> tx300\
-\\n\\ndl tzz581 -> tx301\\n\\n-pzk -> tzz564\\n\\ntzz564 tzz584 -> \
-tx302\\n\\npzk tzz583 -> tx303\\n\\ndk pzk -> tzz578\\n\\nbk tzz578 -> \
-tx304\\n\\nck tzz578 -> tx305\\n\\nbl pzl -> tzz573\\n\\n-(al tzz573) -> \
-tx306\\n\\ncl pzl -> tzz580\\n\\nal tzz580 -> tx307\\n\\ndl tzz573 -> \
-tx308\\n\\ndl tzz580 -> tx309\\n\\ntx280 tzz572 -> tx310\\n\\ntx280 tzz564 -> \
-tx311\\n\\ntx281 tzz574 -> tx312\\n\\n-pzl -> tzz585\\n\\ntx281 tzz585 -> \
-tx313\\n\\ntx282 tzz565 -> tx314\\n\\ntx282 tzz564 -> tx315\\n\\ntx283 tzz575 \
--> tx316\\n\\ntx283 tzz585 -> tx317\\n\\ntx284 tzz565 -> tx318\\n\\ntx284 \
-tzz572 -> tx319\\n\\ntx278 + tx280 + tx282 + tx284 -> tx320\\n\\ntx285 tzz575 \
--> tx321\\n\\ntx285 tzz574 -> tx322\\n\\ntx279 + tx281 + tx283 + tx285 -> \
-tx323\\n\\ntx286 + tx289 + tx294 + tx297 + tx311 + tx315 -> tx324\\n\\ntx298 \
-+ tx301 -> tzz599\\n\\ntx293 + tzz599 -> tzz600\\n\\ntx290 + tzz600 -> tzz603\
-\\n\\ntx313 + tx317 + tzz603 -> tx325\\n\\ntx295 + tx296 + tx303 + tx304 + \
-tx314 + tx318 -> tx326\\n\\ntx287 + tx288 + tx302 + tx305 + tx310 + tx319 -> \
-tx327\\n\\nreciprocal[tx320] -> tx328\\n\\ntx307 + tx308 -> tzz595\\n\\ntx300 \
-+ tzz595 -> tzz597\\n\\ntx299 + tzz597 -> tzz598\\n\\ntx316 + tx321 + tzz598 \
--> tx329\\n\\ntx306 + tx309 -> tzz596\\n\\ntx292 + tzz596 -> \
-tzz601\\n\\ntx291 + tzz601 -> tzz602\\n\\ntx312 + tx322 + tzz602 -> \
-tx330\\n\\nreciprocal[tx323] -> tx331\\n\\ntzz575 -> tx332\\n\\ntzz574 -> \
-tx333\\n\\ntzz585 -> tx334\\n\\n2. tx328 -> tzz556\\n\\ntx324 tzz556 -> tx335\
-\\n\\ntx326 tzz556 -> tx336\\n\\ntx327 tzz556 -> tx337\\n\\n-2. tx331 -> \
-tzz555\\n\\ntx325 tzz555 -> tx338\\n\\ntx329 tzz555 -> tx339\\n\\ntx330 \
-tzz555 -> tx340\\n\\n-xl -> tx341\\n\\n-yl -> tx342\\n\\n-zl -> \
-tx343\\n\\ntx341 + xk -> tzz588\\n\\ntx336 + tzz588 -> tzz590\\n\\ntx332 + \
-tzz590 -> tzz594\\n\\npxk + tzz594 -> tzz606\\n\\ntx339 + tzz606 -> \
-tx344\\n\\ntx342 + yk -> tzz587\\n\\ntx337 + tzz587 -> tzz589\\n\\ntx333 + \
-tzz589 -> tzz593\\n\\npyk + tzz593 -> tzz605\\n\\ntx340 + tzz605 -> \
-tx345\\n\\ntx343 + zk -> tzz586\\n\\ntx335 + tzz586 -> tzz591\\n\\ntx334 + \
-tzz591 -> tzz592\\n\\npzk + tzz592 -> tzz604\\n\\ntx338 + tzz604 -> \
-tx346\\n\\npower2[tx344] -> tx347\\n\\npower2[tx345] -> \
-tx348\\n\\npower2[tx346] -> tx349\\n\\ntx347 + tx348 + tx349 -> \
-tx350\\n\\n-r0 -> tx351\\n\\nmysqrt[tx350] -> tx352\\n\\ntx351 + tx352 -> \
-tx353\\n\\npower2[tx353] -> tx354\\n\\nks tx354 -> \
-Energy\\n\\nCCode[STAPLE_ENERGY_ACCUMULATE(Energy);]\\n\\ntx283 tx332 -> \
-tx355\\n\\ntx285 tx332 -> tx356\\n\\ntx281 tx333 -> tx357\\n\\ntx285 tx333 -> \
-tx358\\n\\ntx281 tx334 -> tx359\\n\\ntx283 tx334 -> tx360\\n\\ntx355 + tx356 \
-+ tzz598 -> tx361\\n\\ntx357 + tx358 + tzz602 -> tx362\\n\\ntx359 + tx360 + \
-tzz603 -> tx363\\n\\nck tzz565 -> tx364\\n\\ntzz579 -> tx365\\n\\nbk pyk -> \
-tx366\\n\\ndk tzz572 -> tx367\\n\\nbk tzz564 -> tx368\\n\\nck pzk -> tx369\\n\
-\\ntx361 tzz555 -> tx370\\n\\ntx362 tzz555 -> tx371\\n\\ntx363 tzz555 -> \
-tx372\\n\\npower2[tx328] -> tx373\\n\\ntx364 + tx366 -> tx374\\n\\ntx365 + \
-tx368 -> tx375\\n\\ntx367 + tx369 -> tx376\\n\\ntx370 + tzz606 -> \
-tx377\\n\\ntx371 + tzz605 -> tx378\\n\\ntx372 + tzz604 -> tx379\\n\\n-4. \
-tx373 -> tzz560\\n\\ntx324 tzz560 -> tzz571\\n\\nak tzz571 -> \
-tx380\\n\\ntx326 tzz560 -> tzz570\\n\\nak tzz570 -> tx381\\n\\ntx327 tzz560 \
--> tzz569\\n\\nak tzz569 -> tx382\\n\\ntx374 tzz556 -> tx383\\n\\ntx375 \
-tzz556 -> tx384\\n\\ntx376 tzz556 -> tx385\\n\\npower2[tx377] -> \
-tx386\\n\\npower2[tx378] -> tx387\\n\\npower2[tx379] -> tx388\\n\\ntx380 + \
-tx383 -> tx389\\n\\ntx382 + tx384 -> tx390\\n\\ntx381 + tx385 -> \
-tx391\\n\\ntx386 + tx387 + tx388 -> tx392\\n\\n2. tx379 -> tzz561\\n\\ntx389 \
-tzz561 -> tx393\\n\\n2. tx378 -> tzz562\\n\\ntx390 tzz562 -> tx394\\n\\n2. \
-tx377 -> tzz563\\n\\ntx391 tzz563 -> tx395\\n\\nmysqrt[tx392] -> \
-tx396\\n\\nreciprocal[tx396] -> tx397\\n\\ntx393 + tx394 + tx395 -> \
-tx398\\n\\ntx351 + tx396 -> tx399\\n\\ntx397 tx399 -> tzz557\\n\\nks tzz557 \
--> tzz558\\n\\ntx398 tzz558 -> gak\\n\\n-gak -> \
-fak\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 0, fak );]\\n\\nck pxk -> tx400\\n\
-\\nak pyk -> tx401\\n\\ntzz582 -> tx402\\n\\nak tzz564 -> tx403\\n\\n-2. bk \
-pzk -> tx404\\n\\ntzz578 -> tx405\\n\\n-2. tx366 -> tx406\\n\\ntx365 + tx401 \
-+ tx404 -> tx407\\n\\ntx402 + tx405 -> tx408\\n\\ntx400 + tx403 + tx406 -> \
-tx409\\n\\nbk tzz571 -> tx410\\n\\nbk tzz570 -> tx411\\n\\nbk tzz569 -> tx412\
-\\n\\ntx407 tzz556 -> tx413\\n\\ntx408 tzz556 -> tx414\\n\\ntx409 tzz556 -> \
-tx415\\n\\ntx410 + tx413 -> tx416\\n\\ntx411 + tx414 -> tx417\\n\\ntx412 + \
-tx415 -> tx418\\n\\ntx416 tzz561 -> tx419\\n\\ntx417 tzz563 -> \
-tx420\\n\\ntx418 tzz562 -> tx421\\n\\ntx419 + tx420 + tx421 -> \
-tx422\\n\\ntx422 tzz558 -> gbk\\n\\n-gbk -> \
-fbk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 1, fbk );]\\n\\nak tzz565 -> tx423\
-\\n\\nbk pxk -> tx424\\n\\ndk pyk -> tx425\\n\\nak pzk -> tx426\\n\\n-2. \
-tx369 -> tx427\\n\\n-2. tx400 -> tx428\\n\\ntx405 + tx424 -> tx429\\n\\ntx423 \
-+ tx425 + tx427 -> tx430\\n\\ntx366 + tx426 + tx428 -> tx431\\n\\nck tzz571 \
--> tx432\\n\\nck tzz570 -> tx433\\n\\nck tzz569 -> tx434\\n\\ntx429 tzz556 -> \
-tx435\\n\\ntx430 tzz556 -> tx436\\n\\ntx431 tzz556 -> tx437\\n\\ntx434 + \
-tx435 -> tx438\\n\\ntx432 + tx436 -> tx439\\n\\ntx433 + tx437 -> \
-tx440\\n\\ntx438 tzz562 -> tx441\\n\\ntx439 tzz561 -> tx442\\n\\ntx440 tzz563 \
--> tx443\\n\\ntx441 + tx442 + tx443 -> tx444\\n\\ntx444 tzz558 -> \
-gck\\n\\n-gck -> fck\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 2, fck \
-);]\\n\\nak pxk -> tx445\\n\\nbk pzk -> tx446\\n\\n-2. tx365 -> \
-tx447\\n\\n-tx401 -> tx448\\n\\n-2. tx425 -> tx449\\n\\ntx402 + tx424 -> \
-tx450\\n\\ntx446 + tx447 + tx448 -> tx451\\n\\ntx369 + tx445 + tx449 -> tx452\
-\\n\\ndk tzz571 -> tx453\\n\\ndk tzz570 -> tx454\\n\\ndk tzz569 -> \
-tx455\\n\\ntx450 tzz556 -> tx456\\n\\ntx451 tzz556 -> tx457\\n\\ntx452 tzz556 \
--> tx458\\n\\ntx453 + tx456 -> tx459\\n\\ntx454 + tx457 -> tx460\\n\\ntx455 + \
-tx458 -> tx461\\n\\ntx459 tzz561 -> tx462\\n\\ntx460 tzz563 -> \
-tx463\\n\\ntx461 tzz562 -> tx464\\n\\ntx462 + tx463 + tx464 -> \
-tx465\\n\\ntx465 tzz558 -> gdk\\n\\n-gdk -> \
-fdk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 3, fdk );]\\n\\ntzz558 tzz563 -> \
-gxk\\n\\n-gxk -> fxk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 4, fxk \
-);]\\n\\ntzz558 tzz562 -> gyk\\n\\n-gyk -> \
-fyk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 5, fyk );]\\n\\ntzz558 tzz561 -> \
-gzk\\n\\n-gzk -> fzk\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I1, 6, fzk \
-);]\\n\\ntzz577 -> tx466\\n\\nbl pyl -> tx467\\n\\ntzz580 -> tx468\\n\\ncl \
-tx332 -> tx469\\n\\ndl tx333 -> tx470\\n\\nbl tx334 -> \
-tx471\\n\\npower2[tx331] -> tx472\\n\\ntx467 + tx469 -> tx473\\n\\ntx468 + \
-tx470 -> tx474\\n\\ntx466 + tx471 -> tx475\\n\\n4. tx472 -> tzz559\\n\\ntx361 \
-tzz559 -> tzz568\\n\\nal tzz568 -> tx476\\n\\ntx362 tzz559 -> tzz567\\n\\nal \
-tzz567 -> tx477\\n\\ntx363 tzz559 -> tzz566\\n\\nal tzz566 -> \
-tx478\\n\\ntx473 tzz555 -> tx479\\n\\ntx474 tzz555 -> tx480\\n\\ntx475 tzz555 \
--> tx481\\n\\ntx478 + tx479 -> tx482\\n\\ntx476 + tx480 -> tx483\\n\\ntx477 + \
-tx481 -> tx484\\n\\ntx482 tzz561 -> tx485\\n\\ntx483 tzz563 -> \
-tx486\\n\\ntx484 tzz562 -> tx487\\n\\ntx485 + tx486 + tx487 -> \
-tx488\\n\\ntx488 tzz558 -> gal\\n\\n-gal -> \
-fal\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 0, fal );]\\n\\ncl pxl -> tx489\\n\
-\\nal pyl -> tx490\\n\\ntzz581 -> tx491\\n\\n-2. tzz573 -> tx492\\n\\ndl pzl \
--> tx493\\n\\nal tx334 -> tx494\\n\\n-2. tx467 -> tx495\\n\\ntx466 + tx490 + \
-tx492 -> tx496\\n\\ntx491 + tx493 -> tx497\\n\\ntx489 + tx494 + tx495 -> \
-tx498\\n\\nbl tzz568 -> tx499\\n\\nbl tzz567 -> tx500\\n\\nbl tzz566 -> tx501\
-\\n\\ntx496 tzz555 -> tx502\\n\\ntx497 tzz555 -> tx503\\n\\ntx498 tzz555 -> \
-tx504\\n\\ntx501 + tx502 -> tx505\\n\\ntx499 + tx503 -> tx506\\n\\ntx500 + \
-tx504 -> tx507\\n\\ntx505 tzz561 -> tx508\\n\\ntx506 tzz563 -> \
-tx509\\n\\ntx507 tzz562 -> tx510\\n\\ntx508 + tx509 + tx510 -> \
-tx511\\n\\ntx511 tzz558 -> gbl\\n\\n-gbl -> \
-fbl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 1, fbl );]\\n\\nbl pxl -> tx512\\n\
-\\ndl pyl -> tx513\\n\\nal pzl -> tx514\\n\\nal tx332 -> tx515\\n\\n-2. tx468 \
--> tx516\\n\\n-2. tx489 -> tx517\\n\\ntx493 + tx512 -> tx518\\n\\ntx513 + \
-tx515 + tx516 -> tx519\\n\\ntx467 + tx514 + tx517 -> tx520\\n\\ncl tzz568 -> \
-tx521\\n\\ncl tzz567 -> tx522\\n\\ncl tzz566 -> tx523\\n\\ntx518 tzz555 -> \
-tx524\\n\\ntx519 tzz555 -> tx525\\n\\ntx520 tzz555 -> tx526\\n\\ntx522 + \
-tx524 -> tx527\\n\\ntx523 + tx525 -> tx528\\n\\ntx521 + tx526 -> \
-tx529\\n\\ntx527 tzz562 -> tx530\\n\\ntx528 tzz561 -> tx531\\n\\ntx529 tzz563 \
--> tx532\\n\\ntx530 + tx531 + tx532 -> tx533\\n\\ntx533 tzz558 -> \
-gcl\\n\\n-gcl -> fcl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 2, fcl \
-);]\\n\\nal pxl -> tx534\\n\\ntzz573 -> tx535\\n\\nal tx333 -> tx536\\n\\n-2. \
-tx466 -> tx537\\n\\n-2. tx513 -> tx538\\n\\ntx491 + tx512 -> tx539\\n\\ntx535 \
-+ tx536 + tx537 -> tx540\\n\\ntx468 + tx534 + tx538 -> tx541\\n\\ndl tzz568 \
--> tx542\\n\\ndl tzz567 -> tx543\\n\\ndl tzz566 -> tx544\\n\\ntx539 tzz555 -> \
-tx545\\n\\ntx540 tzz555 -> tx546\\n\\ntx541 tzz555 -> tx547\\n\\ntx544 + \
-tx545 -> tx548\\n\\ntx542 + tx546 -> tx549\\n\\ntx543 + tx547 -> \
-tx550\\n\\ntx548 tzz561 -> tx551\\n\\ntx549 tzz563 -> tx552\\n\\ntx550 tzz562 \
--> tx553\\n\\ntx551 + tx552 + tx553 -> tx554\\n\\ntx554 tzz558 -> \
-gdl\\n\\n-gdl -> fdl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 3, fdl \
-);]\\n\\n-2. tzz558 -> tzz576\\n\\ntx377 tzz576 -> gxl\\n\\n-gxl -> \
-fxl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 4, fxl );]\\n\\ntx378 tzz576 -> \
-gyl\\n\\n-gyl -> fyl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 5, fyl \
-);]\\n\\ntx379 tzz576 -> gzl\\n\\n-gzl -> \
-fzl\\n\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 6, fzl );]\"\>"], "Print",
- CellChangeTimes->{3.702666640270697*^9, 3.702667223609469*^9, 
-  3.702889707661439*^9, 3.702891210318593*^9, 3.702894400586055*^9, 
-  3.702894500717475*^9, 3.7073192647294073`*^9, 3.707321572021159*^9, 
-  3.707328272120843*^9, 3.707330300475561*^9, 3.7073409608399897`*^9, 
-  3.707387984234692*^9},ExpressionUUID->"2b4b826f-e3b8-40b7-baa6-\
+Cell[BoxData["\"\<After removal: \
+CCode[CYLREP_SET_PARAMETER(ks,ks);]\\\\n\\\\nCCode[CYLREP_SET_PARAMETER(r0,r0)\
+;]\\\\n\\\\nCCode[CYLREP_SET_PARAMETER(I1,rigidBodyK);]\\\\n\\\\nCCode[CYLREP_\
+SET_PARAMETER(I2,rigidBodyL);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(ak,I1,0);]\\\
+\\n\\\\nCCode[CYLREP_SET_POSITION(bk,I1,1);]\\\\n\\\\nCCode[CYLREP_SET_\
+POSITION(ck,I1,2);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(dk,I1,3);]\\\\n\\\\\
+nCCode[CYLREP_SET_POSITION(xk,I1,4);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(yk,\
+I1,5);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(zk,I1,6);]\\\\n\\\\nCCode[CYLREP_\
+SET_POSITION(al,I2,0);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(bl,I2,1);]\\\\n\\\\\
+nCCode[CYLREP_SET_POSITION(cl,I2,2);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(dl,\
+I2,3);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(xl,I2,4);]\\\\n\\\\nCCode[CYLREP_\
+SET_POSITION(yl,I2,5);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(zl,I2,6);]\\\\n\\\\\
+nCCode[CYLREP_SET_POINT(pxk,pointK,getX());]\\\\n\\\\nCCode[CYLREP_SET_POINT(\
+pyk,pointK,getY());]\\\\n\\\\nCCode[CYLREP_SET_POINT(pzk,pointK,getZ());]\\\\\
+n\\\\nCCode[CYLREP_SET_POINT(pxl,pointL,getX());]\\\\n\\\\nCCode[CYLREP_SET_\
+POINT(pyl,pointL,getY());]\\\\n\\\\nCCode[CYLREP_SET_POINT(pzl,pointL,getZ());\
+]\\\\n\\\\npower2[ak] -> tx278\\\\n\\\\npower2[al] -> \
+tx279\\\\n\\\\npower2[bk] -> tx280\\\\n\\\\npower2[bl] -> \
+tx281\\\\n\\\\npower2[ck] -> tx282\\\\n\\\\npower2[cl] -> \
+tx283\\\\n\\\\npower2[dk] -> tx284\\\\n\\\\npower2[dl] -> tx285\\\\n\\\\n-pxk \
+-> tzz565\\\\n\\\\nak ck -> tzz583\\\\n\\\\ntzz565 tzz583 -> \
+tx286\\\\n\\\\nbk ck pxk -> tx287\\\\n\\\\ndk pxk -> tzz579\\\\n\\\\nak \
+tzz579 -> tx288\\\\n\\\\nbk tzz579 -> tx289\\\\n\\\\n-pxl -> \
+tzz575\\\\n\\\\nal cl tzz575 -> tx290\\\\n\\\\nbl cl pxl -> tx291\\\\n\\\\ndl \
+pxl -> tzz577\\\\n\\\\nal tzz577 -> tx292\\\\n\\\\nbl tzz577 -> \
+tx293\\\\n\\\\nak bk -> tzz584\\\\n\\\\npyk tzz584 -> tx294\\\\n\\\\nck pyk \
+-> tzz582\\\\n\\\\nbk tzz582 -> tx295\\\\n\\\\n-pyk -> tzz572\\\\n\\\\nak dk \
+tzz572 -> tx296\\\\n\\\\ndk tzz582 -> tx297\\\\n\\\\nal bl pyl -> \
+tx298\\\\n\\\\ncl pyl -> tzz581\\\\n\\\\nbl tzz581 -> tx299\\\\n\\\\n-pyl -> \
+tzz574\\\\n\\\\nal dl tzz574 -> tx300\\\\n\\\\ndl tzz581 -> \
+tx301\\\\n\\\\n-pzk -> tzz564\\\\n\\\\ntzz564 tzz584 -> tx302\\\\n\\\\npzk \
+tzz583 -> tx303\\\\n\\\\ndk pzk -> tzz578\\\\n\\\\nbk tzz578 -> \
+tx304\\\\n\\\\nck tzz578 -> tx305\\\\n\\\\nbl pzl -> tzz573\\\\n\\\\n-(al \
+tzz573) -> tx306\\\\n\\\\ncl pzl -> tzz580\\\\n\\\\nal tzz580 -> tx307\\\\n\\\
+\\ndl tzz573 -> tx308\\\\n\\\\ndl tzz580 -> tx309\\\\n\\\\ntx280 tzz572 -> \
+tx310\\\\n\\\\ntx280 tzz564 -> tx311\\\\n\\\\ntx281 tzz574 -> \
+tx312\\\\n\\\\n-pzl -> tzz585\\\\n\\\\ntx281 tzz585 -> tx313\\\\n\\\\ntx282 \
+tzz565 -> tx314\\\\n\\\\ntx282 tzz564 -> tx315\\\\n\\\\ntx283 tzz575 -> tx316\
+\\\\n\\\\ntx283 tzz585 -> tx317\\\\n\\\\ntx284 tzz565 -> tx318\\\\n\\\\ntx284 \
+tzz572 -> tx319\\\\n\\\\ntx278 + tx280 + tx282 + tx284 -> \
+tx320\\\\n\\\\ntx285 tzz575 -> tx321\\\\n\\\\ntx285 tzz574 -> \
+tx322\\\\n\\\\ntx279 + tx281 + tx283 + tx285 -> tx323\\\\n\\\\ntx286 + tx289 \
++ tx294 + tx297 + tx311 + tx315 -> tx324\\\\n\\\\ntx298 + tx301 -> \
+tzz599\\\\n\\\\ntx293 + tzz599 -> tzz600\\\\n\\\\ntx290 + tzz600 -> \
+tzz603\\\\n\\\\ntx313 + tx317 + tzz603 -> tx325\\\\n\\\\ntx295 + tx296 + \
+tx303 + tx304 + tx314 + tx318 -> tx326\\\\n\\\\ntx287 + tx288 + tx302 + tx305 \
++ tx310 + tx319 -> tx327\\\\n\\\\nreciprocal[tx320] -> tx328\\\\n\\\\ntx307 + \
+tx308 -> tzz595\\\\n\\\\ntx300 + tzz595 -> tzz597\\\\n\\\\ntx299 + tzz597 -> \
+tzz598\\\\n\\\\ntx316 + tx321 + tzz598 -> tx329\\\\n\\\\ntx306 + tx309 -> \
+tzz596\\\\n\\\\ntx292 + tzz596 -> tzz601\\\\n\\\\ntx291 + tzz601 -> \
+tzz602\\\\n\\\\ntx312 + tx322 + tzz602 -> tx330\\\\n\\\\nreciprocal[tx323] -> \
+tx331\\\\n\\\\ntzz575 -> tx332\\\\n\\\\ntzz574 -> tx333\\\\n\\\\ntzz585 -> \
+tx334\\\\n\\\\n2. tx328 -> tzz556\\\\n\\\\ntx324 tzz556 -> \
+tx335\\\\n\\\\ntx326 tzz556 -> tx336\\\\n\\\\ntx327 tzz556 -> \
+tx337\\\\n\\\\n-2. tx331 -> tzz555\\\\n\\\\ntx325 tzz555 -> \
+tx338\\\\n\\\\ntx329 tzz555 -> tx339\\\\n\\\\ntx330 tzz555 -> \
+tx340\\\\n\\\\n-xl -> tx341\\\\n\\\\n-yl -> tx342\\\\n\\\\n-zl -> \
+tx343\\\\n\\\\ntx341 + xk -> tzz588\\\\n\\\\ntx336 + tzz588 -> \
+tzz590\\\\n\\\\ntx332 + tzz590 -> tzz594\\\\n\\\\npxk + tzz594 -> tzz606\\\\n\
+\\\\ntx339 + tzz606 -> tx344\\\\n\\\\ntx342 + yk -> tzz587\\\\n\\\\ntx337 + \
+tzz587 -> tzz589\\\\n\\\\ntx333 + tzz589 -> tzz593\\\\n\\\\npyk + tzz593 -> \
+tzz605\\\\n\\\\ntx340 + tzz605 -> tx345\\\\n\\\\ntx343 + zk -> \
+tzz586\\\\n\\\\ntx335 + tzz586 -> tzz591\\\\n\\\\ntx334 + tzz591 -> \
+tzz592\\\\n\\\\npzk + tzz592 -> tzz604\\\\n\\\\ntx338 + tzz604 -> \
+tx346\\\\n\\\\npower2[tx344] -> tx347\\\\n\\\\npower2[tx345] -> \
+tx348\\\\n\\\\npower2[tx346] -> tx349\\\\n\\\\ntx347 + tx348 + tx349 -> tx350\
+\\\\n\\\\n-r0 -> tx351\\\\n\\\\nmysqrt[tx350] -> tx352\\\\n\\\\ntx351 + tx352 \
+-> tx353\\\\n\\\\npower2[tx353] -> tx354\\\\n\\\\nks tx354 -> \
+Energy\\\\n\\\\nCCode[CYLREP_ENERGY_ACCUMULATE(Energy);]\\\\n\\\\ntx283 tx332 \
+-> tx355\\\\n\\\\ntx285 tx332 -> tx356\\\\n\\\\ntx281 tx333 -> \
+tx357\\\\n\\\\ntx285 tx333 -> tx358\\\\n\\\\ntx281 tx334 -> \
+tx359\\\\n\\\\ntx283 tx334 -> tx360\\\\n\\\\ntx355 + tx356 + tzz598 -> \
+tx361\\\\n\\\\ntx357 + tx358 + tzz602 -> tx362\\\\n\\\\ntx359 + tx360 + \
+tzz603 -> tx363\\\\n\\\\nck tzz565 -> tx364\\\\n\\\\ntzz579 -> \
+tx365\\\\n\\\\nbk pyk -> tx366\\\\n\\\\ndk tzz572 -> tx367\\\\n\\\\nbk tzz564 \
+-> tx368\\\\n\\\\nck pzk -> tx369\\\\n\\\\ntx361 tzz555 -> \
+tx370\\\\n\\\\ntx362 tzz555 -> tx371\\\\n\\\\ntx363 tzz555 -> \
+tx372\\\\n\\\\npower2[tx328] -> tx373\\\\n\\\\ntx364 + tx366 -> \
+tx374\\\\n\\\\ntx365 + tx368 -> tx375\\\\n\\\\ntx367 + tx369 -> \
+tx376\\\\n\\\\ntx370 + tzz606 -> tx377\\\\n\\\\ntx371 + tzz605 -> \
+tx378\\\\n\\\\ntx372 + tzz604 -> tx379\\\\n\\\\n-4. tx373 -> \
+tzz560\\\\n\\\\ntx324 tzz560 -> tzz571\\\\n\\\\nak tzz571 -> \
+tx380\\\\n\\\\ntx326 tzz560 -> tzz570\\\\n\\\\nak tzz570 -> \
+tx381\\\\n\\\\ntx327 tzz560 -> tzz569\\\\n\\\\nak tzz569 -> \
+tx382\\\\n\\\\ntx374 tzz556 -> tx383\\\\n\\\\ntx375 tzz556 -> \
+tx384\\\\n\\\\ntx376 tzz556 -> tx385\\\\n\\\\npower2[tx377] -> \
+tx386\\\\n\\\\npower2[tx378] -> tx387\\\\n\\\\npower2[tx379] -> \
+tx388\\\\n\\\\ntx380 + tx383 -> tx389\\\\n\\\\ntx382 + tx384 -> \
+tx390\\\\n\\\\ntx381 + tx385 -> tx391\\\\n\\\\ntx386 + tx387 + tx388 -> tx392\
+\\\\n\\\\n2. tx379 -> tzz561\\\\n\\\\ntx389 tzz561 -> tx393\\\\n\\\\n2. tx378 \
+-> tzz562\\\\n\\\\ntx390 tzz562 -> tx394\\\\n\\\\n2. tx377 -> \
+tzz563\\\\n\\\\ntx391 tzz563 -> tx395\\\\n\\\\nmysqrt[tx392] -> \
+tx396\\\\n\\\\nreciprocal[tx396] -> tx397\\\\n\\\\ntx393 + tx394 + tx395 -> \
+tx398\\\\n\\\\ntx351 + tx396 -> tx399\\\\n\\\\ntx397 tx399 -> \
+tzz557\\\\n\\\\nks tzz557 -> tzz558\\\\n\\\\ntx398 tzz558 -> \
+gak\\\\n\\\\n-gak -> fak\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 0, fak \
+);]\\\\n\\\\nck pxk -> tx400\\\\n\\\\nak pyk -> tx401\\\\n\\\\ntzz582 -> \
+tx402\\\\n\\\\nak tzz564 -> tx403\\\\n\\\\n-2. bk pzk -> \
+tx404\\\\n\\\\ntzz578 -> tx405\\\\n\\\\n-2. tx366 -> tx406\\\\n\\\\ntx365 + \
+tx401 + tx404 -> tx407\\\\n\\\\ntx402 + tx405 -> tx408\\\\n\\\\ntx400 + tx403 \
++ tx406 -> tx409\\\\n\\\\nbk tzz571 -> tx410\\\\n\\\\nbk tzz570 -> tx411\\\\n\
+\\\\nbk tzz569 -> tx412\\\\n\\\\ntx407 tzz556 -> tx413\\\\n\\\\ntx408 tzz556 \
+-> tx414\\\\n\\\\ntx409 tzz556 -> tx415\\\\n\\\\ntx410 + tx413 -> \
+tx416\\\\n\\\\ntx411 + tx414 -> tx417\\\\n\\\\ntx412 + tx415 -> \
+tx418\\\\n\\\\ntx416 tzz561 -> tx419\\\\n\\\\ntx417 tzz563 -> \
+tx420\\\\n\\\\ntx418 tzz562 -> tx421\\\\n\\\\ntx419 + tx420 + tx421 -> \
+tx422\\\\n\\\\ntx422 tzz558 -> gbk\\\\n\\\\n-gbk -> \
+fbk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 1, fbk );]\\\\n\\\\nak tzz565 \
+-> tx423\\\\n\\\\nbk pxk -> tx424\\\\n\\\\ndk pyk -> tx425\\\\n\\\\nak pzk -> \
+tx426\\\\n\\\\n-2. tx369 -> tx427\\\\n\\\\n-2. tx400 -> tx428\\\\n\\\\ntx405 \
++ tx424 -> tx429\\\\n\\\\ntx423 + tx425 + tx427 -> tx430\\\\n\\\\ntx366 + \
+tx426 + tx428 -> tx431\\\\n\\\\nck tzz571 -> tx432\\\\n\\\\nck tzz570 -> \
+tx433\\\\n\\\\nck tzz569 -> tx434\\\\n\\\\ntx429 tzz556 -> \
+tx435\\\\n\\\\ntx430 tzz556 -> tx436\\\\n\\\\ntx431 tzz556 -> \
+tx437\\\\n\\\\ntx434 + tx435 -> tx438\\\\n\\\\ntx432 + tx436 -> \
+tx439\\\\n\\\\ntx433 + tx437 -> tx440\\\\n\\\\ntx438 tzz562 -> \
+tx441\\\\n\\\\ntx439 tzz561 -> tx442\\\\n\\\\ntx440 tzz563 -> \
+tx443\\\\n\\\\ntx441 + tx442 + tx443 -> tx444\\\\n\\\\ntx444 tzz558 -> \
+gck\\\\n\\\\n-gck -> fck\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 2, fck \
+);]\\\\n\\\\nak pxk -> tx445\\\\n\\\\nbk pzk -> tx446\\\\n\\\\n-2. tx365 -> \
+tx447\\\\n\\\\n-tx401 -> tx448\\\\n\\\\n-2. tx425 -> tx449\\\\n\\\\ntx402 + \
+tx424 -> tx450\\\\n\\\\ntx446 + tx447 + tx448 -> tx451\\\\n\\\\ntx369 + tx445 \
++ tx449 -> tx452\\\\n\\\\ndk tzz571 -> tx453\\\\n\\\\ndk tzz570 -> tx454\\\\n\
+\\\\ndk tzz569 -> tx455\\\\n\\\\ntx450 tzz556 -> tx456\\\\n\\\\ntx451 tzz556 \
+-> tx457\\\\n\\\\ntx452 tzz556 -> tx458\\\\n\\\\ntx453 + tx456 -> \
+tx459\\\\n\\\\ntx454 + tx457 -> tx460\\\\n\\\\ntx455 + tx458 -> \
+tx461\\\\n\\\\ntx459 tzz561 -> tx462\\\\n\\\\ntx460 tzz563 -> \
+tx463\\\\n\\\\ntx461 tzz562 -> tx464\\\\n\\\\ntx462 + tx463 + tx464 -> \
+tx465\\\\n\\\\ntx465 tzz558 -> gdk\\\\n\\\\n-gdk -> \
+fdk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 3, fdk );]\\\\n\\\\ntzz558 \
+tzz563 -> gxk\\\\n\\\\n-gxk -> fxk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, \
+4, fxk );]\\\\n\\\\ntzz558 tzz562 -> gyk\\\\n\\\\n-gyk -> \
+fyk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, 5, fyk );]\\\\n\\\\ntzz558 \
+tzz561 -> gzk\\\\n\\\\n-gzk -> fzk\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I1, \
+6, fzk );]\\\\n\\\\ntzz577 -> tx466\\\\n\\\\nbl pyl -> tx467\\\\n\\\\ntzz580 \
+-> tx468\\\\n\\\\ncl tx332 -> tx469\\\\n\\\\ndl tx333 -> tx470\\\\n\\\\nbl \
+tx334 -> tx471\\\\n\\\\npower2[tx331] -> tx472\\\\n\\\\ntx467 + tx469 -> \
+tx473\\\\n\\\\ntx468 + tx470 -> tx474\\\\n\\\\ntx466 + tx471 -> \
+tx475\\\\n\\\\n4. tx472 -> tzz559\\\\n\\\\ntx361 tzz559 -> tzz568\\\\n\\\\nal \
+tzz568 -> tx476\\\\n\\\\ntx362 tzz559 -> tzz567\\\\n\\\\nal tzz567 -> tx477\\\
+\\n\\\\ntx363 tzz559 -> tzz566\\\\n\\\\nal tzz566 -> tx478\\\\n\\\\ntx473 \
+tzz555 -> tx479\\\\n\\\\ntx474 tzz555 -> tx480\\\\n\\\\ntx475 tzz555 -> tx481\
+\\\\n\\\\ntx478 + tx479 -> tx482\\\\n\\\\ntx476 + tx480 -> \
+tx483\\\\n\\\\ntx477 + tx481 -> tx484\\\\n\\\\ntx482 tzz561 -> \
+tx485\\\\n\\\\ntx483 tzz563 -> tx486\\\\n\\\\ntx484 tzz562 -> \
+tx487\\\\n\\\\ntx485 + tx486 + tx487 -> tx488\\\\n\\\\ntx488 tzz558 -> \
+gal\\\\n\\\\n-gal -> fal\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 0, fal \
+);]\\\\n\\\\ncl pxl -> tx489\\\\n\\\\nal pyl -> tx490\\\\n\\\\ntzz581 -> \
+tx491\\\\n\\\\n-2. tzz573 -> tx492\\\\n\\\\ndl pzl -> tx493\\\\n\\\\nal tx334 \
+-> tx494\\\\n\\\\n-2. tx467 -> tx495\\\\n\\\\ntx466 + tx490 + tx492 -> \
+tx496\\\\n\\\\ntx491 + tx493 -> tx497\\\\n\\\\ntx489 + tx494 + tx495 -> tx498\
+\\\\n\\\\nbl tzz568 -> tx499\\\\n\\\\nbl tzz567 -> tx500\\\\n\\\\nbl tzz566 \
+-> tx501\\\\n\\\\ntx496 tzz555 -> tx502\\\\n\\\\ntx497 tzz555 -> tx503\\\\n\\\
+\\ntx498 tzz555 -> tx504\\\\n\\\\ntx501 + tx502 -> tx505\\\\n\\\\ntx499 + \
+tx503 -> tx506\\\\n\\\\ntx500 + tx504 -> tx507\\\\n\\\\ntx505 tzz561 -> tx508\
+\\\\n\\\\ntx506 tzz563 -> tx509\\\\n\\\\ntx507 tzz562 -> tx510\\\\n\\\\ntx508 \
++ tx509 + tx510 -> tx511\\\\n\\\\ntx511 tzz558 -> gbl\\\\n\\\\n-gbl -> \
+fbl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 1, fbl );]\\\\n\\\\nbl pxl -> \
+tx512\\\\n\\\\ndl pyl -> tx513\\\\n\\\\nal pzl -> tx514\\\\n\\\\nal tx332 -> \
+tx515\\\\n\\\\n-2. tx468 -> tx516\\\\n\\\\n-2. tx489 -> tx517\\\\n\\\\ntx493 \
++ tx512 -> tx518\\\\n\\\\ntx513 + tx515 + tx516 -> tx519\\\\n\\\\ntx467 + \
+tx514 + tx517 -> tx520\\\\n\\\\ncl tzz568 -> tx521\\\\n\\\\ncl tzz567 -> \
+tx522\\\\n\\\\ncl tzz566 -> tx523\\\\n\\\\ntx518 tzz555 -> \
+tx524\\\\n\\\\ntx519 tzz555 -> tx525\\\\n\\\\ntx520 tzz555 -> \
+tx526\\\\n\\\\ntx522 + tx524 -> tx527\\\\n\\\\ntx523 + tx525 -> \
+tx528\\\\n\\\\ntx521 + tx526 -> tx529\\\\n\\\\ntx527 tzz562 -> \
+tx530\\\\n\\\\ntx528 tzz561 -> tx531\\\\n\\\\ntx529 tzz563 -> \
+tx532\\\\n\\\\ntx530 + tx531 + tx532 -> tx533\\\\n\\\\ntx533 tzz558 -> \
+gcl\\\\n\\\\n-gcl -> fcl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 2, fcl \
+);]\\\\n\\\\nal pxl -> tx534\\\\n\\\\ntzz573 -> tx535\\\\n\\\\nal tx333 -> \
+tx536\\\\n\\\\n-2. tx466 -> tx537\\\\n\\\\n-2. tx513 -> tx538\\\\n\\\\ntx491 \
++ tx512 -> tx539\\\\n\\\\ntx535 + tx536 + tx537 -> tx540\\\\n\\\\ntx468 + \
+tx534 + tx538 -> tx541\\\\n\\\\ndl tzz568 -> tx542\\\\n\\\\ndl tzz567 -> \
+tx543\\\\n\\\\ndl tzz566 -> tx544\\\\n\\\\ntx539 tzz555 -> \
+tx545\\\\n\\\\ntx540 tzz555 -> tx546\\\\n\\\\ntx541 tzz555 -> \
+tx547\\\\n\\\\ntx544 + tx545 -> tx548\\\\n\\\\ntx542 + tx546 -> \
+tx549\\\\n\\\\ntx543 + tx547 -> tx550\\\\n\\\\ntx548 tzz561 -> \
+tx551\\\\n\\\\ntx549 tzz563 -> tx552\\\\n\\\\ntx550 tzz562 -> \
+tx553\\\\n\\\\ntx551 + tx552 + tx553 -> tx554\\\\n\\\\ntx554 tzz558 -> \
+gdl\\\\n\\\\n-gdl -> fdl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 3, fdl \
+);]\\\\n\\\\n-2. tzz558 -> tzz576\\\\n\\\\ntx377 tzz576 -> gxl\\\\n\\\\n-gxl \
+-> fxl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 4, fxl );]\\\\n\\\\ntx378 \
+tzz576 -> gyl\\\\n\\\\n-gyl -> fyl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, \
+5, fyl );]\\\\n\\\\ntx379 tzz576 -> gzl\\\\n\\\\n-gzl -> \
+fzl\\\\n\\\\nCCode[CYLREP_FORCE_ACCUMULATE(I2, 6, fzl );]\>\""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.702666640270697*^9, 3.702667223609469*^9, 3.702889707661439*^9, 
+   3.702891210318593*^9, 3.702894400586055*^9, 3.702894500717475*^9, 
+   3.7073192647294073`*^9, 3.707321572021159*^9, 3.707328272120843*^9, 
+   3.707330300475561*^9, 3.7073409608399897`*^9, 3.707387984234692*^9, {
+   3.708253030259364*^9, 
+   3.708253030528296*^9}},ExpressionUUID->"2b4b826f-e3b8-40b7-baa6-\
 dd99f8c7e92b"],
 
 Cell[BoxData[
@@ -2999,22 +3074,22 @@ Cell[BoxData[
   3.707328272120843*^9, 3.707330300475561*^9, 3.7073409608399897`*^9, 
   3.70738798432628*^9},ExpressionUUID->"9abb1531-4a32-4be7-8221-538a586f5947"],
 
-Cell[BoxData["\<\"After removal: \
-CCode[STAPLE_SET_PARAMETER(ks,ks);]\\\\n\\\\nCCode[STAPLE_SET_PARAMETER(r0,r0)\
-;]\\\\n\\\\nCCode[STAPLE_SET_PARAMETER(I1,rigidBodyK);]\\\\n\\\\nCCode[STAPLE_\
-SET_PARAMETER(I2,rigidBodyL);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(ak,I1,0);]\\\
-\\n\\\\nCCode[STAPLE_SET_POSITION(bk,I1,1);]\\\\n\\\\nCCode[STAPLE_SET_\
-POSITION(ck,I1,2);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(dk,I1,3);]\\\\n\\\\\
-nCCode[STAPLE_SET_POSITION(xk,I1,4);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(yk,\
-I1,5);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(zk,I1,6);]\\\\n\\\\nCCode[STAPLE_\
-SET_POSITION(al,I2,0);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(bl,I2,1);]\\\\n\\\\\
-nCCode[STAPLE_SET_POSITION(cl,I2,2);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(dl,\
-I2,3);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(xl,I2,4);]\\\\n\\\\nCCode[STAPLE_\
-SET_POSITION(yl,I2,5);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(zl,I2,6);]\\\\n\\\\\
-nCCode[STAPLE_SET_POINT(pxk,pointK,getX());]\\\\n\\\\nCCode[STAPLE_SET_POINT(\
-pyk,pointK,getY());]\\\\n\\\\nCCode[STAPLE_SET_POINT(pzk,pointK,getZ());]\\\\\
-n\\\\nCCode[STAPLE_SET_POINT(pxl,pointL,getX());]\\\\n\\\\nCCode[STAPLE_SET_\
-POINT(pyl,pointL,getY());]\\\\n\\\\nCCode[STAPLE_SET_POINT(pzl,pointL,getZ());\
+Cell[BoxData["\"\<After removal: \
+CCode[CYLREP_SET_PARAMETER(ks,ks);]\\\\n\\\\nCCode[CYLREP_SET_PARAMETER(r0,r0)\
+;]\\\\n\\\\nCCode[CYLREP_SET_PARAMETER(I1,rigidBodyK);]\\\\n\\\\nCCode[CYLREP_\
+SET_PARAMETER(I2,rigidBodyL);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(ak,I1,0);]\\\
+\\n\\\\nCCode[CYLREP_SET_POSITION(bk,I1,1);]\\\\n\\\\nCCode[CYLREP_SET_\
+POSITION(ck,I1,2);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(dk,I1,3);]\\\\n\\\\\
+nCCode[CYLREP_SET_POSITION(xk,I1,4);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(yk,\
+I1,5);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(zk,I1,6);]\\\\n\\\\nCCode[CYLREP_\
+SET_POSITION(al,I2,0);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(bl,I2,1);]\\\\n\\\\\
+nCCode[CYLREP_SET_POSITION(cl,I2,2);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(dl,\
+I2,3);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(xl,I2,4);]\\\\n\\\\nCCode[CYLREP_\
+SET_POSITION(yl,I2,5);]\\\\n\\\\nCCode[CYLREP_SET_POSITION(zl,I2,6);]\\\\n\\\\\
+nCCode[CYLREP_SET_POINT(pxk,pointK,getX());]\\\\n\\\\nCCode[CYLREP_SET_POINT(\
+pyk,pointK,getY());]\\\\n\\\\nCCode[CYLREP_SET_POINT(pzk,pointK,getZ());]\\\\\
+n\\\\nCCode[CYLREP_SET_POINT(pxl,pointL,getX());]\\\\n\\\\nCCode[CYLREP_SET_\
+POINT(pyl,pointL,getY());]\\\\n\\\\nCCode[CYLREP_SET_POINT(pzl,pointL,getZ());\
 ]\\\\n\\\\npower2[bk] -> tx198\\\\n\\\\npower2[bl] -> \
 tx199\\\\n\\\\npower2[ck] -> tx200\\\\n\\\\npower2[cl] -> \
 tx201\\\\n\\\\npower2[dk] -> tx202\\\\n\\\\npower2[dl] -> tx203\\\\n\\\\n-pxk \
@@ -3137,7 +3212,7 @@ fdl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 3, fdl );]\\\\n\\\\n-2. tzz396 \
 fxl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 4, fxl );]\\\\n\\\\ntx282 \
 tzz410 -> gyl\\\\n\\\\n-gyl -> fyl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, \
 5, fyl );]\\\\n\\\\ntx283 tzz410 -> gzl\\\\n\\\\n-gzl -> \
-fzl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 6, fzl );]\"\>"], "Print",
+fzl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 6, fzl );]\>\""], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{
@@ -3145,8 +3220,8 @@ fzl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 6, fzl );]\"\>"], "Print",
    3.702891210318593*^9, 3.702894400586055*^9, 3.702894500717475*^9, 
    3.7073192647294073`*^9, 3.707321572021159*^9, 3.707328272120843*^9, 
    3.7073302583131533`*^9, 3.707330833272649*^9, 3.7073425954669437`*^9, {
-   3.707354522411519*^9, 
-   3.707354530945825*^9}},ExpressionUUID->"7955818b-87d6-44ad-8eab-\
+   3.707354522411519*^9, 3.707354530945825*^9}, {3.708253030542482*^9, 
+   3.708253030675502*^9}},ExpressionUUID->"7955818b-87d6-44ad-8eab-\
 839b25be98b6"],
 
 Cell[BoxData["\<\"eliminateTrivialRules\"\>"], "Print",
@@ -3502,11 +3577,12 @@ Cell[BoxData[
   3.70734259877312*^9},ExpressionUUID->"44edc2a8-f52d-4583-812f-20af488c53a8"],
 
 Cell[BoxData["\<\"trivialRules>> outs = {Energy, fak, fbk, fck, fdk, fxk, \
-fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, stapleDeviation}\"\>"], "Print",
+fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, cylrepDeviation}\"\>"], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{3.702666640270697*^9, 3.702667238826087*^9, 
-  3.702667882952414*^9},ExpressionUUID->"76d0d842-fe01-4a98-b251-\
+  3.702667882952414*^9, 
+  3.708253182024726*^9},ExpressionUUID->"76d0d842-fe01-4a98-b251-\
 e25ee8a9561f"],
 
 Cell[BoxData["\<\"There were no trivial rules\"\>"], "Print",
@@ -3563,11 +3639,12 @@ Cell[BoxData["\<\"trivialRules>> triv = {}\"\>"], "Print",
 a5722d675ef7"],
 
 Cell[BoxData["\<\"trivialRules>> outs = {Energy, fak, fbk, fck, fdk, fxk, \
-fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, stapleDeviation}\"\>"], "Print",
+fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, cylrepDeviation}\"\>"], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{3.702666640270697*^9, 3.702667244721278*^9, 
-  3.702667883206108*^9},ExpressionUUID->"8effe180-aa86-4335-96c6-\
+  3.702667883206108*^9, 
+  3.7082531830141172`*^9},ExpressionUUID->"8effe180-aa86-4335-96c6-\
 ecee0ff581a8"],
 
 Cell[BoxData["\<\"There were no trivial rules\"\>"], "Print",
@@ -3585,11 +3662,12 @@ Cell[BoxData["\<\"trivialRules>> triv = {}\"\>"], "Print",
   3.70266724476563*^9},ExpressionUUID->"3f0539af-8738-448c-8b73-7edb9258e168"],
 
 Cell[BoxData["\<\"trivialRules>> outs = {Energy, fak, fbk, fck, fdk, fxk, \
-fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, stapleDeviation}\"\>"], "Print",
+fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, cylrepDeviation}\"\>"], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{3.702666640270697*^9, 3.7026672447676687`*^9, 
-  3.702667883390546*^9},ExpressionUUID->"162802e8-5d65-4a86-8235-\
+  3.702667883390546*^9, 
+  3.708253183933464*^9},ExpressionUUID->"162802e8-5d65-4a86-8235-\
 f263db213c26"],
 
 Cell[BoxData["\<\"There were no trivial rules\"\>"], "Print",
@@ -3608,11 +3686,12 @@ Cell[BoxData["\<\"trivialRules>> triv = {}\"\>"], "Print",
 b5026937b413"],
 
 Cell[BoxData["\<\"trivialRules>> outs = {Energy, fak, fbk, fck, fdk, fxk, \
-fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, stapleDeviation}\"\>"], "Print",
+fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, cylrepDeviation}\"\>"], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{3.702666640270697*^9, 3.7026672448001738`*^9, 
-  3.702667883572517*^9},ExpressionUUID->"2c07a05f-b14c-4a6c-82d1-\
+  3.702667883572517*^9, 
+  3.708253186693405*^9},ExpressionUUID->"2c07a05f-b14c-4a6c-82d1-\
 78c461f7e9d1"],
 
 Cell[BoxData["\<\"There were no trivial rules\"\>"], "Print",
@@ -3627,11 +3706,12 @@ Cell[BoxData["\<\"trivialRules>> triv = {tzz318 -> gxk, tzz317 -> gyk, tzz316 \
 ec5f33fc87d8"],
 
 Cell[BoxData["\<\"trivialRules>> outs = {Energy, fak, fbk, fck, fdk, fxk, \
-fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, stapleDeviation}\"\>"], "Print",
+fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, cylrepDeviation}\"\>"], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{3.702666640270697*^9, 3.702667245582816*^9, 
-  3.702667883759779*^9},ExpressionUUID->"2b5cb5f9-20cb-4df8-8dc1-\
+  3.702667883759779*^9, 
+  3.7082531867225122`*^9},ExpressionUUID->"2b5cb5f9-20cb-4df8-8dc1-\
 eea64e7397d6"],
 
 Cell[BoxData["\<\"Trivial rules are being removed: tzz318 -> gxk\\n\\ntzz317 \
@@ -3640,7 +3720,7 @@ Cell[BoxData["\<\"Trivial rules are being removed: tzz318 -> gxk\\n\\ntzz317 \
   3.702667245584216*^9},ExpressionUUID->"2a67c478-7cec-48f7-81ca-\
 4af1fe05d494"],
 
-Cell[BoxData["\<\"After removal: \
+Cell[BoxData["\"\<After removal: \
 CCode[STAPLE_SET_PARAMETER(I1);]\\\\n\\\\nCCode[STAPLE_SET_PARAMETER(I2);]\\\\\
 n\\\\nCCode[STAPLE_SET_POSITION(ak,I1,0);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(\
 bk,I1,1);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(ck,I1,2);]\\\\n\\\\nCCode[\
@@ -3687,7 +3767,7 @@ tx219 + xk -> tx223\\\\n\\\\ntx203 + tx206 + tx211 + tx214 + tx215 + tx217 + \
 tx220 + yk -> tx224\\\\n\\\\ntx204 + tx207 + tx210 + tx213 + tx218 + tx221 + \
 tx222 + zk -> tx225\\\\n\\\\npower2[tx223] -> tx226\\\\n\\\\npower2[tx224] -> \
 tx227\\\\n\\\\npower2[tx225] -> tx228\\\\n\\\\ntx226 + tx227 + tx228 -> \
-Energy\\\\n\\\\nCCode[staple_ENERGY_ACCUMULATE(Energy);]\\\\n\\\\n2. ak -> \
+Energy\\\\n\\\\nCCode[cylrep_ENERGY_ACCUMULATE(Energy);]\\\\n\\\\n2. ak -> \
 tzz322\\\\n\\\\ntzz322 x1 -> tx229\\\\n\\\\n-2. ck x1 -> \
 tx230\\\\n\\\\ntzz311 x1 -> tx231\\\\n\\\\ntzz322 y1 -> tx232\\\\n\\\\n-2. y1 \
 -> tzz330\\\\n\\\\nbk tzz330 -> tx233\\\\n\\\\ndk tzz330 -> \
@@ -3750,12 +3830,13 @@ fdl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 3, fdl );]\\\\n\\\\n-2. tx223 \
 );]\\\\n\\\\n-2. tx224 -> gyl\\\\n\\\\n-gyl -> \
 fyl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 5, fyl );]\\\\n\\\\n-2. tx225 \
 -> gzl\\\\n\\\\n-gzl -> fzl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 6, fzl \
-);]\"\>"], "Print",
+);]\>\""], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{
   3.702666640270697*^9, 3.7026672455856*^9, {3.702667866916711*^9, 
-   3.702667883937563*^9}},ExpressionUUID->"ccd0c9a2-f581-4052-95e2-\
+   3.702667883937563*^9}, 
+   3.708253186776266*^9},ExpressionUUID->"ccd0c9a2-f581-4052-95e2-\
 7de4741b9127"],
 
 Cell[BoxData["\<\"eliminateTrivialRules\"\>"], "Print",
@@ -3770,11 +3851,12 @@ Cell[BoxData["\<\"trivialRules>> triv = {tzz318 -> gxk, tzz317 -> gyk, tzz316 \
 b7b703369890"],
 
 Cell[BoxData["\<\"trivialRules>> outs = {Energy, fak, fbk, fck, fdk, fxk, \
-fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, stapleDeviation}\"\>"], "Print",
+fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, cylrepDeviation}\"\>"], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{3.702666640270697*^9, 3.702667245651865*^9, 
-  3.7026678841172247`*^9},ExpressionUUID->"d440b506-a4a9-4fca-9b94-\
+  3.7026678841172247`*^9, 
+  3.708253186793668*^9},ExpressionUUID->"d440b506-a4a9-4fca-9b94-\
 9724c12875b2"],
 
 Cell[BoxData["\<\"Trivial rules are being removed: tzz318 -> gxk\\n\\ntzz317 \
@@ -3783,7 +3865,7 @@ Cell[BoxData["\<\"Trivial rules are being removed: tzz318 -> gxk\\n\\ntzz317 \
   3.702667245653268*^9},ExpressionUUID->"c4cc59c0-ec84-48e7-a691-\
 cbe566998047"],
 
-Cell[BoxData["\<\"After removal: \
+Cell[BoxData["\"\<After removal: \
 CCode[STAPLE_SET_PARAMETER(I1);]\\\\n\\\\nCCode[STAPLE_SET_PARAMETER(I2);]\\\\\
 n\\\\nCCode[STAPLE_SET_POSITION(ak,I1,0);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(\
 bk,I1,1);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(ck,I1,2);]\\\\n\\\\nCCode[\
@@ -3830,7 +3912,7 @@ tx219 + xk -> tx223\\\\n\\\\ntx203 + tx206 + tx211 + tx214 + tx215 + tx217 + \
 tx220 + yk -> tx224\\\\n\\\\ntx204 + tx207 + tx210 + tx213 + tx218 + tx221 + \
 tx222 + zk -> tx225\\\\n\\\\npower2[tx223] -> tx226\\\\n\\\\npower2[tx224] -> \
 tx227\\\\n\\\\npower2[tx225] -> tx228\\\\n\\\\ntx226 + tx227 + tx228 -> \
-Energy\\\\n\\\\nCCode[staple_ENERGY_ACCUMULATE(Energy);]\\\\n\\\\n2. ak -> \
+Energy\\\\n\\\\nCCode[cylrep_ENERGY_ACCUMULATE(Energy);]\\\\n\\\\n2. ak -> \
 tzz322\\\\n\\\\ntzz322 x1 -> tx229\\\\n\\\\n-2. ck x1 -> \
 tx230\\\\n\\\\ntzz311 x1 -> tx231\\\\n\\\\ntzz322 y1 -> tx232\\\\n\\\\n-2. y1 \
 -> tzz330\\\\n\\\\nbk tzz330 -> tx233\\\\n\\\\ndk tzz330 -> \
@@ -3893,12 +3975,13 @@ fdl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 3, fdl );]\\\\n\\\\n-2. tx223 \
 );]\\\\n\\\\n-2. tx224 -> gyl\\\\n\\\\n-gyl -> \
 fyl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 5, fyl );]\\\\n\\\\n-2. tx225 \
 -> gzl\\\\n\\\\n-gzl -> fzl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 6, fzl \
-);]\"\>"], "Print",
+);]\>\""], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{
   3.702666640270697*^9, 3.7026672456546783`*^9, {3.702667867137817*^9, 
-   3.7026678842833033`*^9}},ExpressionUUID->"57b587b5-01a5-41d6-a649-\
+   3.7026678842833033`*^9}, 
+   3.708253186807585*^9},ExpressionUUID->"57b587b5-01a5-41d6-a649-\
 9487e8194ab2"],
 
 Cell[BoxData["\<\"trivialRules>> triv = {tzz318 -> gxk, tzz317 -> gyk, tzz316 \
@@ -3908,11 +3991,12 @@ Cell[BoxData["\<\"trivialRules>> triv = {tzz318 -> gxk, tzz317 -> gyk, tzz316 \
 6fd316a14459"],
 
 Cell[BoxData["\<\"trivialRules>> outs = {Energy, fak, fbk, fck, fdk, fxk, \
-fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, stapleDeviation}\"\>"], "Print",
+fyk, fzk, fal, fbl, fcl, fdl, fxl, fyl, fzl, cylrepDeviation}\"\>"], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{3.702666640270697*^9, 3.702667245866466*^9, 
-  3.702667884453957*^9},ExpressionUUID->"7f2864d2-b587-433f-9349-\
+  3.702667884453957*^9, 
+  3.708253186813333*^9},ExpressionUUID->"7f2864d2-b587-433f-9349-\
 0f8630ac863b"],
 
 Cell[BoxData["\<\"Trivial rules are being removed: tzz318 -> gxk\\n\\ntzz317 \
@@ -3921,7 +4005,7 @@ Cell[BoxData["\<\"Trivial rules are being removed: tzz318 -> gxk\\n\\ntzz317 \
   3.702667245867931*^9},ExpressionUUID->"0cf84b87-599b-4113-a87d-\
 16a8863c59ab"],
 
-Cell[BoxData["\<\"After removal: \
+Cell[BoxData["\"\<After removal: \
 CCode[STAPLE_SET_PARAMETER(I1);]\\\\n\\\\nCCode[STAPLE_SET_PARAMETER(I2);]\\\\\
 n\\\\nCCode[STAPLE_SET_POSITION(ak,I1,0);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(\
 bk,I1,1);]\\\\n\\\\nCCode[STAPLE_SET_POSITION(ck,I1,2);]\\\\n\\\\nCCode[\
@@ -3969,7 +4053,7 @@ tx219 + xk -> tx223\\\\n\\\\ntx203 + tx206 + tx211 + tx214 + tx215 + tx217 + \
 tx220 + yk -> tx224\\\\n\\\\ntx204 + tx207 + tx210 + tx213 + tx218 + tx221 + \
 tx222 + zk -> tx225\\\\n\\\\npower2[tx223] -> tx226\\\\n\\\\npower2[tx224] -> \
 tx227\\\\n\\\\npower2[tx225] -> tx228\\\\n\\\\ntx226 + tx227 + tx228 -> \
-Energy\\\\n\\\\nCCode[staple_ENERGY_ACCUMULATE(Energy);]\\\\n\\\\n2. ak -> \
+Energy\\\\n\\\\nCCode[cylrep_ENERGY_ACCUMULATE(Energy);]\\\\n\\\\n2. ak -> \
 tzz322\\\\n\\\\ntzz322 x1 -> tx229\\\\n\\\\n-2. ck x1 -> \
 tx230\\\\n\\\\ntzz311 x1 -> tx231\\\\n\\\\ntzz322 y1 -> tx232\\\\n\\\\n-2. y1 \
 -> tzz330\\\\n\\\\nbk tzz330 -> tx233\\\\n\\\\ndk tzz330 -> \
@@ -4032,12 +4116,13 @@ fdl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 3, fdl );]\\\\n\\\\n-2. tx223 \
 );]\\\\n\\\\n-2. tx224 -> gyl\\\\n\\\\n-gyl -> \
 fyl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 5, fyl );]\\\\n\\\\n-2. tx225 \
 -> gzl\\\\n\\\\n-gzl -> fzl\\\\n\\\\nCCode[STAPLE_FORCE_ACCUMULATE(I2, 6, fzl \
-);]\"\>"], "Print",
+);]\>\""], "Print",
  GeneratedCell->False,
  CellAutoOverwrite->False,
  CellChangeTimes->{
   3.702666640270697*^9, 3.702667245869404*^9, {3.702667867353277*^9, 
-   3.7026678846397448`*^9}},ExpressionUUID->"2aa86af4-74a8-44c8-b94f-\
+   3.7026678846397448`*^9}, 
+   3.708253186827038*^9},ExpressionUUID->"2aa86af4-74a8-44c8-b94f-\
 0f70ddcfeabe"],
 
 Cell[BoxData[
@@ -4084,10 +4169,12 @@ functions are green.\
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"packGraph", "[", "staplePack", "]"}]], "Input",
+ RowBox[{"packGraph", "[", "cylrepPack", "]"}]], "Input",
  CellChangeTimes->{{3.405634991753235*^9, 3.405634995403973*^9}, {
    3.4085648880849*^9, 3.408564889562644*^9}, 3.7026665440166197`*^9, 
-   3.7026678792391*^9},ExpressionUUID->"5431ef0d-4fc2-4780-b4be-3a4f67a43e2b"],
+   3.7026678792391*^9, 
+   3.7082531868287697`*^9},ExpressionUUID->"5431ef0d-4fc2-4780-b4be-\
+3a4f67a43e2b"],
 
 Cell[BoxData[
  GraphicsBox[{
@@ -6518,10 +6605,10 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"staplePack", "[", 
+ RowBox[{"cylrepPack", "[", 
   RowBox[{"[", "4", "]"}], "]"}]], "Input",
- CellChangeTimes->{{3.7073293861140413`*^9, 
-  3.707329405728915*^9}},ExpressionUUID->"5361e77d-2814-4d50-9f84-\
+ CellChangeTimes->{{3.7073293861140413`*^9, 3.707329405728915*^9}, 
+   3.708253186849689*^9},ExpressionUUID->"5361e77d-2814-4d50-9f84-\
 4bf4055f16f8"],
 
 Cell[BoxData[
@@ -8124,7 +8211,7 @@ Cell[BoxData[
          DynamicBox[ToBoxes[
            FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"], 
            StandardForm],
-          ImageSizeCache->{308., {2., 8.}}],
+          ImageSizeCache->{354., {2., 8.}}],
          StripOnInput->False,
          DynamicUpdating->True], "Panel",
         StripOnInput->False,
@@ -8161,7 +8248,7 @@ Cell[BoxData[
            DynamicBox[ToBoxes[
              FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
              StandardForm],
-            ImageSizeCache->{48., {0., 8.}}],
+            ImageSizeCache->{56., {0., 8.}}],
            StripOnInput->False,
            DynamicUpdating->True], "Panel",
           StripOnInput->False,
@@ -8178,7 +8265,7 @@ Cell[BoxData[
            DynamicBox[ToBoxes[
              FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
              StandardForm],
-            ImageSizeCache->{56., {0., 8.}}],
+            ImageSizeCache->{64., {0., 8.}}],
            StripOnInput->False,
            DynamicUpdating->True], "Panel",
           StripOnInput->False,
@@ -8195,7 +8282,7 @@ Cell[BoxData[
            DynamicBox[ToBoxes[
              FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
              StandardForm],
-            ImageSizeCache->{41., {0., 8.}}],
+            ImageSizeCache->{47., {0., 8.}}],
            StripOnInput->False,
            DynamicUpdating->True], "Panel",
           StripOnInput->False,
@@ -8212,7 +8299,7 @@ Cell[BoxData[
            DynamicBox[ToBoxes[
              FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
              StandardForm],
-            ImageSizeCache->{75., {0., 8.}}],
+            ImageSizeCache->{87., {0., 8.}}],
            StripOnInput->False,
            DynamicUpdating->True], "Panel",
           StripOnInput->False,
@@ -13427,7 +13514,7 @@ Cell[BoxData[
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{1855, 1028},
+WindowSize->{1855, 1056},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 PrintingCopies->1,
 PrintingPageRange->{1, Automatic},
@@ -13594,643 +13681,637 @@ Cell[37078, 1065, 715, 16, 32, "Input", "ExpressionUUID" -> \
 Cell[37796, 1083, 5611, 134, 176, "Output", "ExpressionUUID" -> \
 "9ab69102-ab62-425a-a86d-3c00e8be3747"]
 }, Open  ]],
-Cell[43422, 1220, 1968, 50, 378, "Input", "ExpressionUUID" -> \
+Cell[43422, 1220, 1994, 51, 378, "Input", "ExpressionUUID" -> \
 "25d768ae-822f-439e-88ab-dccbeb657eb3"],
-Cell[45393, 1272, 1247, 29, 103, "Input", "ExpressionUUID" -> \
+Cell[45419, 1273, 1349, 31, 103, "Input", "ExpressionUUID" -> \
 "73c80546-179b-4a4d-be83-bd4e78cbb208"],
-Cell[46643, 1303, 1546, 38, 126, "Input", "ExpressionUUID" -> \
+Cell[46771, 1306, 1622, 39, 126, "Input", "ExpressionUUID" -> \
 "292bce02-772d-4567-85eb-30dc9fd192e3"],
-Cell[48192, 1343, 3040, 80, 309, "Input", "ExpressionUUID" -> \
+Cell[48396, 1347, 3139, 81, 309, "Input", "ExpressionUUID" -> \
 "1ba5a378-9b83-4f21-863f-73f3ad635eb9"],
-Cell[CellGroupData[{
-Cell[51257, 1427, 223, 4, 32, "Input", "ExpressionUUID" -> \
+Cell[51538, 1430, 248, 5, 32, "Input", "ExpressionUUID" -> \
 "c2b5e4f9-51d1-4bb8-a9a3-8d70eb95895d"],
-Cell[51483, 1433, 3383, 83, 564, "Output", "ExpressionUUID" -> \
-"604778e7-468d-4f7d-82e9-33d150f1bf68"]
-}, Open  ]],
-Cell[54881, 1519, 1037, 26, 126, "Input", "ExpressionUUID" -> \
+Cell[51789, 1437, 2982, 77, 564, InheritFromParent, "ExpressionUUID" -> \
+"604778e7-468d-4f7d-82e9-33d150f1bf68"],
+Cell[54774, 1516, 1135, 27, 126, "Input", "ExpressionUUID" -> \
 "8be6f392-c34d-43c0-8ce9-b69111073add"],
-Cell[CellGroupData[{
-Cell[55943, 1549, 171, 3, 32, "Input", "ExpressionUUID" -> \
+Cell[55912, 1545, 190, 2, 32, "Input", "ExpressionUUID" -> \
 "3bb3e559-0794-4327-b6b6-8272cb8d9188"],
-Cell[56117, 1554, 5936, 136, 176, "Output", "ExpressionUUID" -> \
+Cell[56105, 1549, 5818, 134, 242, InheritFromParent, "ExpressionUUID" -> \
 "25578402-f4c9-4288-bc0e-ff3879c625b0"]
-}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[62102, 1696, 173, 3, 51, "Subtitle", "ExpressionUUID" -> \
+Cell[61960, 1688, 173, 3, 51, "Subtitle", "ExpressionUUID" -> \
 "406c2e62-d031-4d65-89ab-220ca622838b"],
-Cell[62278, 1701, 262, 6, 34, "Input", "ExpressionUUID" -> \
+Cell[62136, 1693, 290, 7, 34, "Input", "ExpressionUUID" -> \
 "2e40f068-4e78-4573-a0b6-9808791c4f32"],
-Cell[62543, 1709, 444, 9, 34, "Input", "ExpressionUUID" -> \
+Cell[62429, 1702, 547, 11, 34, "Input", "ExpressionUUID" -> \
 "df08ad31-7880-4191-b5eb-cf0e33deea61"],
 Cell[CellGroupData[{
-Cell[63012, 1722, 190, 3, 32, "Input", "ExpressionUUID" -> \
+Cell[63001, 1717, 216, 4, 32, "Input", "ExpressionUUID" -> \
 "e2425163-0ba3-4239-8a2b-c7fc74b36b67"],
-Cell[63205, 1727, 928, 16, 34, "Output", "ExpressionUUID" -> \
+Cell[63220, 1723, 928, 16, 34, "Output", "ExpressionUUID" -> \
 "caab30fc-9ec8-4ada-b0d1-b3cd17ddedf6"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[64170, 1748, 183, 3, 44, "Subsection", "ExpressionUUID" -> \
+Cell[64185, 1744, 183, 3, 44, "Subsection", "ExpressionUUID" -> \
 "81f791a6-9b7c-4785-8168-d67ad95e9131"],
-Cell[64356, 1753, 541, 12, 79, "Input", "ExpressionUUID" -> \
+Cell[64371, 1749, 589, 12, 79, "Input", "ExpressionUUID" -> \
 "d4ee2390-ddd2-4c1f-8d2e-73e6f4ed754f"],
-Cell[64900, 1767, 362, 7, 34, "Input", "ExpressionUUID" -> \
+Cell[64963, 1763, 415, 8, 34, "Input", "ExpressionUUID" -> \
 "ad91b7ae-a9ac-408e-9cc5-b9074a7eff33"],
-Cell[CellGroupData[{
-Cell[65287, 1778, 310, 6, 32, "Input", "ExpressionUUID" -> \
+Cell[65381, 1773, 338, 7, 32, "Input", "ExpressionUUID" -> \
 "ce3baefe-0244-4fda-9aab-ab7cb7e93947"],
-Cell[65600, 1786, 785, 13, 34, "Output", "ExpressionUUID" -> \
-"4369e2cf-c283-48b2-bb4f-d87c41e73e90"]
-}, Open  ]],
-Cell[66400, 1802, 601, 12, 34, "Input", "ExpressionUUID" -> \
+Cell[65722, 1782, 231, 5, 34, InheritFromParent, "ExpressionUUID" -> \
+"4369e2cf-c283-48b2-bb4f-d87c41e73e90"],
+Cell[65956, 1789, 627, 13, 34, "Input", "ExpressionUUID" -> \
 "33e2b5b2-61a9-4ec6-9284-5abb92b14f69"],
-Cell[67004, 1816, 308, 5, 31, "Text", "ExpressionUUID" -> \
+Cell[66586, 1804, 354, 5, 31, "Text", "ExpressionUUID" -> \
 "a09d7055-e98a-4e56-903c-aac336ad1055"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[67349, 1826, 310, 6, 45, "Subsection", "ExpressionUUID" -> \
+Cell[66977, 1814, 310, 6, 45, "Subsection", "ExpressionUUID" -> \
 "86f82416-ae28-48e7-89a8-8a52b0b10c34"],
-Cell[67662, 1834, 1815, 33, 193, "Input", "ExpressionUUID" -> \
+Cell[67290, 1822, 1891, 34, 193, "Input", "ExpressionUUID" -> \
 "d681c39b-c74f-4a15-9aa4-27fbd158f121"],
 Cell[CellGroupData[{
-Cell[69502, 1871, 363, 8, 34, "Input", "ExpressionUUID" -> \
+Cell[69206, 1860, 385, 8, 34, "Input", "ExpressionUUID" -> \
 "0e2d1b50-7feb-4b67-b871-b8ea7349d220"],
 Cell[CellGroupData[{
-Cell[69890, 1883, 929, 18, 24, "Print", "ExpressionUUID" -> \
+Cell[69616, 1872, 929, 18, 24, "Print", "ExpressionUUID" -> \
 "559c2868-8500-4002-909c-f3d5804a8380"],
-Cell[70822, 1903, 907, 17, 24, "Print", "ExpressionUUID" -> \
+Cell[70548, 1892, 907, 17, 24, "Print", "ExpressionUUID" -> \
 "2caa3f7c-7ade-4d12-b89a-610e8ea0b72c"],
-Cell[71732, 1922, 905, 17, 24, "Print", "ExpressionUUID" -> \
+Cell[71458, 1911, 905, 17, 24, "Print", "ExpressionUUID" -> \
 "1b5d5463-bd34-4122-b7e1-6bcd54cf84a0"],
-Cell[72640, 1941, 899, 17, 24, "Print", "ExpressionUUID" -> \
+Cell[72366, 1930, 899, 17, 24, "Print", "ExpressionUUID" -> \
 "c866e375-ba34-4424-b0f9-9a6df01778f8"]
 }, Open  ]]
 }, Open  ]],
-Cell[73566, 1962, 590, 10, 31, "Text", "ExpressionUUID" -> \
+Cell[73292, 1951, 639, 11, 31, "Text", "ExpressionUUID" -> \
 "8badf66f-b944-4538-a70e-32d7f4c650ab"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[74193, 1977, 199, 3, 45, "Subsection", "ExpressionUUID" -> \
+Cell[73968, 1967, 199, 3, 45, "Subsection", "ExpressionUUID" -> \
 "f57d2cd8-12a7-4355-954e-e660dbf87bc7"],
 Cell[CellGroupData[{
-Cell[74417, 1984, 165, 3, 32, "Input", "ExpressionUUID" -> \
+Cell[74192, 1974, 190, 3, 32, "Input", "ExpressionUUID" -> \
 "42d7bdb2-e586-48a1-b292-7a5c72f63b4c"],
-Cell[74585, 1989, 468, 9, 34, "Output", "ExpressionUUID" -> \
+Cell[74385, 1979, 468, 9, 34, "Output", "ExpressionUUID" -> \
 "348fecad-93be-4e52-8f3d-6b6f1f5a3390"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[75090, 2003, 188, 4, 32, "Input", "ExpressionUUID" -> \
+Cell[74890, 1993, 211, 4, 32, "Input", "ExpressionUUID" -> \
 "947a19c0-4f19-4e63-8662-03bf251f1e10"],
-Cell[75281, 2009, 496, 10, 34, "Output", "ExpressionUUID" -> \
+Cell[75104, 1999, 496, 10, 34, "Output", "ExpressionUUID" -> \
 "df0eae93-0036-4834-bae2-4caa4a0de5ca"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[75814, 2024, 681, 12, 34, "Input", "ExpressionUUID" -> \
+Cell[75637, 2014, 729, 12, 34, "Input", "ExpressionUUID" -> \
 "579e0215-e217-4a6f-aa64-97bfa8d33974"],
 Cell[CellGroupData[{
-Cell[76520, 2040, 412, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[76391, 2030, 412, 6, 24, "Print", "ExpressionUUID" -> \
 "6f81370e-b341-44be-b54e-29da258b69be"],
-Cell[76935, 2048, 415, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[76806, 2038, 415, 6, 24, "Print", "ExpressionUUID" -> \
 "c2759059-9990-4f4b-914b-08d26e15206c"],
-Cell[77353, 2056, 493, 7, 26, "Print", "ExpressionUUID" -> \
+Cell[77224, 2046, 493, 7, 26, "Print", "ExpressionUUID" -> \
 "ff6b602d-1dc9-46ab-9b12-71e0420f16ff"],
-Cell[77849, 2065, 418, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[77720, 2055, 418, 6, 24, "Print", "ExpressionUUID" -> \
 "579fd191-dad9-4d95-84ab-0079e6ca6ba1"],
-Cell[78270, 2073, 412, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[78141, 2063, 412, 6, 24, "Print", "ExpressionUUID" -> \
 "a547969b-4cbe-48c7-9c6f-b8aa90af3b4a"],
-Cell[78685, 2081, 417, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[78556, 2071, 417, 6, 24, "Print", "ExpressionUUID" -> \
 "38ce98e7-00f3-4b42-a13b-8a7bd80d7540"],
-Cell[79105, 2089, 490, 6, 26, "Print", "ExpressionUUID" -> \
+Cell[78976, 2079, 490, 6, 26, "Print", "ExpressionUUID" -> \
 "9327c2b3-6325-4386-a488-6a9e1f6a23f1"],
-Cell[79598, 2097, 420, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[79469, 2087, 420, 6, 24, "Print", "ExpressionUUID" -> \
 "2ce055a5-b5ac-4cd2-bada-29641f9cdd51"],
-Cell[80021, 2105, 414, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[79892, 2095, 414, 6, 24, "Print", "ExpressionUUID" -> \
 "7013a66a-4884-422e-8570-cf1bb5bc9d65"],
-Cell[80438, 2113, 417, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[80309, 2103, 417, 6, 24, "Print", "ExpressionUUID" -> \
 "33aecac5-a51b-4126-b81c-bd51acbc0ee4"],
-Cell[80858, 2121, 493, 7, 26, "Print", "ExpressionUUID" -> \
+Cell[80729, 2111, 493, 7, 26, "Print", "ExpressionUUID" -> \
 "4fe31609-3941-441f-8fd9-d484d5c4500e"],
-Cell[81354, 2130, 418, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[81225, 2120, 418, 6, 24, "Print", "ExpressionUUID" -> \
 "87ec8798-5dba-4463-916d-b73ebac2bda9"],
-Cell[81775, 2138, 587, 8, 26, "Print", "ExpressionUUID" -> \
+Cell[81646, 2128, 587, 8, 26, "Print", "ExpressionUUID" -> \
 "6ae8615d-891d-49be-99a4-364354361b48"],
-Cell[82365, 2148, 493, 7, 26, "Print", "ExpressionUUID" -> \
+Cell[82236, 2138, 493, 7, 26, "Print", "ExpressionUUID" -> \
 "c52e6454-3584-4d2f-b75b-d8ac1e09029e"],
-Cell[82861, 2157, 636, 10, 385, "Print", "ExpressionUUID" -> \
+Cell[82732, 2147, 636, 10, 385, "Print", "ExpressionUUID" -> \
 "90ea8890-1c36-4f7e-99cb-db076c3dab19"],
-Cell[83500, 2169, 713, 16, 39, "Print", "ExpressionUUID" -> \
+Cell[83371, 2159, 713, 16, 39, "Print", "ExpressionUUID" -> \
 "4146e777-4c3f-4e84-8793-f8e38c0e10a2"],
-Cell[84216, 2187, 657, 15, 34, "Print", "ExpressionUUID" -> \
+Cell[84087, 2177, 657, 15, 34, "Print", "ExpressionUUID" -> \
 "d8d8a2bf-26ba-4b90-9e1c-12402c28f4d7"],
-Cell[84876, 2204, 656, 15, 34, "Print", "ExpressionUUID" -> \
+Cell[84747, 2194, 656, 15, 34, "Print", "ExpressionUUID" -> \
 "dc78cc55-ff36-4792-bc20-15a903e9d10c"],
-Cell[85535, 2221, 412, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[85406, 2211, 412, 6, 24, "Print", "ExpressionUUID" -> \
 "f5853c5d-e558-4028-b01b-9f62fad3551c"],
-Cell[85950, 2229, 415, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[85821, 2219, 415, 6, 24, "Print", "ExpressionUUID" -> \
 "c3d0a027-3af9-4935-bbcc-d28807af57e1"],
-Cell[86368, 2237, 493, 7, 26, "Print", "ExpressionUUID" -> \
+Cell[86239, 2227, 493, 7, 26, "Print", "ExpressionUUID" -> \
 "7a5ad1cd-bf6e-47ef-a699-a7b17dac2f72"],
-Cell[86864, 2246, 418, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[86735, 2236, 418, 6, 24, "Print", "ExpressionUUID" -> \
 "3cd3fe64-7d4d-48cb-a65f-f18da221c74f"],
-Cell[87285, 2254, 404, 5, 24, "Print", "ExpressionUUID" -> \
+Cell[87156, 2244, 404, 5, 24, "Print", "ExpressionUUID" -> \
 "9bd92286-99e1-4bad-9129-5c0db15570e7"]
 }, Open  ]],
-Cell[87704, 2262, 1486, 24, 59, "Message", "ExpressionUUID" -> \
+Cell[87575, 2252, 1486, 24, 59, "Message", "ExpressionUUID" -> \
 "702f6e7a-ba2f-42a0-a100-ea201e71f6e0"],
 Cell[CellGroupData[{
-Cell[89215, 2290, 412, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[89086, 2280, 412, 6, 24, "Print", "ExpressionUUID" -> \
 "fea18b41-e87e-4561-bfcb-e5ebbee2284b"],
-Cell[89630, 2298, 417, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[89501, 2288, 417, 6, 24, "Print", "ExpressionUUID" -> \
 "1f65addd-af10-46cc-b54f-d6d3d73c718e"],
-Cell[90050, 2306, 490, 6, 26, "Print", "ExpressionUUID" -> \
+Cell[89921, 2296, 490, 6, 26, "Print", "ExpressionUUID" -> \
 "3cb68af7-a827-4732-ae36-5653ebca6a6f"],
-Cell[90543, 2314, 418, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[90414, 2304, 418, 6, 24, "Print", "ExpressionUUID" -> \
 "04136cef-89f2-4c94-a4ad-7b31afea41fa"],
-Cell[90964, 2322, 412, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[90835, 2312, 412, 6, 24, "Print", "ExpressionUUID" -> \
 "3efe126f-1f2a-46ab-a5ac-fd47788d7927"],
-Cell[91379, 2330, 412, 5, 24, "Print", "ExpressionUUID" -> \
+Cell[91250, 2320, 412, 5, 24, "Print", "ExpressionUUID" -> \
 "2a833040-2647-4fa0-81f6-9af7c820d083"],
-Cell[91794, 2337, 493, 7, 26, "Print", "ExpressionUUID" -> \
+Cell[91665, 2327, 493, 7, 26, "Print", "ExpressionUUID" -> \
 "fa9f6c0e-34ad-4bdf-afda-78b0e660a9ab"],
-Cell[92290, 2346, 420, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[92161, 2336, 420, 6, 24, "Print", "ExpressionUUID" -> \
 "380b2836-f24f-40ec-847f-b6850546d79d"],
-Cell[92713, 2354, 414, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[92584, 2344, 414, 6, 24, "Print", "ExpressionUUID" -> \
 "57890c0a-a02f-4606-a022-7e1ea0855f4c"],
-Cell[93130, 2362, 417, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[93001, 2352, 417, 6, 24, "Print", "ExpressionUUID" -> \
 "7cb0cc8c-c58b-47f3-b1b5-7c1864be6624"],
-Cell[93550, 2370, 493, 7, 26, "Print", "ExpressionUUID" -> \
+Cell[93421, 2360, 493, 7, 26, "Print", "ExpressionUUID" -> \
 "26fcbf48-ce1f-415e-9e4c-501cf3ca4dd4"],
-Cell[94046, 2379, 418, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[93917, 2369, 418, 6, 24, "Print", "ExpressionUUID" -> \
 "de7e7d25-0913-4ffa-8855-a691e8fa1eda"],
-Cell[94467, 2387, 587, 8, 26, "Print", "ExpressionUUID" -> \
+Cell[94338, 2377, 587, 8, 26, "Print", "ExpressionUUID" -> \
 "f970bb0b-2612-47b9-9c0c-b8687cee6efb"],
-Cell[95057, 2397, 493, 7, 26, "Print", "ExpressionUUID" -> \
+Cell[94928, 2387, 493, 7, 26, "Print", "ExpressionUUID" -> \
 "9473536f-9d03-4983-858d-614f59fe095a"],
-Cell[95553, 2406, 636, 10, 385, "Print", "ExpressionUUID" -> \
+Cell[95424, 2396, 636, 10, 385, "Print", "ExpressionUUID" -> \
 "b4d96b08-2646-4a9b-9408-9520a3983c4a"],
-Cell[96192, 2418, 11680, 159, 15140, "Print", "ExpressionUUID" -> \
+Cell[96063, 2408, 13333, 187, 15140, "Print", "ExpressionUUID" -> \
 "229031f7-cf40-44ca-af58-8e1a49e71e10"],
-Cell[107875, 2579, 412, 6, 24, "Print", "ExpressionUUID" -> \
+Cell[109399, 2597, 412, 6, 24, "Print", "ExpressionUUID" -> \
 "59ce7d3e-5035-4c1a-bd7d-44c75b1b9dc8"],
-Cell[108290, 2587, 589, 8, 26, "Print", "ExpressionUUID" -> \
+Cell[109814, 2605, 589, 8, 26, "Print", "ExpressionUUID" -> \
 "5a270fd4-2256-42bd-a493-ddf79317c886"],
-Cell[108882, 2597, 493, 7, 26, "Print", "ExpressionUUID" -> \
+Cell[110406, 2615, 493, 7, 26, "Print", "ExpressionUUID" -> \
 "fe3ea229-1c26-431f-b9c7-05281f984a18"],
-Cell[109378, 2606, 636, 10, 385, "Print", "ExpressionUUID" -> \
+Cell[110902, 2624, 636, 10, 385, "Print", "ExpressionUUID" -> \
 "805fa311-5fba-465f-90f5-b7b6187774e0"],
-Cell[110017, 2618, 11680, 159, 15140, "Print", "ExpressionUUID" -> \
+Cell[111541, 2636, 13339, 187, 15140, "Print", "ExpressionUUID" -> \
 "74cfd218-694f-4ddf-871b-9c32d9b4f0ab"],
-Cell[121700, 2779, 587, 8, 37, "Print", "ExpressionUUID" -> \
+Cell[124883, 2825, 587, 8, 37, "Print", "ExpressionUUID" -> \
 "3d352fba-88b6-48f2-a720-7425a83eded4"],
-Cell[122290, 2789, 495, 7, 22, "Print", "ExpressionUUID" -> \
+Cell[125473, 2835, 495, 7, 22, "Print", "ExpressionUUID" -> \
 "d495e87d-38bd-4f42-8139-6d9cdded9a8a"],
-Cell[122788, 2798, 636, 10, 293, "Print", "ExpressionUUID" -> \
+Cell[125971, 2844, 636, 10, 385, "Print", "ExpressionUUID" -> \
 "04f21b23-fec6-4982-a7c8-f5cbe1795628"],
-Cell[123427, 2810, 12007, 165, 12162, "Print", "ExpressionUUID" -> \
+Cell[126610, 2856, 13748, 194, 15980, "Print", "ExpressionUUID" -> \
 "2b4b826f-e3b8-40b7-baa6-dd99f8c7e92b"],
-Cell[135437, 2977, 600, 10, 22, "Print", "ExpressionUUID" -> \
+Cell[140361, 3052, 600, 10, 24, "Print", "ExpressionUUID" -> \
 "36f4ed5c-72bf-47a8-b136-3ca69980fc8c"],
-Cell[136040, 2989, 584, 10, 22, "Print", "ExpressionUUID" -> \
+Cell[140964, 3064, 584, 10, 24, "Print", "ExpressionUUID" -> \
 "9abb1531-4a32-4be7-8221-538a586f5947"],
-Cell[136627, 3001, 10625, 148, 8929, "Print", "ExpressionUUID" -> \
+Cell[141551, 3076, 10671, 148, 932, "Print", "ExpressionUUID" -> \
 "7955818b-87d6-44ad-8eab-839b25be98b6"],
-Cell[147255, 3151, 409, 5, 21, "Print", "ExpressionUUID" -> \
+Cell[152225, 3226, 409, 5, 24, "Print", "ExpressionUUID" -> \
 "b7ab686a-7fc4-41fd-9584-47fd448fc033"],
-Cell[147667, 3158, 587, 8, 52, "Print", "ExpressionUUID" -> \
+Cell[152637, 3233, 587, 8, 26, "Print", "ExpressionUUID" -> \
 "860589d3-629c-4f0d-b4d0-d317a4240f16"],
-Cell[148257, 3168, 495, 7, 38, "Print", "ExpressionUUID" -> \
+Cell[153227, 3243, 495, 7, 26, "Print", "ExpressionUUID" -> \
 "cbade9da-a385-4dd4-9896-03ff7d02d57f"],
-Cell[148755, 3177, 636, 10, 293, "Print", "ExpressionUUID" -> \
+Cell[153725, 3252, 636, 10, 385, "Print", "ExpressionUUID" -> \
 "2091caa5-1373-4841-baae-e63384bf8bba"],
-Cell[149394, 3189, 9259, 125, 8944, "Print", "ExpressionUUID" -> \
+Cell[154364, 3264, 9259, 125, 11700, "Print", "ExpressionUUID" -> \
 "d2914d1d-91d0-4edd-b77c-5f7220efc9a1"],
-Cell[158656, 3316, 587, 8, 37, "Print", "ExpressionUUID" -> \
+Cell[163626, 3391, 587, 8, 26, "Print", "ExpressionUUID" -> \
 "129e3cd1-ed95-4ff5-97e0-a98b61437851"],
-Cell[159246, 3326, 493, 7, 22, "Print", "ExpressionUUID" -> \
+Cell[164216, 3401, 493, 7, 26, "Print", "ExpressionUUID" -> \
 "568e5cdc-06b7-471f-b258-56bd089fe82c"],
-Cell[159742, 3335, 636, 10, 293, "Print", "ExpressionUUID" -> \
+Cell[164712, 3410, 636, 10, 385, "Print", "ExpressionUUID" -> \
 "f0c7137e-2b16-4e00-bbf1-ecc2c3a060a3"],
-Cell[160381, 3347, 9581, 129, 9570, "Print", "ExpressionUUID" -> \
+Cell[165351, 3422, 9581, 129, 12540, "Print", "ExpressionUUID" -> \
 "b5e76693-c146-470d-9c26-0251af69a932"],
-Cell[169965, 3478, 605, 11, 22, "Print", "ExpressionUUID" -> \
+Cell[174935, 3553, 605, 11, 24, "Print", "ExpressionUUID" -> \
 "628f7295-2259-48a6-b1f0-2294049fef9c"],
-Cell[170573, 3491, 584, 10, 22, "Print", "ExpressionUUID" -> \
+Cell[175543, 3566, 584, 10, 24, "Print", "ExpressionUUID" -> \
 "44edc2a8-f52d-4583-812f-20af488c53a8"],
-Cell[171160, 3503, 349, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[176130, 3578, 374, 7, 26, "Print", "ExpressionUUID" -> \
 "76d0d842-fe01-4a98-b251-e25ee8a9561f"],
-Cell[171512, 3511, 187, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[176507, 3587, 187, 3, 24, "Print", "ExpressionUUID" -> \
 "06ef47d8-0470-44ae-bf62-46e932aa94a9"],
-Cell[171702, 3516, 171, 2, 22, "Print", "ExpressionUUID" -> \
+Cell[176697, 3592, 171, 2, 24, "Print", "ExpressionUUID" -> \
 "b0370fd6-10e2-4133-ad97-90d7be3fa990"]
 }, Open  ]],
-Cell[171888, 3521, 1837, 29, 60, "Message", "ExpressionUUID" -> \
+Cell[176883, 3597, 1837, 29, 59, "Message", "ExpressionUUID" -> \
 "b2b3007b-91e9-4767-b0ba-52916c99149b"],
 Cell[CellGroupData[{
-Cell[173750, 3554, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[178745, 3630, 179, 3, 24, "Print", "ExpressionUUID" -> \
 "0ebf8ad8-7179-45ea-9a18-4418281d16de"],
-Cell[173932, 3559, 182, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[178927, 3635, 182, 3, 24, "Print", "ExpressionUUID" -> \
 "70e9567a-165b-4153-b43f-a5722d675ef7"],
-Cell[174117, 3564, 349, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[179112, 3640, 376, 7, 26, "Print", "ExpressionUUID" -> \
 "8effe180-aa86-4335-96c6-ecee0ff581a8"],
-Cell[174469, 3572, 187, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[179491, 3649, 187, 3, 24, "Print", "ExpressionUUID" -> \
 "0b9d8b6c-70fd-4d9b-a37c-9961cac9454f"],
-Cell[174659, 3577, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[179681, 3654, 179, 3, 24, "Print", "ExpressionUUID" -> \
 "40ff87b4-24da-4303-a643-1be1f05c2feb"],
-Cell[174841, 3582, 179, 2, 21, "Print", "ExpressionUUID" -> \
+Cell[179863, 3659, 179, 2, 24, "Print", "ExpressionUUID" -> \
 "3f0539af-8738-448c-8b73-7edb9258e168"],
-Cell[175023, 3586, 351, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[180045, 3663, 376, 7, 26, "Print", "ExpressionUUID" -> \
 "162802e8-5d65-4a86-8235-f263db213c26"],
-Cell[175377, 3594, 187, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[180424, 3672, 187, 3, 24, "Print", "ExpressionUUID" -> \
 "3145172e-5f6d-4e17-8c82-4c71a3abdf13"],
-Cell[175567, 3599, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[180614, 3677, 179, 3, 24, "Print", "ExpressionUUID" -> \
 "b7666e58-d702-49f1-885f-4b856ed75359"],
-Cell[175749, 3604, 182, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[180796, 3682, 182, 3, 24, "Print", "ExpressionUUID" -> \
 "35dc1e04-548a-4d88-b795-b5026937b413"],
-Cell[175934, 3609, 351, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[180981, 3687, 376, 7, 26, "Print", "ExpressionUUID" -> \
 "2c07a05f-b14c-4a6c-82d1-78c461f7e9d1"],
-Cell[176288, 3617, 185, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[181360, 3696, 185, 3, 24, "Print", "ExpressionUUID" -> \
 "177fc7c4-420b-4b2e-b213-3ec6841ce1ab"],
-Cell[176476, 3622, 229, 4, 22, "Print", "ExpressionUUID" -> \
+Cell[181548, 3701, 229, 4, 26, "Print", "ExpressionUUID" -> \
 "d13716d1-6052-4836-93f0-ec5f33fc87d8"],
-Cell[176708, 3628, 349, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[181780, 3707, 376, 7, 26, "Print", "ExpressionUUID" -> \
 "2b5cb5f9-20cb-4df8-8dc1-eea64e7397d6"],
-Cell[177060, 3636, 244, 4, 86, "Print", "ExpressionUUID" -> \
+Cell[182159, 3716, 244, 4, 105, "Print", "ExpressionUUID" -> \
 "2a67c478-7cec-48f7-81ca-4af1fe05d494"],
-Cell[177307, 3642, 8211, 116, 670, "Print", "ExpressionUUID" -> \
+Cell[182406, 3722, 8237, 117, 742, "Print", "ExpressionUUID" -> \
 "ccd0c9a2-f581-4052-95e2-7de4741b9127"],
-Cell[185521, 3760, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[190646, 3841, 179, 3, 24, "Print", "ExpressionUUID" -> \
 "5df1ca3b-90e9-4bda-b0b9-cbe496a5a801"],
-Cell[185703, 3765, 227, 4, 22, "Print", "ExpressionUUID" -> \
+Cell[190828, 3846, 227, 4, 26, "Print", "ExpressionUUID" -> \
 "3cb6158e-a035-4f60-9b9e-b7b703369890"],
-Cell[185933, 3771, 351, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[191058, 3852, 376, 7, 26, "Print", "ExpressionUUID" -> \
 "d440b506-a4a9-4fca-9b94-9724c12875b2"],
-Cell[186287, 3779, 244, 4, 86, "Print", "ExpressionUUID" -> \
+Cell[191437, 3861, 244, 4, 105, "Print", "ExpressionUUID" -> \
 "c4cc59c0-ec84-48e7-a691-cbe566998047"],
-Cell[186534, 3785, 8217, 116, 670, "Print", "ExpressionUUID" -> \
+Cell[191684, 3867, 8243, 117, 742, "Print", "ExpressionUUID" -> \
 "57b587b5-01a5-41d6-a649-9487e8194ab2"],
-Cell[194754, 3903, 227, 4, 22, "Print", "ExpressionUUID" -> \
+Cell[199930, 3986, 227, 4, 26, "Print", "ExpressionUUID" -> \
 "20c2dacb-4b9e-4d10-b64b-6fd316a14459"],
-Cell[194984, 3909, 349, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[200160, 3992, 374, 7, 26, "Print", "ExpressionUUID" -> \
 "7f2864d2-b587-433f-9349-0f8630ac863b"],
-Cell[195336, 3917, 244, 4, 86, "Print", "ExpressionUUID" -> \
+Cell[200537, 4001, 244, 4, 105, "Print", "ExpressionUUID" -> \
 "0cf84b87-599b-4113-a87d-16a8863c59ab"],
-Cell[195583, 3923, 8293, 117, 687, "Print", "ExpressionUUID" -> \
+Cell[200784, 4007, 8319, 118, 744, "Print", "ExpressionUUID" -> \
 "2aa86af4-74a8-44c8-b94f-0f70ddcfeabe"],
-Cell[203879, 4042, 372, 8, 22, "Print", "ExpressionUUID" -> \
+Cell[209106, 4127, 372, 8, 22, "Print", "ExpressionUUID" -> \
 "6b21c1ac-0a69-4792-b541-3371b4fb58c1"],
-Cell[204254, 4052, 356, 8, 22, "Print", "ExpressionUUID" -> \
+Cell[209481, 4137, 356, 8, 22, "Print", "ExpressionUUID" -> \
 "9a89ecdc-9540-4f0a-99af-7d0ac5b9403a"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[204671, 4067, 731, 14, 144, "Subsection", "ExpressionUUID" -> \
+Cell[209898, 4152, 731, 14, 122, "Subsection", "ExpressionUUID" -> \
 "cbb51846-b073-4d66-a40d-19cfdfa43db4"],
 Cell[CellGroupData[{
-Cell[205427, 4085, 288, 4, 28, "Input", "ExpressionUUID" -> \
+Cell[210654, 4170, 318, 6, 32, "Input", "ExpressionUUID" -> \
 "5431ef0d-4fc2-4780-b4be-3a4f67a43e2b"],
-Cell[205718, 4091, 110324, 2423, 417, "Output", "ExpressionUUID" -> \
+Cell[210975, 4178, 110324, 2423, 413, "Output", "ExpressionUUID" -> \
 "9b8c40e2-3d05-436d-a0a3-0f8ca22ba8db"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[316079, 6519, 214, 5, 28, "Input", "ExpressionUUID" -> \
+Cell[321336, 6606, 237, 5, 32, "Input", "ExpressionUUID" -> \
 "5361e77d-2814-4d50-9f84-4bf4055f16f8"],
-Cell[316296, 6526, 535, 11, 28, "Output", "ExpressionUUID" -> \
+Cell[321576, 6613, 535, 11, 28, "Output", "ExpressionUUID" -> \
 "4501531a-3852-46e6-801d-9edc5e6f6bf6"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[316904, 6545, 246, 4, 92, "Title", "ExpressionUUID" -> \
+Cell[322184, 6632, 246, 4, 92, "Title", "ExpressionUUID" -> \
 "99e589df-c607-422d-b90a-47c5eec937df"],
-Cell[317153, 6551, 704, 17, 63, "Input", "ExpressionUUID" -> \
+Cell[322433, 6638, 704, 17, 63, "Input", "ExpressionUUID" -> \
 "e16e94a4-d359-4f56-a245-a3ea2b6ae35a"],
-Cell[317860, 6570, 634, 15, 46, "Input", "ExpressionUUID" -> \
+Cell[323140, 6657, 634, 15, 46, "Input", "ExpressionUUID" -> \
 "d440aff2-f8c7-4c28-b789-26254fb13c79"],
 Cell[CellGroupData[{
-Cell[318519, 6589, 420, 11, 28, "Input", "ExpressionUUID" -> \
+Cell[323799, 6676, 420, 11, 28, "Input", "ExpressionUUID" -> \
 "04a0aaef-177f-4740-a3df-4f7a1cd2ca9b"],
-Cell[318942, 6602, 2238, 62, 98, "Output", "ExpressionUUID" -> \
+Cell[324222, 6689, 2238, 62, 98, "Output", "ExpressionUUID" -> \
 "6857b6d5-ecd5-4a48-b12d-525f7dede686"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[321217, 6669, 465, 12, 28, "Input", "ExpressionUUID" -> \
+Cell[326497, 6756, 465, 12, 28, "Input", "ExpressionUUID" -> \
 "007c8579-0cc2-452b-96da-e4940561f522"],
-Cell[321685, 6683, 2209, 61, 98, "Output", "ExpressionUUID" -> \
+Cell[326965, 6770, 2209, 61, 98, "Output", "ExpressionUUID" -> \
 "51ad97f0-6ddd-4f46-9c7f-5cb79c761819"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[323931, 6749, 673, 14, 28, "Input", "ExpressionUUID" -> \
+Cell[329211, 6836, 673, 14, 28, "Input", "ExpressionUUID" -> \
 "5ae029eb-fb14-4e1b-828d-201a20ad7f94"],
-Cell[324607, 6765, 4679, 124, 152, "Output", "ExpressionUUID" -> \
+Cell[329887, 6852, 4679, 124, 152, "Output", "ExpressionUUID" -> \
 "ea28623e-73bc-4e81-8596-13df6d4d9804"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[329323, 6894, 722, 15, 50, "Input", "ExpressionUUID" -> \
+Cell[334603, 6981, 722, 15, 50, "Input", "ExpressionUUID" -> \
 "d8d93cf8-5709-42b3-b783-59c3767e7b2b"],
-Cell[330048, 6911, 10024, 252, 295, "Output", "ExpressionUUID" -> \
+Cell[335328, 6998, 10024, 252, 295, "Output", "ExpressionUUID" -> \
 "f0a27775-ad98-4fde-bbed-b013c14c2ee3"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[340109, 7168, 731, 12, 49, "Input", "ExpressionUUID" -> \
+Cell[345389, 7255, 731, 12, 49, "Input", "ExpressionUUID" -> \
 "f3c543e2-adf8-416e-acef-9bb44228a62a"],
-Cell[340843, 7182, 5179, 129, 152, "Output", "ExpressionUUID" -> \
+Cell[346123, 7269, 5179, 129, 152, "Output", "ExpressionUUID" -> \
 "9efcbc98-ee38-4d3f-bdcf-4be3fe486fac"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[346059, 7316, 357, 6, 28, "Input", "ExpressionUUID" -> \
+Cell[351339, 7403, 357, 6, 28, "Input", "ExpressionUUID" -> \
 "03735cf4-b684-42f2-a87c-ae44a81ca24f"],
-Cell[346419, 7324, 14957, 375, 440, "Output", "ExpressionUUID" -> \
+Cell[351699, 7411, 14957, 375, 440, "Output", "ExpressionUUID" -> \
 "bf96f252-f285-4dd1-b3a1-121e13629365"]
 }, Open  ]],
-Cell[361391, 7702, 2171, 53, 284, "Input", "ExpressionUUID" -> \
+Cell[366671, 7789, 2171, 53, 284, "Input", "ExpressionUUID" -> \
 "4f329393-b262-4763-b790-be525ce0237d"],
-Cell[363565, 7757, 1514, 34, 114, "Input", "ExpressionUUID" -> \
+Cell[368845, 7844, 1514, 34, 114, "Input", "ExpressionUUID" -> \
 "643aecd6-efef-4a95-8615-200e19ebeb95"],
-Cell[365082, 7793, 1690, 40, 114, "Input", "ExpressionUUID" -> \
+Cell[370362, 7880, 1690, 40, 114, "Input", "ExpressionUUID" -> \
 "c029a610-21c9-4e08-bb9b-f137691fc7b6"],
-Cell[366775, 7835, 1840, 45, 114, "Input", "ExpressionUUID" -> \
+Cell[372055, 7922, 1840, 45, 114, "Input", "ExpressionUUID" -> \
 "09024d92-3e9e-4fa8-989b-3d9db6dd9922"],
 Cell[CellGroupData[{
-Cell[368640, 7884, 276, 5, 28, "Input", "ExpressionUUID" -> \
+Cell[373920, 7971, 276, 5, 28, "Input", "ExpressionUUID" -> \
 "f34fb485-dd91-4de0-9c1c-83b915d3bf95"],
-Cell[368919, 7891, 3269, 96, 448, "Output", "ExpressionUUID" -> \
+Cell[374199, 7978, 3269, 96, 448, "Output", "ExpressionUUID" -> \
 "a9fdbb9f-4410-4130-97e7-3da91db9810b"]
 }, Open  ]],
-Cell[372203, 7990, 1181, 28, 97, "Input", "ExpressionUUID" -> \
+Cell[377483, 8077, 1181, 28, 97, "Input", "ExpressionUUID" -> \
 "e40bd18b-17ef-43af-89dc-cd07baddd091"],
 Cell[CellGroupData[{
-Cell[373409, 8022, 173, 3, 51, "Subtitle", "ExpressionUUID" -> \
+Cell[378689, 8109, 173, 3, 51, "Subtitle", "ExpressionUUID" -> \
 "27b20d13-fa7b-4171-ae76-0f594cf98264"],
-Cell[373585, 8027, 313, 7, 28, "Input", "ExpressionUUID" -> \
+Cell[378865, 8114, 313, 7, 28, "Input", "ExpressionUUID" -> \
 "4f0ede5a-4231-4825-ab05-01e180d460d0"],
-Cell[373901, 8036, 590, 12, 28, "Input", "ExpressionUUID" -> \
+Cell[379181, 8123, 590, 12, 28, "Input", "ExpressionUUID" -> \
 "c20c68b0-74de-4c67-9447-605ff037bd0a"],
 Cell[CellGroupData[{
-Cell[374516, 8052, 241, 4, 28, "Input", "ExpressionUUID" -> \
+Cell[379796, 8139, 241, 4, 28, "Input", "ExpressionUUID" -> \
 "2e966e09-1026-478b-867e-babfbc5b5c47"],
-Cell[374760, 8058, 764, 14, 28, "Output", "ExpressionUUID" -> \
+Cell[380040, 8145, 764, 14, 28, "Output", "ExpressionUUID" -> \
 "3632fc00-1a87-4544-8ad7-fcf1febe2339"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[375561, 8077, 183, 3, 44, "Subsection", "ExpressionUUID" -> \
+Cell[380841, 8164, 183, 3, 44, "Subsection", "ExpressionUUID" -> \
 "02e43ed9-bae1-43b8-b110-bb528009c90d"],
-Cell[375747, 8082, 646, 13, 63, "Input", "ExpressionUUID" -> \
+Cell[381027, 8169, 646, 13, 63, "Input", "ExpressionUUID" -> \
 "ce5b176b-1cc8-49b0-a213-89c907bc1af8"],
-Cell[376396, 8097, 468, 9, 28, "Input", "ExpressionUUID" -> \
+Cell[381676, 8184, 468, 9, 28, "Input", "ExpressionUUID" -> \
 "562ff3a7-5e78-423e-bf7e-87389b8be191"],
 Cell[CellGroupData[{
-Cell[376889, 8110, 259, 4, 28, "Input", "ExpressionUUID" -> \
+Cell[382169, 8197, 259, 4, 28, "Input", "ExpressionUUID" -> \
 "62ceec50-c1ce-4c9a-87ab-2a87f6a9499f"],
-Cell[377151, 8116, 4919, 138, 130, "Output", "ExpressionUUID" -> \
+Cell[382431, 8203, 4919, 138, 130, "Output", "ExpressionUUID" -> \
 "ea7cf4b9-3628-43c6-90b2-59c3abb1bb2a"]
 }, Open  ]],
-Cell[382085, 8257, 656, 13, 28, "Input", "ExpressionUUID" -> \
+Cell[387365, 8344, 656, 13, 28, "Input", "ExpressionUUID" -> \
 "f6620a17-4562-4bf1-88f1-7adc1e897aeb"],
-Cell[382744, 8272, 461, 10, 28, "Input", "ExpressionUUID" -> \
+Cell[388024, 8359, 461, 10, 28, "Input", "ExpressionUUID" -> \
 "71286fb7-af22-4324-9d0a-5cbcfe1c0caf"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[383242, 8287, 310, 6, 44, "Subsection", "ExpressionUUID" -> \
+Cell[388522, 8374, 310, 6, 44, "Subsection", "ExpressionUUID" -> \
 "5442ac97-0e57-4711-bb05-1b3e18ad7df9"],
-Cell[383555, 8295, 2237, 39, 148, "Input", "ExpressionUUID" -> \
+Cell[388835, 8382, 2237, 39, 148, "Input", "ExpressionUUID" -> \
 "4ab4714b-60f2-47ea-b28a-a26a9b649e91"],
 Cell[CellGroupData[{
-Cell[385817, 8338, 410, 8, 28, "Input", "ExpressionUUID" -> \
+Cell[391097, 8425, 410, 8, 28, "Input", "ExpressionUUID" -> \
 "c43a2ade-7972-4c58-b328-e37b15a787d3"],
 Cell[CellGroupData[{
-Cell[386252, 8350, 574, 12, 22, "Print", "ExpressionUUID" -> \
+Cell[391532, 8437, 574, 12, 22, "Print", "ExpressionUUID" -> \
 "4fc5ea73-dccf-4fac-b8b4-539bb7383a4c"],
-Cell[386829, 8364, 550, 11, 22, "Print", "ExpressionUUID" -> \
+Cell[392109, 8451, 550, 11, 22, "Print", "ExpressionUUID" -> \
 "ebfc34f5-7ce7-4c91-9f31-1bca32bf1533"],
-Cell[387382, 8377, 548, 11, 22, "Print", "ExpressionUUID" -> \
+Cell[392662, 8464, 548, 11, 22, "Print", "ExpressionUUID" -> \
 "7ff60bc8-831c-4ba6-b4f3-bb6f5f89a4b8"],
-Cell[387933, 8390, 542, 11, 22, "Print", "ExpressionUUID" -> \
+Cell[393213, 8477, 542, 11, 22, "Print", "ExpressionUUID" -> \
 "b1b011dc-d63d-4083-86bd-d9d65970a48e"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[388536, 8408, 199, 3, 44, "Subsection", "ExpressionUUID" -> \
+Cell[393816, 8495, 199, 3, 44, "Subsection", "ExpressionUUID" -> \
 "704ad6a9-439a-4ba7-bebb-2317a4d8848f"],
 Cell[CellGroupData[{
-Cell[388760, 8415, 785, 13, 28, "Input", "ExpressionUUID" -> \
+Cell[394040, 8502, 785, 13, 28, "Input", "ExpressionUUID" -> \
 "2f9f5430-4753-4c89-bac8-cbd70c7c981e"],
 Cell[CellGroupData[{
-Cell[389570, 8432, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[394850, 8519, 179, 3, 21, "Print", "ExpressionUUID" -> \
 "eaf294ed-2c22-4734-8737-86e982a11c0c"],
-Cell[389752, 8437, 182, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[395032, 8524, 182, 3, 21, "Print", "ExpressionUUID" -> \
 "e435f4e8-229b-4b97-a4bc-5fa81fd18f1c"],
-Cell[389937, 8442, 282, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[395217, 8529, 282, 5, 22, "Print", "ExpressionUUID" -> \
 "6ec239e2-8002-444f-b6a4-d4349a8f8fe5"],
-Cell[390222, 8449, 185, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[395502, 8536, 185, 3, 21, "Print", "ExpressionUUID" -> \
 "b79079ba-16dc-4e0b-8284-b8724944192d"],
-Cell[390410, 8454, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[395690, 8541, 179, 3, 21, "Print", "ExpressionUUID" -> \
 "b2baf078-f6b5-447f-871f-5144712a3d6d"],
-Cell[390592, 8459, 182, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[395872, 8546, 182, 3, 21, "Print", "ExpressionUUID" -> \
 "5c3d2268-1acb-49b1-b20c-2af7f3826e57"],
-Cell[390777, 8464, 284, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[396057, 8551, 284, 5, 22, "Print", "ExpressionUUID" -> \
 "6fec3725-65dc-4985-9be2-ee9d8134b42e"],
-Cell[391064, 8471, 185, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[396344, 8558, 185, 3, 21, "Print", "ExpressionUUID" -> \
 "b04c3db3-c2ef-4e83-9b17-0e0c2ad2ccd9"],
-Cell[391252, 8476, 181, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[396532, 8563, 181, 3, 21, "Print", "ExpressionUUID" -> \
 "daa55c13-e47f-49f1-a536-8c3295413b17"],
-Cell[391436, 8481, 232, 4, 21, "Print", "ExpressionUUID" -> \
+Cell[396716, 8568, 232, 4, 21, "Print", "ExpressionUUID" -> \
 "a7cc6c54-cf0f-45ba-99b1-dd37ff56b527"],
-Cell[391671, 8487, 284, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[396951, 8574, 284, 5, 22, "Print", "ExpressionUUID" -> \
 "d3c6cbd9-85a4-44d4-b648-c41a31530685"],
-Cell[391958, 8494, 247, 4, 83, "Print", "ExpressionUUID" -> \
+Cell[397238, 8581, 247, 4, 83, "Print", "ExpressionUUID" -> \
 "688542e9-6855-4686-b26f-d353392d8125"],
-Cell[392208, 8500, 9734, 132, 9032, "Print", "ExpressionUUID" -> \
+Cell[397488, 8587, 9734, 132, 9032, "Print", "ExpressionUUID" -> \
 "f26f9e29-f9f8-45c9-92c9-40e611a7635a"],
-Cell[401945, 8634, 232, 4, 21, "Print", "ExpressionUUID" -> \
+Cell[407225, 8721, 232, 4, 21, "Print", "ExpressionUUID" -> \
 "f87ddeae-3a2b-4ecd-96f5-05833d004f23"],
-Cell[402180, 8640, 284, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[407460, 8727, 284, 5, 22, "Print", "ExpressionUUID" -> \
 "4a80c5a2-473d-43d9-824b-4ddefc79b0ee"],
-Cell[402467, 8647, 249, 4, 83, "Print", "ExpressionUUID" -> \
+Cell[407747, 8734, 249, 4, 83, "Print", "ExpressionUUID" -> \
 "2d798f4e-c67b-4761-9b9b-fc32f182518a"],
-Cell[402719, 8653, 10179, 142, 9952, "Print", "ExpressionUUID" -> \
+Cell[407999, 8740, 10179, 142, 9952, "Print", "ExpressionUUID" -> \
 "e643dad8-83c3-4197-8077-6a1afba283c9"],
-Cell[412901, 8797, 181, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[418181, 8884, 181, 3, 21, "Print", "ExpressionUUID" -> \
 "01c01d7c-d8a2-4a3a-bfbf-117f1d093bc5"],
-Cell[413085, 8802, 243, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[418365, 8889, 243, 3, 21, "Print", "ExpressionUUID" -> \
 "a9440cd1-c3f4-4265-ac52-5a937b3be071"],
-Cell[413331, 8807, 282, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[418611, 8894, 282, 5, 22, "Print", "ExpressionUUID" -> \
 "cacf3fa0-bea7-4667-939b-205fdf80e499"],
-Cell[413616, 8814, 269, 4, 113, "Print", "ExpressionUUID" -> \
+Cell[418896, 8901, 269, 4, 113, "Print", "ExpressionUUID" -> \
 "cfc7dd5e-41b2-41d3-a352-22c6041fed9a"],
-Cell[413888, 8820, 10185, 141, 9982, "Print", "ExpressionUUID" -> \
+Cell[419168, 8907, 10185, 141, 9982, "Print", "ExpressionUUID" -> \
 "9d85146c-bfd0-4db2-9a84-ac93a1aa8ded"],
-Cell[424076, 8963, 246, 4, 21, "Print", "ExpressionUUID" -> \
+Cell[429356, 9050, 246, 4, 21, "Print", "ExpressionUUID" -> \
 "048d4cab-ffa1-43af-99c0-a01b86b079ca"],
-Cell[424325, 8969, 282, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[429605, 9056, 282, 5, 22, "Print", "ExpressionUUID" -> \
 "507e9a79-e6aa-4f23-b53c-51de6e98f966"],
-Cell[424610, 8976, 267, 4, 113, "Print", "ExpressionUUID" -> \
+Cell[429890, 9063, 267, 4, 113, "Print", "ExpressionUUID" -> \
 "d197e554-07b9-42f0-8b9f-65b04fba9ecb"],
-Cell[424880, 8982, 10243, 140, 10102, "Print", "ExpressionUUID" -> \
+Cell[430160, 9069, 10243, 140, 10102, "Print", "ExpressionUUID" -> \
 "06a37371-afb1-46f0-8913-3a2df975ecf4"],
-Cell[435126, 9124, 373, 7, 22, "Print", "ExpressionUUID" -> \
+Cell[440406, 9211, 373, 7, 22, "Print", "ExpressionUUID" -> \
 "1441be08-6427-437c-9d64-273b4373d296"],
-Cell[435502, 9133, 360, 8, 22, "Print", "ExpressionUUID" -> \
+Cell[440782, 9220, 360, 8, 22, "Print", "ExpressionUUID" -> \
 "de1429e0-c6ee-4979-8d6a-c6e39a85fa50"],
-Cell[435865, 9143, 482, 13, 33, "Print", "ExpressionUUID" -> \
+Cell[441145, 9230, 482, 13, 33, "Print", "ExpressionUUID" -> \
 "b92ae281-f86d-4507-92bd-b772b08e7759"],
-Cell[436350, 9158, 424, 12, 29, "Print", "ExpressionUUID" -> \
+Cell[441630, 9245, 424, 12, 29, "Print", "ExpressionUUID" -> \
 "d20fe8eb-463d-4c4c-8d0d-31be08f6debf"],
-Cell[436777, 9172, 423, 12, 29, "Print", "ExpressionUUID" -> \
+Cell[442057, 9259, 423, 12, 29, "Print", "ExpressionUUID" -> \
 "d8ea139c-5cc2-4126-9b7e-ddd95824eecf"],
-Cell[437203, 9186, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[442483, 9273, 179, 3, 21, "Print", "ExpressionUUID" -> \
 "55de072e-6c6b-4736-8df2-47dec2c24aa3"],
-Cell[437385, 9191, 184, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[442665, 9278, 184, 3, 21, "Print", "ExpressionUUID" -> \
 "77f6ead3-036f-4046-babe-4905bc396fa8"],
-Cell[437572, 9196, 282, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[442852, 9283, 282, 5, 22, "Print", "ExpressionUUID" -> \
 "f427a92b-8bd5-4d95-aca9-148d1f41eae6"],
-Cell[437857, 9203, 185, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[443137, 9290, 185, 3, 21, "Print", "ExpressionUUID" -> \
 "f694d6a7-f409-417f-9135-91d08ec98b71"],
-Cell[438045, 9208, 174, 3, 22, "Print", "ExpressionUUID" -> \
+Cell[443325, 9295, 174, 3, 22, "Print", "ExpressionUUID" -> \
 "65c325ab-1392-470e-8e2a-bdf8b8304e4e"]
 }, Open  ]],
-Cell[438234, 9214, 2078, 33, 108, "Message", "ExpressionUUID" -> \
+Cell[443514, 9301, 2078, 33, 108, "Message", "ExpressionUUID" -> \
 "254ea70c-139a-47a7-8bf4-c02de34732db"],
 Cell[CellGroupData[{
-Cell[440337, 9251, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[445617, 9338, 179, 3, 21, "Print", "ExpressionUUID" -> \
 "d28f7d31-20ab-4e18-befa-5b8ece9ba44c"],
-Cell[440519, 9256, 184, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[445799, 9343, 184, 3, 21, "Print", "ExpressionUUID" -> \
 "adae9f78-4be7-4708-97bc-8d2cee07f933"],
-Cell[440706, 9261, 279, 4, 22, "Print", "ExpressionUUID" -> \
+Cell[445986, 9348, 279, 4, 22, "Print", "ExpressionUUID" -> \
 "7473bb8a-25f3-428d-9a84-bb5863bdb1f9"],
-Cell[440988, 9267, 185, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[446268, 9354, 185, 3, 21, "Print", "ExpressionUUID" -> \
 "c053e933-be6b-48b7-bf9c-2712ff6cd109"],
-Cell[441176, 9272, 181, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[446456, 9359, 181, 3, 21, "Print", "ExpressionUUID" -> \
 "4d9d9e63-4369-4fb0-97f2-afb8bba2a322"],
-Cell[441360, 9277, 182, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[446640, 9364, 182, 3, 21, "Print", "ExpressionUUID" -> \
 "dd542fba-4822-4434-a0d0-29ce78c1332d"],
-Cell[441545, 9282, 282, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[446825, 9369, 282, 5, 22, "Print", "ExpressionUUID" -> \
 "449a13b0-24f6-43a0-9365-bae3c262e713"],
-Cell[441830, 9289, 185, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[447110, 9376, 185, 3, 21, "Print", "ExpressionUUID" -> \
 "23cb6398-1d41-4aaf-8c6b-4b8ffec063d4"],
-Cell[442018, 9294, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[447298, 9381, 179, 3, 21, "Print", "ExpressionUUID" -> \
 "9a8018c7-ab46-436c-8e0d-71e2494651de"],
-Cell[442200, 9299, 216, 4, 21, "Print", "ExpressionUUID" -> \
+Cell[447480, 9386, 216, 4, 21, "Print", "ExpressionUUID" -> \
 "5318cd0b-25a3-4c00-ba8a-2604bfd2622d"],
-Cell[442419, 9305, 279, 4, 22, "Print", "ExpressionUUID" -> \
+Cell[447699, 9392, 279, 4, 22, "Print", "ExpressionUUID" -> \
 "3630bbfe-5bd2-4329-ade4-0b06c42c7601"],
-Cell[442701, 9311, 227, 4, 53, "Print", "ExpressionUUID" -> \
+Cell[447981, 9398, 227, 4, 53, "Print", "ExpressionUUID" -> \
 "6875833a-5a11-4d20-9b27-610c0c56b7ec"],
-Cell[442931, 9317, 13226, 179, 12496, "Print", "ExpressionUUID" -> \
+Cell[448211, 9404, 13226, 179, 12496, "Print", "ExpressionUUID" -> \
 "240a1e00-fdb1-4ab7-bd0a-35bcebf45be7"],
-Cell[456160, 9498, 388, 6, 37, "Print", "ExpressionUUID" -> \
+Cell[461440, 9585, 388, 6, 37, "Print", "ExpressionUUID" -> \
 "11cc25cd-fe94-4572-b85e-0945a73b571b"],
-Cell[456551, 9506, 282, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[461831, 9593, 282, 5, 22, "Print", "ExpressionUUID" -> \
 "32f6cf96-2a92-4c00-81aa-5a263ee387c9"],
-Cell[456836, 9513, 443, 7, 353, "Print", "ExpressionUUID" -> \
+Cell[462116, 9600, 443, 7, 353, "Print", "ExpressionUUID" -> \
 "0a368260-334d-40b8-a7d7-8462db87c720"],
-Cell[457282, 9522, 13598, 187, 13598, "Print", "ExpressionUUID" -> \
+Cell[462562, 9609, 13598, 187, 13598, "Print", "ExpressionUUID" -> \
 "4e0758b4-55be-44b4-b193-e28e42e93a6e"],
-Cell[470883, 9711, 179, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[476163, 9798, 179, 3, 21, "Print", "ExpressionUUID" -> \
 "aa077eed-6ce6-429b-86e7-461871cc8dac"],
-Cell[471065, 9716, 422, 6, 37, "Print", "ExpressionUUID" -> \
+Cell[476345, 9803, 422, 6, 37, "Print", "ExpressionUUID" -> \
 "deaf105d-3ae9-4406-bbfb-4045b5d58af7"],
-Cell[471490, 9724, 282, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[476770, 9811, 282, 5, 22, "Print", "ExpressionUUID" -> \
 "ce3453fc-5e7a-4512-88d1-3d0142243b31"],
-Cell[471775, 9731, 485, 8, 413, "Print", "ExpressionUUID" -> \
+Cell[477055, 9818, 485, 8, 413, "Print", "ExpressionUUID" -> \
 "eec90378-8492-4c5a-bc5d-60a708d8fa26"],
-Cell[472263, 9741, 13614, 187, 13658, "Print", "ExpressionUUID" -> \
+Cell[477543, 9828, 13614, 187, 13658, "Print", "ExpressionUUID" -> \
 "335e0fb4-5c54-4ba5-b0fb-e06492fc7778"],
-Cell[485880, 9930, 422, 6, 37, "Print", "ExpressionUUID" -> \
+Cell[491160, 10017, 422, 6, 37, "Print", "ExpressionUUID" -> \
 "bad5ef15-14c9-407a-a498-afd3145df085"],
-Cell[486305, 9938, 282, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[491585, 10025, 282, 5, 22, "Print", "ExpressionUUID" -> \
 "c2f0b841-148d-487b-b42e-fb3e6cffc26a"],
-Cell[486590, 9945, 487, 8, 413, "Print", "ExpressionUUID" -> \
+Cell[491870, 10032, 487, 8, 413, "Print", "ExpressionUUID" -> \
 "f1ddb5e2-92d1-4fb0-bf37-a0dd80eca6a7"],
-Cell[487080, 9955, 13939, 192, 14284, "Print", "ExpressionUUID" -> \
+Cell[492360, 10042, 13939, 192, 14284, "Print", "ExpressionUUID" -> \
 "6e0992b5-caaa-4880-bc9c-c4c50981642b"],
-Cell[501022, 10149, 378, 8, 22, "Print", "ExpressionUUID" -> \
+Cell[506302, 10236, 378, 8, 22, "Print", "ExpressionUUID" -> \
 "c98e19de-768a-41bf-8ba9-ff0773d97312"],
-Cell[501403, 10159, 360, 8, 22, "Print", "ExpressionUUID" -> \
+Cell[506683, 10246, 360, 8, 22, "Print", "ExpressionUUID" -> \
 "f13d306f-6f66-4b08-81a4-76cd1ace86bd"],
-Cell[501766, 10169, 261, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[507046, 10256, 261, 6, 22, "Print", "ExpressionUUID" -> \
 "3b81412f-2648-4000-960d-3312e6f9775a"],
-Cell[502030, 10177, 257, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[507310, 10264, 257, 5, 22, "Print", "ExpressionUUID" -> \
 "1beafd50-7491-464e-b014-bf4a4acfb575"],
-Cell[502290, 10184, 270, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[507570, 10271, 270, 6, 22, "Print", "ExpressionUUID" -> \
 "98ecde32-56af-4415-8c0a-bbad7fa5bdd7"],
-Cell[502563, 10192, 913, 15, 86, "Print", "ExpressionUUID" -> \
+Cell[507843, 10279, 913, 15, 86, "Print", "ExpressionUUID" -> \
 "782a5e04-25e4-4f02-b695-ef53934c59b0"],
-Cell[503479, 10209, 154, 3, 22, "Print", "ExpressionUUID" -> \
+Cell[508759, 10296, 154, 3, 22, "Print", "ExpressionUUID" -> \
 "9ffdbfac-ee31-436e-8315-1285c26c1e04"],
-Cell[503636, 10214, 157, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[508916, 10301, 157, 3, 21, "Print", "ExpressionUUID" -> \
 "9f6252ed-bac0-41c7-8394-d86fd390b237"],
-Cell[503796, 10219, 263, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[509076, 10306, 263, 6, 22, "Print", "ExpressionUUID" -> \
 "38396828-0e0e-4118-b2d6-cb23738fc720"],
-Cell[504062, 10227, 262, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[509342, 10314, 262, 6, 22, "Print", "ExpressionUUID" -> \
 "3e3f179b-2789-47c5-b9c5-2465161db2c4"],
-Cell[504327, 10235, 272, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[509607, 10322, 272, 6, 22, "Print", "ExpressionUUID" -> \
 "5caea3ef-c1ed-4bdb-aa69-0805cbaa5da6"],
-Cell[504602, 10243, 913, 15, 86, "Print", "ExpressionUUID" -> \
+Cell[509882, 10330, 913, 15, 86, "Print", "ExpressionUUID" -> \
 "48c10378-98e2-4052-985d-510824e9335e"],
-Cell[505518, 10260, 159, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[510798, 10347, 159, 3, 21, "Print", "ExpressionUUID" -> \
 "3ac1313e-5efd-4308-9095-08d0b29e1ddc"],
-Cell[505680, 10265, 263, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[510960, 10352, 263, 6, 22, "Print", "ExpressionUUID" -> \
 "ce439755-58c1-4b86-b535-2d57f948336e"],
-Cell[505946, 10273, 260, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[511226, 10360, 260, 6, 22, "Print", "ExpressionUUID" -> \
 "1ebaecec-31ac-43d9-b4ce-4e746cbdd021"],
-Cell[506209, 10281, 272, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[511489, 10368, 272, 6, 22, "Print", "ExpressionUUID" -> \
 "f5a3df03-f8f7-479c-8b11-04c8da9ddadf"],
-Cell[506484, 10289, 917, 15, 86, "Print", "ExpressionUUID" -> \
+Cell[511764, 10376, 917, 15, 86, "Print", "ExpressionUUID" -> \
 "9ac6f916-a3d2-4208-a60a-579d4e337dc7"],
-Cell[507404, 10306, 157, 3, 21, "Print", "ExpressionUUID" -> \
+Cell[512684, 10393, 157, 3, 21, "Print", "ExpressionUUID" -> \
 "c852a8d7-f3b8-4422-95f2-198f1e6a03a4"],
-Cell[507564, 10311, 261, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[512844, 10398, 261, 6, 22, "Print", "ExpressionUUID" -> \
 "8d860150-2624-41b6-a80a-ce6bc31d7f22"],
-Cell[507828, 10319, 262, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[513108, 10406, 262, 6, 22, "Print", "ExpressionUUID" -> \
 "2b5b85bb-df08-4545-8060-9067a3fe92a1"],
-Cell[508093, 10327, 270, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[513373, 10414, 270, 6, 22, "Print", "ExpressionUUID" -> \
 "fe44fdc0-7b73-414e-9408-3b91683c17df"],
-Cell[508366, 10335, 913, 15, 86, "Print", "ExpressionUUID" -> \
+Cell[513646, 10422, 913, 15, 86, "Print", "ExpressionUUID" -> \
 "fb215401-1283-43c7-b06c-f1e6995092f8"],
-Cell[509282, 10352, 263, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[514562, 10439, 263, 6, 22, "Print", "ExpressionUUID" -> \
 "5ed6132b-fc7a-4b24-9453-ef36439d6354"],
-Cell[509548, 10360, 262, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[514828, 10447, 262, 6, 22, "Print", "ExpressionUUID" -> \
 "6352f70b-93ca-4abd-a78b-6741a7d2d7d1"],
-Cell[509813, 10368, 269, 5, 22, "Print", "ExpressionUUID" -> \
+Cell[515093, 10455, 269, 5, 22, "Print", "ExpressionUUID" -> \
 "43baff20-11fe-48a0-a29d-d7897cc3b58b"],
-Cell[510085, 10375, 913, 15, 86, "Print", "ExpressionUUID" -> \
+Cell[515365, 10462, 913, 15, 86, "Print", "ExpressionUUID" -> \
 "860479ce-918f-484f-86f5-eb7e3e5af768"],
-Cell[511001, 10392, 154, 2, 21, "Print", "ExpressionUUID" -> \
+Cell[516281, 10479, 154, 2, 21, "Print", "ExpressionUUID" -> \
 "e5ea51d8-608b-428c-9f8f-90aef21ef658"],
-Cell[511158, 10396, 263, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[516438, 10483, 263, 6, 22, "Print", "ExpressionUUID" -> \
 "6b896789-0d10-4957-ade5-d793dc0ba6c6"],
-Cell[511424, 10404, 260, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[516704, 10491, 260, 6, 22, "Print", "ExpressionUUID" -> \
 "303b8a52-ebf9-4f1a-98ea-2365f68e864f"],
-Cell[511687, 10412, 270, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[516967, 10499, 270, 6, 22, "Print", "ExpressionUUID" -> \
 "4ebfe125-fd30-40f6-8014-3ad906d8ef6a"],
-Cell[511960, 10420, 913, 15, 86, "Print", "ExpressionUUID" -> \
+Cell[517240, 10507, 913, 15, 86, "Print", "ExpressionUUID" -> \
 "039af999-1311-442e-98ee-0deb2fcb4fa9"],
-Cell[512876, 10437, 261, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[518156, 10524, 261, 6, 22, "Print", "ExpressionUUID" -> \
 "b33a6424-6bbb-401e-a5c3-7f7c0be6caaa"],
-Cell[513140, 10445, 260, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[518420, 10532, 260, 6, 22, "Print", "ExpressionUUID" -> \
 "7d032ab4-3b70-46be-b099-a2b7eed7b32b"],
-Cell[513403, 10453, 270, 6, 22, "Print", "ExpressionUUID" -> \
+Cell[518683, 10540, 270, 6, 22, "Print", "ExpressionUUID" -> \
 "f3da72b7-d018-4100-b058-fba9b5584c67"],
-Cell[513676, 10461, 915, 15, 86, "Print", "ExpressionUUID" -> \
+Cell[518956, 10548, 915, 15, 86, "Print", "ExpressionUUID" -> \
 "cd331a0b-3a38-42b1-957f-925ad76653b2"],
-Cell[514594, 10478, 350, 8, 22, "Print", "ExpressionUUID" -> \
+Cell[519874, 10565, 350, 8, 22, "Print", "ExpressionUUID" -> \
 "3e7e95ba-cc22-44e4-82b6-391ec84c7443"],
-Cell[514947, 10488, 334, 8, 22, "Print", "ExpressionUUID" -> \
+Cell[520227, 10575, 334, 8, 22, "Print", "ExpressionUUID" -> \
 "e42cff8d-8038-411c-b4fc-230ce1fdc489"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[515342, 10503, 731, 14, 144, "Subsection", "ExpressionUUID" -> \
+Cell[520622, 10590, 731, 14, 144, "Subsection", "ExpressionUUID" -> \
 "2ee66a00-f8a5-4fc8-8bfc-30ae67474e74"],
 Cell[CellGroupData[{
-Cell[516098, 10521, 369, 6, 28, "Input", "ExpressionUUID" -> \
+Cell[521378, 10608, 369, 6, 28, "Input", "ExpressionUUID" -> \
 "9a65c146-c609-40f3-a015-d53e98ed7f18"],
-Cell[516470, 10529, 130948, 2894, 446, "Output", "ExpressionUUID" -> \
+Cell[521750, 10616, 130948, 2894, 446, "Output", "ExpressionUUID" -> \
 "779589e7-5028-4668-905e-43562c3b34d8"]
 }, Open  ]]
 }, Open  ]]
