@@ -19,7 +19,7 @@
    ))
 
   ;check if not ("format":"3.0")
-(defun parse-json (json)
+(defun parse-json (json csv-data)
   (let ((vstrands (make-hash-table :test #'eql)))
     (loop for json-vstrand-info in (LIST-OF-VSTRANDS-FROM-JSON json)
        for num = (cdr (assoc :num json-vstrand-info))
@@ -62,27 +62,66 @@
        for scaffold-vec = (scaffold-vec vstrand)
        do (CONNECT-EVERYTHING vstrands num staple-json staple-vec #'staple-vec)
        do (CONNECT-EVERYTHING vstrands num scaffold-json scaffold-vec #'scaffold-vec))
-    ;; Deal with loop
-    ;; (skip-loop skip loop staple-vec scaffold-vec) -> return new staple and scaffold
-    (loop for vstrand being the hash-values in vstrands using (hash-key num)
-       for loop-json = (loop-json vstrand)
-       for staple-vec = (staple-vec vstrand)
-       for skip-json = (skip-json vstrand)
-       for scaffold-vec = (scaffold-vec vstrand)
-       do (format t "duplex num ~a~%" num)
-       do (multiple-value-bind (a b)
-	      (skip-loop num skip-json loop-json staple-vec scaffold-vec)
-	    (setf (p-strand vstrand) a
-		  (n-strand vstrand) b)))   
-    vstrands))
+    ;;deal with sequence
+    (unless csv-data
+      (warn "No CSV; nucleobase information will be defaulted"))
+    (let ((node-staple-sequences (make-hash-table :test #'eq)))
+      (loop for (num pos sequence) in csv-data
+	 for start-node = (lookup-node vstrands num pos :staple-vec)
+	 do (setf (gethash start-node node-staple-sequences) sequence))
+      ;; Deal with loop
+      ;; (skip-loop skip loop staple-vec scaffold-vec) -> return new staple and scaffold
+      (loop for vstrand being the hash-values in vstrands using (hash-key num)
+	 for loop-json = (loop-json vstrand)
+	 for staple-vec = (staple-vec vstrand)
+	 for skip-json = (skip-json vstrand)
+	 for scaffold-vec = (scaffold-vec vstrand)
+	 do (format t "duplex num ~a~%" num)
+	 do (multiple-value-bind (a b)
+		(skip-loop num skip-json loop-json staple-vec scaffold-vec)
+	      (setf (p-strand vstrand) a
+		    (n-strand vstrand) b)))
+      ;;fill base names
+      (loop for sequence being the hash-values in node-staple-sequences using (hash-key start-node)
+	 do (loop with node = start-node
+	       for base across sequence
+	       do (unless (char= base #\?)
+		    (setf (name node) base))
+		 (setf node (forward-node node))
+		 (unless node (return))))
+      vstrands))
 
+   
 (defun read-csv-sequence-file (csv-filename)
   (if (probe-file csv-filename)
-      (let ((csv-file (open csv-filename :direction :input)))
-	(unwind-protect
-	     (read-csv:parse-csv csv-file)
-	  (close csv-file)))
+      (with-open-file (csv-filename :direction :input)
+	(read-csv:parse-csv csv-file))
       nil))
+
+(defun find-title-row (data)
+  (find-if (lambda (row)
+	     (alpha-char-p (char (first row) 0)))
+	   data))
+
+(defun title-positions (title-row)
+  (values (position "Start" title-row :test #'string=)
+	  (position "Sequence" title-row :test #'string=)))
+
+(defun positions-and-sequences (csv)
+  (let* ((title-row (find-title-row csv))
+	 (data (remove title-row csv)))
+    (multiple-value-bind (start sequence)
+	(title-positions title-row)
+      (loop for row in data
+	 collect (multiple-value-bind (strand pos)
+		     (position-from-string (nth start row))
+		   (list strand pos
+			 (nth sequence row)))))))
+
+(defun position-from-string (string)
+  (multiple-value-bind (first stop)
+      (parse-integer string :junk-allowed t)
+    (values first (parse-integer string :start (1+ stop) :junk-allowed t))))
 
 (defun apply-default-sequence-to-cstrands (cstrands)
   (loop for strand in cstrands
@@ -92,26 +131,50 @@
 		(when (hbond-node node)
 		  (setf (base-name (hbond-node node)) :C))))))
 
-(defun apply-csv-sequence-to-cstrands (csv-sequence cstrands)
+(defun node-has-name-p (node)
+  (slot-boundp node 'name))
+
+(defun complementary-base (base)
+  (ecase base
+    ((:c) :g)
+    ((:g) :c)
+    ((:a) :t)
+    ((:t) :a)))
+
+(defun fill-empty-bases-with-default (cstrands)
   ;;; Apply the sequence information in csv-sequence to the vstrands
   ;;;    If there is no csv-sequence then use :G/:C
-  (if csv-sequence
-      (progn
-	(warn "implement the apply-csv-sequence-to-vstrands function")
-	(apply-default-sequence-to-cstrands cstrands))
-      (apply-default-sequence-to-cstrands cstrands)))
+  (loop for strand in cstrands
+     do (loop for node in (dna-strand-as-list-of-nodes strand)
+	   for hnode = (hbond-node node)
+	   do (if (node-has-name-p node)
+		  (cond ((not hnode))
+			((node-has-name-p hnode)
+			 (unless (eql (name hnode)
+				      (complementary-base (name node)))
+			   (error "Base pair doesn't match: ~a" node)))
+			(t (setf (name hnode)
+				 (complementary-base (name node)))))
+		  (cond ((not hnode)
+			 (setf (name node) :G))
+			((node-has-name-p hnode)
+			 (setf (name node)
+			       (complementary-base (name hnode))))
+			(t (setf (name node) :G
+				 (name hnode) :C)))))))
 
 (defun parse-cadnano (file-name)
   (let ((json-filename (make-pathname :type "json" :defaults file-name))
 	(csv-filename (make-pathname :type "csv" :defaults file-name)))
-    (let* ((json (let ((json-file (open json-filename :direction :input)))
-		   (prog1
-		       (json:decode-json json-file)
-		     (close json-file))))
-	   (vstrands (parse-json json))
+    (let* ((json (with-open-file (json-file json-filename :direction :input)
+		   (json:decode-json json-file)))
+	   (csv (with-open-file (csv-file csv-filename :direction :input
+					  :if-does-not-exist nil)
+		  (positions-and-sequences
+		   (read-csv:parse-csv csv-file))))
+	   (vstrands (parse-json json csv))
 	   (cstrands (single-or-double-classified-strands vstrands)))
-      (let ((csv-sequence (read-csv-sequence-file csv-filename)))
-	(apply-csv-sequence-to-cstrands csv-sequence cstrands))
+ 	(fill-empty-bases-with-default cstrands))
       cstrands)))
     
 (defun BUILD-NODE (strand-json vec num strand-name)
