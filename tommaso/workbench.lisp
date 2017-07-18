@@ -8,9 +8,9 @@
 
 (load-*bases* #P"~/cando/origami/tommaso/base-pair-pdb-file/")
 
-;;;(defparameter *s* #P"~/cando/origami/tommaso/cadnano_test_file/super_barcode_hex.json")
+(defparameter *s* #P"~/cando/origami/tommaso/cadnano_test_file/super_barcode_hex.json")
 
-(defparameter *s* #P"~/cando/origami/tommaso/cadnano_test_file/nick.json")
+;;;(defparameter *s* #P"~/cando/origami/tommaso/cadnano_test_file/dna-2-nicks.json")
 (defparameter *origami* (parse-cadnano *s*))
 (fill-nodes-with-residues *origami*)
 
@@ -54,5 +54,5 @@
 (chem:minimize *min*)
 
 
-(let ((mol1 (build-one-aggregate *origami* *ef*)))
+(let ((mol (build-one-aggregate *origami* *ef*)))
   (cando:save-mol2 mol "after.mol2"))
