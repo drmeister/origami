@@ -1,3 +1,5 @@
+(in-package :cl-jupyter-user)
+
 
 (defun LIST-OF-VSTRANDS-FROM-JSON (json)
   (cdr (assoc :vstrands json)))
@@ -20,6 +22,7 @@
 
   ;check if not ("format":"3.0")
 (defun parse-json (json csv-data)
+  (format t "Starting parse-json~%")
   (let ((vstrands (make-hash-table :test #'eql)))
     (loop for json-vstrand-info in (LIST-OF-VSTRANDS-FROM-JSON json)
        for num = (cdr (assoc :num json-vstrand-info))
@@ -63,8 +66,10 @@
        do (CONNECT-EVERYTHING vstrands num staple-json staple-vec #'staple-vec)
        do (CONNECT-EVERYTHING vstrands num scaffold-json scaffold-vec #'scaffold-vec))
     ;;deal with sequence
+    (format t "here~%")
     (unless csv-data
       (warn "No CSV; nucleobase information will be defaulted"))
+    (format t "About to assign node-staple-sequences~%")
     (let ((node-staple-sequences (make-hash-table :test #'eq)))
       (loop for (num pos sequence) in csv-data
 	 for start-node = (lookup-node vstrands num pos :staple-vec)
@@ -82,14 +87,15 @@
 	      (setf (p-strand vstrand) a
 		    (n-strand vstrand) b)))
       ;;fill base names
+      (format t "About to apply node-staple-sequences~%")
       (loop for sequence being the hash-values in node-staple-sequences using (hash-key start-node)
 	 do (loop with node = start-node
 	       for base across sequence
 	       do (unless (char= base #\?)
-		    (setf (name node) base))
+		    (setf (base-name node) base))
 		 (setf node (forward-node node))
 		 (unless node (return))))
-      vstrands))
+      vstrands)))
 
    
 (defun read-csv-sequence-file (csv-filename)
@@ -131,8 +137,11 @@
 		(when (hbond-node node)
 		  (setf (base-name (hbond-node node)) :C))))))
 
-(defun node-has-name-p (node)
-  (slot-boundp node 'name))
+(defun node-has-identifier-p (node)
+  (slot-boundp node 'identifier))
+
+(defun node-has-base-name-p (node)
+  (slot-boundp node 'base-name))
 
 (defun complementary-base (base)
   (ecase base
@@ -147,21 +156,27 @@
   (loop for strand in cstrands
      do (loop for node in (dna-strand-as-list-of-nodes strand)
 	   for hnode = (hbond-node node)
-	   do (if (node-has-name-p node)
-		  (cond ((not hnode))
-			((node-has-name-p hnode)
-			 (unless (eql (name hnode)
-				      (complementary-base (name node)))
-			   (error "Base pair doesn't match: ~a" node)))
-			(t (setf (name hnode)
-				 (complementary-base (name node)))))
-		  (cond ((not hnode)
-			 (setf (name node) :G))
-			((node-has-name-p hnode)
-			 (setf (name node)
-			       (complementary-base (name hnode))))
-			(t (setf (name node) :G
-				 (name hnode) :C)))))))
+	   do (format t "fill-empty-bases-with-default node -> ~a~%" node)
+	   do (if (node-has-base-name-p node)
+		  (progn
+		    (format t "TRUE node-has-base-name-p~%")
+		    (cond
+		      ((not hnode))
+		      ((node-has-base-name-p hnode)
+		       (unless (eql (base-name hnode)
+				    (complementary-base (base-name node)))
+			 (error "Base pair doesn't match: ~a" node)))
+		      (t (setf (base-name hnode)
+			       (complementary-base (base-name node))))))
+		  (progn
+		    (format t "NOT node-has-base-name-p~%")
+		    (cond ((not hnode)
+			 (setf (base-name node) :G))
+			((node-has-base-name-p hnode)
+			 (setf (base-name node)
+			       (complementary-base (base-name hnode))))
+			(t (setf (base-name node) :G
+				 (base-name hnode) :C))))))))
 
 (defun parse-cadnano (file-name)
   (let ((json-filename (make-pathname :type "json" :defaults file-name))
@@ -174,14 +189,15 @@
 		   (read-csv:parse-csv csv-file))))
 	   (vstrands (parse-json json csv))
 	   (cstrands (single-or-double-classified-strands vstrands)))
- 	(fill-empty-bases-with-default cstrands))
+      (format t "About to fill-empty-bases-with-default~%")
+      (fill-empty-bases-with-default cstrands)
       cstrands)))
     
 (defun BUILD-NODE (strand-json vec num strand-name)
   (loop for index from 0 below (length vec)
      for node-json in strand-json
      unless (apply #'= -1 node-json)
-     do (setf (elt vec index) (make-instance 'node :name (list :j num strand-name index)))))
+     do (setf (elt vec index) (make-instance 'node :identifier (list :j num strand-name index)))))
 
 (defun INTRA-HELIX-CONNECT (staple-vec scaffold-vec)
   (loop for index from 0 below (length staple-vec)
@@ -214,10 +230,10 @@
    (t-q-bond-node :initform nil :initarg :t-q-bond-node :accessor t-q-bond-node)
    (forward-node :initform nil :initarg :forward-node :accessor forward-node)
    (backward-node :initform nil :initarg :backward-node :accessor backward-node)
-   (base-name :initform nil :initarg :base-name :accessor base-name)
+   (base-name :initarg :base-name :accessor base-name)
    (residue :initform nil :initarg :residue :accessor residue)
    (strand :initarg :strand :accessor strand)
-   (name :initarg :name :reader name)))
+   (identifier :initarg :identifier :reader identifier)))
 
 (defun lookup-node (vstrands vstrand-num pos accessor)
   (let* ((vstrand (gethash vstrand-num vstrands))
@@ -257,7 +273,7 @@
 	     (when xf (setf (backward-node xf) xb))
 	     (setf x NIL)))
 	 (loop-procedure (num strand-name old-vec s-l-cursor new-vec dest-cursor loop-vec setf-accessor-l accessor-l setf-accessor-r)
-	    (setf (elt new-vec dest-cursor) (make-instance 'node :name (list :A num strand-name s-l-cursor :I (elt loop-vec s-l-cursor))))
+	    (setf (elt new-vec dest-cursor) (make-instance 'node :identifier (list :A num strand-name s-l-cursor :I (elt loop-vec s-l-cursor))))
 	    (let ((New-node (elt new-vec dest-cursor))
 		  (Doubled-node (elt old-vec s-l-cursor))
 		  (l-d-node (funcall accessor-l (elt old-vec s-l-cursor))))
@@ -349,7 +365,7 @@
 (defun safe-draw-link (dest node next-node color &optional link)
   ;(let ((*print-pretty* nil)))
   (when (and node next-node)
-    (format dest "\"~a\" -> \"~a\" [color=~a];~%" (name node) (name next-node) color)))
+    (format dest "\"~a\" -> \"~a\" [color=~a];~%" (identifier node) (identifier next-node) color)))
 
 (defun draw-connection (dest node)
   (safe-draw-link dest node (forward-node node) "violet")
@@ -358,7 +374,7 @@
 
 (defun draw-node (dest node)
 ;  (let ((*print-pretty* nil)))
-  (format dest "\"(~{~a~^ ~})\"->" (name node)))
+  (format dest "\"(~{~a~^ ~})\"->" (identifier node)))
 
 (defun draw-strand (dest num name vec)
   (format dest "subgraph cluster~a_~a {~%" (string name) num )
@@ -476,7 +492,7 @@
 
 (defun single-or-double-classified-strands (vstrands)
   (let ((pairs (single-or-double-strand vstrands)))
-    (format t "pairs -> ~a~%" (mapcar (lambda (pair) (format nil "~a -> ~a~%" (name (first pair)) (name (second pair)))) pairs))
+    (format t "pairs -> ~a~%" (mapcar (lambda (pair) (format nil "~a -> ~a~%" (identifier (first pair)) (identifier (second pair)))) pairs))
     (loop for pair in pairs
        for p5 = (first pair) 
        for p3 = (second pair)
