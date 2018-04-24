@@ -9,5 +9,8 @@
    #:fill-nodes-with-residues
    #:build-energy-function
    #:draw-graph
+   #:staple-term
+   #:nonbond-term
+   #:first-optimize
    )
   )

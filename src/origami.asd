@@ -12,5 +12,6 @@
      (:file "parser")
      (:file "build")
      (:file "graph")
+     (:file "graphics")
      (:file "energy")
      ))

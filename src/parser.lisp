@@ -229,7 +229,7 @@
    (t-q-bond-node :initform nil :initarg :t-q-bond-node :accessor t-q-bond-node)
    (forward-node :initform nil :initarg :forward-node :accessor forward-node)
    (backward-node :initform nil :initarg :backward-node :accessor backward-node)
-   (base-name :initarg :base-name :accessor base-name)
+   (base-name :initarg :base-name :initform :G :accessor base-name)
    (residue :initform nil :initarg :residue :accessor residue)
    (strand :initarg :strand :accessor strand)
    (identifier :initarg :identifier :reader identifier)))
